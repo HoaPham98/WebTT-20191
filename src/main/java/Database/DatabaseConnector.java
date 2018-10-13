@@ -1,13 +1,25 @@
 package Database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class DatabaseConnector {
 
-    static final String URL = "";
-    static final String DATABASE_NAME = "";
-    static final String USERNAME = "";
-    static final String PASSWORD = "";
+    static final String DATABASE_NAME = "movie";
+    static final String USERNAME = "MOVIE";
+    static final String PASSWORD = "1";
 
-    public static DatabaseConnector instance = new DatabaseConnector();
+    private static DatabaseConnector instance = new DatabaseConnector();
+    private Connection connection;
+
+    static {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     private DatabaseConnector() {
 
@@ -17,8 +29,39 @@ public class DatabaseConnector {
         return instance;
     }
 
-    void createConnection() {
+    static String getConnectionUrl() {
+        return "jdbc:sqlserver://localhost:1433;" +
+                "databaseName=" + DATABASE_NAME + ";user=" + USERNAME + ";password=" + PASSWORD + ";";
+    }
 
+    public boolean createConnection() {
+        boolean result = false;
+        try {
+            connection = connection == null? DriverManager.getConnection(getConnectionUrl()) : connection;
+            result = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result = false;
+        }
+
+        return result;
+    }
+
+    public boolean closeConnection() {
+        boolean result = false;
+        try {
+            if (connection != null) {
+                connection.close();
+                result = true;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            result = false;
+
+        }
+
+        return result;
     }
 
 }

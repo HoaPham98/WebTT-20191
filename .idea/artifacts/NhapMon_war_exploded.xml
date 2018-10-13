@@ -6,6 +6,9 @@
         <element id="directory" name="classes">
           <element id="module-output" name="NhapMon" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.microsoft.sqlserver:mssql-jdbc:7.0.0.jre8" />
+        </element>
       </element>
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/target/NhapMon/META-INF/MANIFEST.MF" />
