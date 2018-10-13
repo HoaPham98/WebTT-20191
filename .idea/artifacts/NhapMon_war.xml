@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="NhapMon:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="NhapMon.war">
+      <element id="artifact" artifact-name="NhapMon:war exploded" />
+    </root>
+  </artifact>
+</component>
