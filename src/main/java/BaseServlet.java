@@ -1,4 +1,4 @@
-import Database.DatabaseConnector;
+import database.DatabaseConnector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
