@@ -1,8 +1,9 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import dto.Phim;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseConnector {
 
@@ -62,6 +63,27 @@ public class DatabaseConnector {
         }
 
         return result;
+    }
+
+    public ArrayList<Phim> getNowShowingMovies() {
+        ArrayList<Phim> arr = new ArrayList<>();
+
+        try {
+            Statement stm = connection.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM [dbo].[DanhSachPhimDangChieu]");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            while (rs.next()) {
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    System.out.println(
+                            "Column " + i + " [name: " + rsmd.getColumnName(i) + " - data: " + rs.getString(i) + "]");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return arr;
     }
 
 }
