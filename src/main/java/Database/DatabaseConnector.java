@@ -71,12 +71,23 @@ public class DatabaseConnector {
         try {
             Statement stm = connection.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM [dbo].[DanhSachPhimDangChieu]");
-            ResultSetMetaData rsmd = rs.getMetaData();
+//            ResultSetMetaData rsmd = rs.getMetaData();
+            Phim phim = new Phim();
             while (rs.next()) {
-                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    System.out.println(
-                            "Column " + i + " [name: " + rsmd.getColumnName(i) + " - data: " + rs.getString(i) + "]");
-                }
+                phim.setId(rs.getInt(1));
+                phim.setMaPhim(rs.getString(2));
+                phim.setTenPhim(rs.getString(3));
+                phim.setQuocGia(rs.getString(4));
+                phim.setThoiLuongPhim(rs.getTime(5));
+                phim.setNgayBatDau(rs.getDate(6));
+                phim.setNgayKetThuc(rs.getDate(7));
+                phim.setPosterURL(rs.getString(8));
+                phim.setMotaPhim(rs.getString(9));
+                phim.setGhiChu(rs.getString(10));
+                phim.setNhanPhim(rs.getString(11));
+                phim.setImdbRank(rs.getFloat(12));
+                phim.setImdbURL(rs.getString(13));
+                arr.add(phim);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,5 +96,37 @@ public class DatabaseConnector {
 
         return arr;
     }
+
+    public ArrayList<Phim> getInComingMovies() {
+            ArrayList<Phim> arr = new ArrayList<>();
+
+            try {
+                Statement stm = connection.createStatement();
+                ResultSet rs = stm.executeQuery("SELECT * FROM [dbo].[DanhSachPhimDangChieu]");
+//            ResultSetMetaData rsmd = rs.getMetaData();
+                Phim phim = new Phim();
+                while (rs.next()) {
+                    phim.setId(rs.getInt(1));
+                    phim.setMaPhim(rs.getString(2));
+                    phim.setTenPhim(rs.getString(3));
+                    phim.setQuocGia(rs.getString(4));
+                    phim.setThoiLuongPhim(rs.getTime(5));
+                    phim.setNgayBatDau(rs.getDate(6));
+                    phim.setNgayKetThuc(rs.getDate(7));
+                    phim.setPosterURL(rs.getString(8));
+                    phim.setMotaPhim(rs.getString(9));
+                    phim.setGhiChu(rs.getString(10));
+                    phim.setNhanPhim(rs.getString(11));
+                    phim.setImdbRank(rs.getFloat(12));
+                    phim.setImdbURL(rs.getString(13));
+                    arr.add(phim);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return arr;
+        }
+
 
 }
