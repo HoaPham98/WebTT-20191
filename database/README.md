@@ -1,5 +1,21 @@
 # CinemaDatabase  
 
+## Update
+
+#### có 2 procedure nữa t tạo ra.
+* 1 là rutGonVe.
+    bởi vì bảng vé sẽ rất nhanh đầy và những thông tin liên quan đến chi tiết vé như mã vé, mã ghế là không cần thiết. do đó t tạo ra bảng VeRutGon, mục đích là giảm số record, bảng Vé vẫn sẽ hoạt động như bình thường. sẽ lưu thông tin chi tiết và trạng thái các vé. Sau khi xuất chiếu được chiếu xong. Mọi thông tin về vé mà xuất chiếu đó sinh ra sẽ bị xóa đi. và được tính toán thu gọn lại vào bảng VeRutGon ( với mỗi xuất chiếu sẽ chứa các thông tin về số ghế đã bán, chưa bán và doanh thu của từng loại ghế ) . Cách sử dụng là chỉ cần đặt thời gian 1 khoảng thời gian nào đó chạy hàm rutGonVe là được. -> giải quyết được vấn đề cô giáo nói là dữ liệu quá lớn sau một hai tháng. ( giảm được tầm 100 lần gì đó)
+* 2 là thongKePhim
+    hàm này sẽ tính toán các thông tin dựa vào bảng VeRutGon, đưa ra các thông tin thống kê về số lượng xuất chiếu , số lượng ghế đã bán , đã cung cấp và Doanh thu của từng bộ phim theo ngày. khi cần, backend sẽ truy xuất dữ liệu dựa trên bảng thống kê này để đưa ra Doanh thu theo ngày, theo tháng, doanh thu theo bộ phim, tỷ lệ ghế bán được, ... Hàm này cũng như hàm rutGonVe, cần được gọi sau một thời gian mặc định nào đó để tính doanh thu. Chú ý là trong hàm thongKeVe, t đã gọi hàm rutGonVe rồi. nên chỉ cần gọi hàm thongKePhim thôi.
+
+Ví dụ mỗi 1h sáng sẽ chạy hàm này.
+    
+```
+exec thongKePhim;
+```
+
+* 3 là sửa các thông tin về giao dịch, và chi tiết giao dịch thay cho VeOnline. cái này thì ko có gì mới. có một đặc điểm cần lưu ý đó là một giao dịch sẽ chỉ đặt được nhiều ghế trong một xuất chiếu phim.
+
 ## Getting Started
 
 Mô hình cơ sở dữ liệu quản lý hệ thống rạp chiếu phim
@@ -12,7 +28,7 @@ Có 2 file sql hoặc bak. dùng 1 trong 2 file để restore lại database
 
 ### ER Diagram
 
-![alt text](https://bitbucket.org/HoaPhamHust/nmcnpm_104412_nhom17/raw/8db99d0973c6cf189d7d5c866d333373ccaae4ab/database/report/ER-Diagram.png)
+![alt text](https://i.imgur.com/HGqsL8y.jpg)
 
 Cấu trúc một số key:
 MaPhim : P + ID ; ex : P001,
