@@ -2,7 +2,7 @@ package com.nhom17.reposity;
 
 import java.util.ArrayList;
 
-public interface Repository<T> {
+public interface IRepository<T> {
     void add(T item);
 
     void add(Iterable<T> items);
@@ -11,7 +11,9 @@ public interface Repository<T> {
 
     void remove(T item);
 
-    void remove(Specification specification);
+    void remove(String ...conditions);
 
-    ArrayList<T> query(Specification specification);
+    ArrayList<T> getall();
+
+    ArrayList<T> query(String ...conditions);
 }
