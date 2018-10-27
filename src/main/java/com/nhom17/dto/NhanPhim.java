@@ -1,4 +1,4 @@
-package dto;
+package com.nhom17.dto;
 
 public class NhanPhim {
     private String maNhanPhim;

@@ -1,0 +1,5 @@
+﻿INSERT INTO [Book] ([Tensach_20161743],[Tentg_20161743],[Nxb_20161743],[Theloai_20161743],[Nam_20161743],[PhamQuangHoa_20161743]) VALUES (N'Dế Mèn Phiêu Luu Ký',N'Tô Hoài',N'Kim Ðồng',N'Thiếu nhi',1941,1);
+INSERT INTO [Book] ([Tensach_20161743],[Tentg_20161743],[Nxb_20161743],[Theloai_20161743],[Nam_20161743],[PhamQuangHoa_20161743]) VALUES (N'Nỗi buồn chiến tranh',N'Bảo Ninh',N'NXB Trẻ',N'Chiến tranh',1987,1);
+INSERT INTO [Book] ([Tensach_20161743],[Tentg_20161743],[Nxb_20161743],[Theloai_20161743],[Nam_20161743],[PhamQuangHoa_20161743]) VALUES (N'Cho Tôi Xin Một Vé Ði Tuổi Thơ',N'Nguyễn Nhật Ánh',N'NXB Trẻ',N'Tiểu thuyết',2008,1);
+INSERT INTO [Book] ([Tensach_20161743],[Tentg_20161743],[Nxb_20161743],[Theloai_20161743],[Nam_20161743],[PhamQuangHoa_20161743]) VALUES (N'Ðất Rừng Phương Nam',N'Ðoàn Giỏi',N'NXB Văn Học',N'Chiến tranh',1957,1);
+INSERT INTO [Book] ([Tensach_20161743],[Tentg_20161743],[Nxb_20161743],[Theloai_20161743],[Nam_20161743],[PhamQuangHoa_20161743]) VALUES (N'Tắt Ðèn',N'Ngô Tất Tố',N'NXB Kim Ðồng',N'Tiểu thuyết',1937,1);

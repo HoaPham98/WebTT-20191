@@ -1,6 +1,6 @@
-package database;
+package com.nhom17.database;
 
-import dto.Phim;
+import com.nhom17.dto.Phim;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -78,10 +78,14 @@ public class DatabaseConnector {
                 phim.setMaPhim(rs.getString(2));
                 phim.setTenPhim(rs.getString(3));
                 phim.setQuocGia(rs.getString(4));
-                phim.setThoiLuongPhim(rs.getTime(5));
+                phim.setThoiLuongPhim(rs.getTime(5).getTime());
                 phim.setNgayBatDau(rs.getDate(6));
                 phim.setNgayKetThuc(rs.getDate(7));
-                phim.setPosterURL(rs.getString(8));
+                String poster = rs.getString(8);
+                if (poster == null){
+                    poster = "images/carousel/movie-1.jpg";
+                }
+                phim.setPosterURL(poster);
                 phim.setMotaPhim(rs.getString(9));
                 phim.setGhiChu(rs.getString(10));
                 phim.setNhanPhim(rs.getString(11));
@@ -110,10 +114,14 @@ public class DatabaseConnector {
                     phim.setMaPhim(rs.getString(2));
                     phim.setTenPhim(rs.getString(3));
                     phim.setQuocGia(rs.getString(4));
-                    phim.setThoiLuongPhim(rs.getTime(5));
+                    phim.setThoiLuongPhim(rs.getTime(5).getTime());
                     phim.setNgayBatDau(rs.getDate(6));
                     phim.setNgayKetThuc(rs.getDate(7));
-                    phim.setPosterURL(rs.getString(8));
+                    String poster = rs.getString(8);
+                    if (poster == null){
+                        poster = "images/carousel/movie-1.jpg";
+                    }
+                    phim.setPosterURL(poster);
                     phim.setMotaPhim(rs.getString(9));
                     phim.setGhiChu(rs.getString(10));
                     phim.setNhanPhim(rs.getString(11));

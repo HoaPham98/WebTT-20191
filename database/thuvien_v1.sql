@@ -1,0 +1,62 @@
+﻿CREATE TABLE [dbo].[Book] (
+	[Masach_20161743] int NOT NULL IDENTITY(1,1) PRIMARY KEY CLUSTERED, 
+	[Nam_20161743] int NOT NULL, 
+	[PhamQuangHoa_20161743] bit DEFAULT ((1)), 
+	[Tensach_20161743] ntext NOT NULL, 
+	[Tentg_20161743] ntext NOT NULL, 
+	[Nxb_20161743] ntext NOT NULL, 
+	[Theloai_20161743] ntext NOT NULL
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[Reader] (
+	[Madocgia_20161743] int NOT NULL IDENTITY(1,1) PRIMARY KEY CLUSTERED, 
+	[Tendocgia_20161743] ntext NOT NULL, 
+	[Diachi_20161743] ntext NOT NULL, 
+	[Sodt_20161743] char(11) NOT NULL, 
+	[Ngaysinh_20161743] date NOT NULL, 
+	[PhamQuangHoa_20161743] bit NOT NULL DEFAULT ((1))
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[Staff] (
+	[Manhanvien_20161743] int NOT NULL IDENTITY(1,1) PRIMARY KEY CLUSTERED, 
+	[Sodt_20161743] text NOT NULL, 
+	[Ngaysinh_20161743] date NOT NULL, 
+	[PhamQuangHoa_20161743] bit NOT NULL DEFAULT ((1)), 
+	[Tennv_20161743] ntext NOT NULL, 
+	[Diachi_20161743] ntext NOT NULL
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[Borrow] (
+	[Mamuontra_20161743] int NOT NULL IDENTITY(1,1) PRIMARY KEY CLUSTERED, 
+	[Madocgia_20161743] int NOT NULL, 
+	[Manhanvien_20161743] int NOT NULL, 
+	[Ngaymuon_2016743] date NOT NULL, 
+	[Ngayhethan_20161743] date NOT NULL, 
+	[Tiencoc_20161743] int NOT NULL, 
+	[PhamQuangHoa_20161743] bit NOT NULL DEFAULT ((1)), 
+	FOREIGN KEY ([Madocgia_20161743])
+		REFERENCES [dbo].[Reader] ([Madocgia_20161743])
+		ON UPDATE NO ACTION ON DELETE CASCADE, 
+	FOREIGN KEY ([Manhanvien_20161743])
+		REFERENCES [dbo].[Staff] ([Manhanvien_20161743])
+		ON UPDATE NO ACTION ON DELETE CASCADE
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[DetailBorrow] (
+	[ID_20161743] int NOT NULL IDENTITY(1,1) PRIMARY KEY CLUSTERED, 
+	[Mamuontra_20161743] int NOT NULL, 
+	[Masach_20161743] int NOT NULL, 
+	[Ngaytra_20161743] date NOT NULL, 
+	[Tienphat_20161743] int NOT NULL, 
+	[PhamQuangHoa_20161743] bit NOT NULL DEFAULT ((1)), 
+	FOREIGN KEY ([Mamuontra_20161743])
+		REFERENCES [dbo].[Borrow] ([Mamuontra_20161743])
+		ON UPDATE NO ACTION ON DELETE CASCADE, 
+	FOREIGN KEY ([Masach_20161743])
+		REFERENCES [dbo].[Book] ([Masach_20161743])
+		ON UPDATE NO ACTION ON DELETE CASCADE
+) ON [PRIMARY]

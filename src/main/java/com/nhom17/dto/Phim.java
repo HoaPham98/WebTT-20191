@@ -1,10 +1,11 @@
-package dto;
+package com.nhom17.dto;
+
 import java.util.Date;
 
 public class Phim {
     private String maPhim;
     private String imdbURL;
-    private int thoiLuongPhim;
+    private long thoiLuongPhim;
     private String nhanPhim;
     private String posterURL;
     private String motaPhim;
@@ -36,11 +37,11 @@ public class Phim {
         this.imdbURL = imdbURL;
     }
 
-    public int getThoiLuongPhim() {
+    public long getThoiLuongPhim() {
         return thoiLuongPhim;
     }
 
-    public void setThoiLuongPhim(int thoiLuongPhim) {
+    public void setThoiLuongPhim(long thoiLuongPhim) {
         this.thoiLuongPhim = thoiLuongPhim;
     }
 
@@ -57,7 +58,7 @@ public class Phim {
     }
 
     public void setPosterURL(String c){
-        this.posterURL = c;
+            this.posterURL = c;
     }
 
     public String getMotaPhim() {

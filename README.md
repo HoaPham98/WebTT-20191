@@ -1,7 +1,7 @@
 # NMCNPM_104412_Nhom17
 
 ##NOTE
-* Tạo database tên `movie` trong sql server
+* Tạo com.nhom17.database tên `movie` trong sql server
 * Tạo login mới là `MOVIE` với password là `1`
 * Chuyển sql server sang chế độ SQL `sql authentication mode`
 * Bật `TCP/IP` cho SQL server

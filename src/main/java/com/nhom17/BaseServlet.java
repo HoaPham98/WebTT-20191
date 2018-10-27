@@ -1,4 +1,6 @@
-import database.DatabaseConnector;
+package com.nhom17;
+
+import com.nhom17.database.DatabaseConnector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;

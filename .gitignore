@@ -1,4 +1,4 @@
 .idea/workspace.xml
 target/
-database/dbo_Book.sql
-database/thuvien_v1.sql
+com.nhom17.database/dbo_Book.sql
+com.nhom17.database/thuvien_v1.sql
