@@ -1,4 +1,4 @@
-/*
+﻿/*
  Navicat Premium Data Transfer
 
  Source Server         : SQL Server GearHost
@@ -925,7 +925,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Phim] ON
 GO
 
-INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL]) VALUES (N'1', N'Venom', N'M?', N'02:01:00.0000000', N'2018-10-07', N'2018-11-07', NULL, N'Ð?o di?n : Ruben Fleischer, Di?n Viên : Tom Hardy, Riz Ahmed, Michelle Williams,..., N?i dung : Venom dã hé l? thân ph?n nhân v?t ph?n di?n c?c k? nguy hi?m và kinh hãi khi tung trailer chính th?c kh?p th? gi?i làm diên d?o fan hâm m? trong th? gi?i c?a Marvel. Chàng phóng viên Eddie Brock bí m?t theo dõi âm muu x?u xa c?a m?t t? ch?c và b? nhi?m ph?i Symbiote và tr? thành quái v?t Venom d?y nguy hi?m.', N'Không', N'C16', N'7.1', N'https://www.imdb.com/title/tt1270797/')
+INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL]) VALUES (N'1', N'Venom', N'Mỹ', N'02:01:00.0000000', N'2018-10-07', N'2018-11-07', NULL, N'Ðạo diễn : Ruben Fleischer, Diễn Viên : Tom Hardy, Riz Ahmed, Michelle Williams,..., Nội dung : Venom dã hé lộ thân phận nhân vật phản diện cực kỳ nguy hiểm và kinh hãi khi tung trailer chính thức khắp thế giới làm điên dảo fan hâm mộ trong thế giới của Marvel. Chàng phóng viên Eddie Brock bí mật theo dõi âm mưu xấu xa của một tổ chức và bị nhiễm phải Symbiote và trở thành quái vật Venom đầy nguy hiểm.', N'Không', N'C16', N'7.1', N'https://www.imdb.com/title/tt1270797/')
 GO
 
 SET IDENTITY_INSERT [dbo].[Phim] OFF
@@ -2463,8 +2463,8 @@ CREATE TABLE [dbo].[VeOnline] (
   [NguoiDat] varchar(30) COLLATE SQL_Latin1_General_CP1_CI_AS  NOT NULL,
   [MaXuatChieu] varchar(6) COLLATE SQL_Latin1_General_CP1_CI_AS  NOT NULL,
   [MaGhe] varchar(8) COLLATE SQL_Latin1_General_CP1_CI_AS  NOT NULL,
-  [NgayDat] AS (CONVERT([date],getdate())) NULL,
-  [GioDat] AS (CONVERT([time],getdate())) NULL,
+  [NgayDat] AS (CONVERT([date],getdate())),
+  [GioDat] AS (CONVERT([time],getdate())),
   [IDTrangThaiVeOnline] int  NOT NULL,
   [MaVe] varchar(23) COLLATE SQL_Latin1_General_CP1_CI_AS  NOT NULL
 )
