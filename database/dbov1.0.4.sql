@@ -12,7 +12,7 @@
  Target Server Version : 13005081
  File Encoding         : 65001
 
- Date: 24/10/2018 00:51:18
+ Date: 27/10/2018 23:01:59
 */
 
 
@@ -3965,7 +3965,9 @@ CREATE TABLE [dbo].[Phim] (
   [NhanPhim] varchar(5) COLLATE SQL_Latin1_General_CP1_CI_AS  NOT NULL,
   [IMDBrank] float(53)  NULL,
   [IMDBURL] varchar(300) COLLATE SQL_Latin1_General_CP1_CI_AS  NULL,
-  [PosterURL2] varchar(500) COLLATE SQL_Latin1_General_CP1_CI_AS  NULL
+  [PosterURL2] varchar(500) COLLATE SQL_Latin1_General_CP1_CI_AS  NULL,
+  [DaoDien] nvarchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS  NULL,
+  [DienVien] nvarchar(500) COLLATE SQL_Latin1_General_CP1_CI_AS  NULL
 )
 GO
 
@@ -3982,22 +3984,16 @@ GO
 SET IDENTITY_INSERT [dbo].[Phim] ON
 GO
 
-INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL1], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL], [PosterURL2]) VALUES (N'1', N'Venom', N'Mỹ', N'02:01:00.0000000', N'2018-10-07', N'2018-11-07', NULL, N'Ð?o di?n : Ruben Fleischer, Di?n Viên : Tom Hardy, Riz Ahmed, Michelle Williams,..., N?i dung : Venom dã hé l? thân ph?n nhân v?t ph?n di?n c?c k? nguy hi?m và kinh hãi khi tung trailer chính th?c kh?p th? gi?i làm diên d?o fan hâm m? trong th? gi?i c?a Marvel. Chàng phóng viên Eddie Brock bí m?t theo dõi âm muu x?u xa c?a m?t t? ch?c và b? nhi?m ph?i Symbiote và tr? thành quái v?t Venom d?y nguy hi?m.', N'Không', N'C16', N'7.1', N'https://www.imdb.com/title/tt1270797/', NULL)
+INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL1], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL], [PosterURL2], [DaoDien], [DienVien]) VALUES (N'1', N'Venom', N'Mỹ', N'02:01:00.0000000', N'2018-10-07', N'2018-11-07', NULL, N'Venom đã hé lộ thân phận nhân vật phản diện cực kỳ nguy hiểm và kinh hãi khi tung trailer chính thức khắp thế giới làm điên đảo fan hâm mộ trong thế giới của Marvel. Chàng phóng viên Eddie Brock bí mật theo dõi âm mưu xấu xa của một tổ chức và bị nhiễm phải Symbiote và trở thành quái vật Venom đầy nguy hiểm.', N'Không', N'C16', N'7.1', N'https://www.imdb.com/title/tt1270797/', NULL, N'Ruben Fleischer', N'Tom Hardy, Riz Ahmed, Michelle Williams,..., ')
 GO
 
-INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL1], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL], [PosterURL2]) VALUES (N'2', N'Bước Chân Đầu Tiên', N'Mỹ', N'02:01:00.0000000', N'2018-10-19', N'2018-11-19', NULL, N'Đạo diễn : Damien Chazelle, 
-Diễn Viên :  Ryan Gosling, Claire Foy, Kyle Chandler, Pablo Schreiber,...
-Nội dung : Bước Chân Đầu Tiên tái hiện lại hành trình lịch sử đưa con người tiếp cận mặt trăng của NASA, xoay quanh cuộc đời của phi hành gia huyền thoại Neil Amstrong trong giai đoạn 1961-1969 cũng như những hy sinh và mất mát – đối với riêng bản thân ông và cả nước Mỹ nói chung – trong quá trình thực hiện một trong những nhiệm vụ nguy hiểm nhất trong lịch sử nhân loại.', N'Không', N'C13', N'7.7', N'https://www.imdb.com/title/tt1213641/', NULL)
+INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL1], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL], [PosterURL2], [DaoDien], [DienVien]) VALUES (N'2', N'Bước Chân Đầu Tiên', N'Mỹ', N'02:01:00.0000000', N'2018-10-19', N'2018-11-19', NULL, N'Bước Chân Đầu Tiên tái hiện lại hành trình lịch sử đưa con người tiếp cận mặt trăng của NASA, xoay quanh cuộc đời của phi hành gia huyền thoại Neil Amstrong trong giai đoạn 1961-1969 cũng như những hy sinh và mất mát – đối với riêng bản thân ông và cả nước Mỹ nói chung – trong quá trình thực hiện một trong những nhiệm vụ nguy hiểm nhất trong lịch sử nhân loại.', N'Không', N'C13', N'7.7', N'https://www.imdb.com/title/tt1213641/', NULL, N'Damien Chazelle', N'Ryan Gosling, Claire Foy, Kyle Chandler, Pablo Schreiber,...')
 GO
 
-INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL1], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL], [PosterURL2]) VALUES (N'3', N'Quý Cô Thừa Kế', N'Việt Nam', N'01:50:00.0000000', N'2018-10-19', N'2018-11-19', NULL, N'Đạo diễn : Hoàng Duy, 
-Diễn Viên :  Ngân Khánh, Song Luân, Sỹ Thanh, Quang Minh, Hồng Đào,…
-Nội dung : Nội dung phim xoay quanh câu chuyện Nhung (Ngân Khánh) là một cô tiểu thư đỏng đảnh coi trời bằng vung và để kế thừa khối tài sản kết xù của bà ngoại cô phải tham gia một khóa học 3 tháng tại khu nhà cổ Từ Tâm. Tại đây cô gặp được Việt Anh (Song Luân) chàng trai thợ hồ hiền lành chất phác. Nhưng kể từ khi gặp nhau những biến cố dần xảy ra, liệu cô sẽ trải qua những khó khăn đó như thế nào và có thừa hưởng được khối tài sản của bà mình không?', N'Không', N'C13', N'7.7', N'https://www.imdb.com/', NULL)
+INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL1], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL], [PosterURL2], [DaoDien], [DienVien]) VALUES (N'3', N'Quý Cô Thừa Kế', N'Việt Nam', N'01:50:00.0000000', N'2018-10-19', N'2018-11-19', NULL, N'Nội dung phim xoay quanh câu chuyện Nhung (Ngân Khánh) là một cô tiểu thư đỏng đảnh coi trời bằng vung và để kế thừa khối tài sản kết xù của bà ngoại cô phải tham gia một khóa học 3 tháng tại khu nhà cổ Từ Tâm. Tại đây cô gặp được Việt Anh (Song Luân) chàng trai thợ hồ hiền lành chất phác. Nhưng kể từ khi gặp nhau những biến cố dần xảy ra, liệu cô sẽ trải qua những khó khăn đó như thế nào và có thừa hưởng được khối tài sản của bà mình không?', N'Không', N'C13', N'7.7', N'https://www.imdb.com/', NULL, N'Hoàng Duy', N'Ngân Khánh, Song Luân, Sỹ Thanh, Quang Minh, Hồng Đào,…')
 GO
 
-INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL1], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL], [PosterURL2]) VALUES (N'4', N'Vì Sao Vụt Sáng', N'Mỹ', N'02:20:00.0000000', N'2018-10-05', N'2018-12-05', NULL, N'Đạo diễn : Bradley Cooper
-Diễn Viên :  Lady Gaga, Bradley Cooper, Sam Elliott, Dave Chappelle
-Nội dung : Tháng 10 này, hãy để tâm hồn bạn bay bổng cùng cảm xúc lãng mạn với câu chuyện tình yêu lấp lánh của Vì Sao Vụt Sáng. Chàng nghệ sỹ nhạc đồng quê Jackson Maine (Bradley Cooper) và ca sỹ vô danh Ally (Lady GaGa) sẽ khiến bạn đắm chìm trong thế giới âm nhạc rực rỡ và rung động đến từng phút giây. Liệu định mệnh sẽ viết nên cái kết nào cho cả hai khi đứng giữa tình yêu và sự nghiệp?Đừng bỏ lỡ màn nhập vai được cho là tuyệt vời nhất của Lady Gaga từ trước đến nay!', N'Không', N'C18', N'7.7', N'https://www.imdb.com/title/tt1517451/', NULL)
+INSERT INTO [dbo].[Phim] ([ID], [TenPhim], [QuocGia], [ThoiLuongPhim], [NgayBatDau], [NgayKetThuc], [PosterURL1], [MotaPhim], [GhiChu], [NhanPhim], [IMDBrank], [IMDBURL], [PosterURL2], [DaoDien], [DienVien]) VALUES (N'4', N'Vì Sao Vụt Sáng', N'Mỹ', N'02:20:00.0000000', N'2018-10-05', N'2018-12-05', NULL, N'Tháng 10 này, hãy để tâm hồn bạn bay bổng cùng cảm xúc lãng mạn với câu chuyện tình yêu lấp lánh của Vì Sao Vụt Sáng. Chàng nghệ sỹ nhạc đồng quê Jackson Maine (Bradley Cooper) và ca sỹ vô danh Ally (Lady GaGa) sẽ khiến bạn đắm chìm trong thế giới âm nhạc rực rỡ và rung động đến từng phút giây. Liệu định mệnh sẽ viết nên cái kết nào cho cả hai khi đứng giữa tình yêu và sự nghiệp?Đừng bỏ lỡ màn nhập vai được cho là tuyệt vời nhất của Lady Gaga từ trước đến nay!', N'Không', N'C18', N'7.7', N'https://www.imdb.com/title/tt1517451/', NULL, N'Bradley Cooper', N'Lady Gaga, Bradley Cooper, Sam Elliott, Dave Chappelle')
 GO
 
 SET IDENTITY_INSERT [dbo].[Phim] OFF
