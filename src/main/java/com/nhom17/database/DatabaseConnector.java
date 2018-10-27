@@ -72,8 +72,8 @@ public class DatabaseConnector {
             Statement stm = connection.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM [dbo].[DanhSachPhimDangChieu]");
 //            ResultSetMetaData rsmd = rs.getMetaData();
-            Phim phim = new Phim();
             while (rs.next()) {
+                Phim phim = new Phim();
                 phim.setId(rs.getInt(1));
                 phim.setMaPhim(rs.getString(2));
                 phim.setTenPhim(rs.getString(3));
@@ -108,8 +108,8 @@ public class DatabaseConnector {
                 Statement stm = connection.createStatement();
                 ResultSet rs = stm.executeQuery("SELECT * FROM [dbo].[DanhSachPhimDangChieu]");
 //            ResultSetMetaData rsmd = rs.getMetaData();
-                Phim phim = new Phim();
                 while (rs.next()) {
+                    Phim phim = new Phim();
                     phim.setId(rs.getInt(1));
                     phim.setMaPhim(rs.getString(2));
                     phim.setTenPhim(rs.getString(3));

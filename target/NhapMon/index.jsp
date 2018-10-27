@@ -1,5 +1,6 @@
 <%@page import="com.nhom17.dto.Phim" %>
 <%@page import="java.util.ArrayList" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
         <meta charset="utf-8">

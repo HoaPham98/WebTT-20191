@@ -1,5 +1,6 @@
 <%@page import="com.nhom17.dto.Phim" %>
 <%@page import="java.util.ArrayList" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
         <meta charset="utf-8">
@@ -45,12 +46,12 @@
                                                 <div class="slide_right" data-animation="animated bounceInRight">
                                                     <a href="javascript:;" class="btn-trailer">watch trailer</a> <a href="javascript:;"
                                                                                                                     class="btn-ticket">buy ticket</a>
-                                                    <ul class="award-logo">
-                                                        <li><img src="images/header/icon1.png" alt="icon"></li>
-                                                        <li><img src="images/header/icon2.png" alt="icon"></li>
-                                                        <li><img src="images/header/icon3.png" alt="icon"></li>
-                                                        <li><img src="images/header/icon4.png" alt="icon"></li>
-                                                    </ul>
+                                                    <%--<ul class="award-logo">--%>
+                                                        <%--<li><img src="images/header/icon1.png" alt="icon"></li>--%>
+                                                        <%--<li><img src="images/header/icon2.png" alt="icon"></li>--%>
+                                                        <%--<li><img src="images/header/icon3.png" alt="icon"></li>--%>
+                                                        <%--<li><img src="images/header/icon4.png" alt="icon"></li>--%>
+                                                    <%--</ul>--%>
                                                 </div>
                                                 <div class="chart-cirle">
                                                     <div class="chart-circle-l" data-animation="animated bounceInUp">

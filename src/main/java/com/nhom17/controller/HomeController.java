@@ -1,6 +1,5 @@
 package com.nhom17.controller;
 
-import com.nhom17.BaseServlet;
 import com.nhom17.dto.Phim;
 
 import javax.servlet.RequestDispatcher;

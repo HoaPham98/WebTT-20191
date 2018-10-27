@@ -1,4 +1,4 @@
-package com.nhom17;
+package com.nhom17.controller;
 
 import com.nhom17.database.DatabaseConnector;
 
