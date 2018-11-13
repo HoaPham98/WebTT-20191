@@ -1,6 +1,7 @@
 package com.nhom17.controller;
 
-import com.nhom17.dto.Phim;
+import com.nhom17.model.dto.Phim;
+import com.nhom17.model.reposity.PhimRepository;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,8 +20,9 @@ public class HomeController extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<Phim> nowShowingMovies = getDatabaseConnectorInstance().getNowShowingMovies();
-        ArrayList<Phim> upComingMovies = getDatabaseConnectorInstance().getInComingMovies();
+        PhimRepository repository = new PhimRepository();
+        ArrayList<Phim> nowShowingMovies = repository.getNowShowingMovies();
+        ArrayList<Phim> upComingMovies = repository.getUpComingMovies();
 
         HttpSession httpSession = request.getSession(false);
         if (httpSession != null) {

@@ -1,4 +1,4 @@
-package com.nhom17.dto;
+package com.nhom17.model.dto;
 
 import java.util.Date;
 
@@ -16,6 +16,9 @@ public class Phim {
     private Date ngayKetThuc;
     private String ghiChu;
     private String quocGia;
+    private String daodien;
+    private String dienVien;
+    private String poster2URL;
 
     public Phim() {
 
@@ -123,5 +126,29 @@ public class Phim {
 
     public void setQuocGia(String quocGia) {
         this.quocGia = quocGia;
+    }
+
+    public String getDaodien() {
+        return daodien;
+    }
+
+    public void setDaodien(String daodien) {
+        this.daodien = daodien;
+    }
+
+    public String getDienVien() {
+        return dienVien;
+    }
+
+    public void setDienVien(String dienVien) {
+        this.dienVien = dienVien;
+    }
+
+    public String getPoster2URL() {
+        return poster2URL;
+    }
+
+    public void setPoster2URL(String poster2URL) {
+        this.poster2URL = poster2URL;
     }
 }

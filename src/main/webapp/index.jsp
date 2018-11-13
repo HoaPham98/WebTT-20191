@@ -1,4 +1,4 @@
-<%@page import="com.nhom17.dto.Phim" %>
+<%@page import="com.nhom17.model.dto.Phim" %>
 <%@page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -108,6 +108,13 @@
                                         %>
                                         <div class="swiper-slide">
                                             <div class="movie-image" data-bg-image=<%=phim.getPosterURL()%>>
+                                                <div class="entry-hover">
+                                                    <div class="entry-actions">
+                                                        <a href="https://vimeo.com/28177848" class="btn-trailers video-player">watch
+                                                            trailer</a>
+                                                        <a href="#order" class="btn-ticket order_btn ">buy ticket</a>
+                                                    </div>
+                                                </div>
                                                 <div class="entry-desc">
                                                     <h3 class="entry-title"><%=phim.getTenPhim()%></h3>
                                                 </div>

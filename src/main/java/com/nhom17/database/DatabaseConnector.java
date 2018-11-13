@@ -1,6 +1,6 @@
 package com.nhom17.database;
 
-import com.nhom17.dto.Phim;
+import com.nhom17.model.dto.Phim;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +12,16 @@ public class DatabaseConnector {
     static final String PASSWORD = "1";
 
     private static DatabaseConnector instance = new DatabaseConnector();
+
+    public Connection getConnection() {
+        try {
+            connection = connection == null? DriverManager.getConnection(getConnectionUrl()) : connection;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
     private Connection connection;
 
     static {

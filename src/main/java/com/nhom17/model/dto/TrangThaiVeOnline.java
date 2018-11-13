@@ -1,4 +1,4 @@
-package com.nhom17.dto;
+package com.nhom17.model.dto;
 
 public class TrangThaiVeOnline {
     private int id;

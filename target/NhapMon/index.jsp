@@ -1,4 +1,4 @@
-<%@page import="com.nhom17.dto.Phim" %>
+<%@page import="com.nhom17.model.dto.Phim" %>
 <%@page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -46,12 +46,12 @@
                                                 <div class="slide_right" data-animation="animated bounceInRight">
                                                     <a href="javascript:;" class="btn-trailer">watch trailer</a> <a href="javascript:;"
                                                                                                                     class="btn-ticket">buy ticket</a>
-                                                    <ul class="award-logo">
-                                                        <li><img src="images/header/icon1.png" alt="icon"></li>
-                                                        <li><img src="images/header/icon2.png" alt="icon"></li>
-                                                        <li><img src="images/header/icon3.png" alt="icon"></li>
-                                                        <li><img src="images/header/icon4.png" alt="icon"></li>
-                                                    </ul>
+                                                    <%--<ul class="award-logo">--%>
+                                                        <%--<li><img src="images/header/icon1.png" alt="icon"></li>--%>
+                                                        <%--<li><img src="images/header/icon2.png" alt="icon"></li>--%>
+                                                        <%--<li><img src="images/header/icon3.png" alt="icon"></li>--%>
+                                                        <%--<li><img src="images/header/icon4.png" alt="icon"></li>--%>
+                                                    <%--</ul>--%>
                                                 </div>
                                                 <div class="chart-cirle">
                                                     <div class="chart-circle-l" data-animation="animated bounceInUp">
@@ -108,6 +108,13 @@
                                         %>
                                         <div class="swiper-slide">
                                             <div class="movie-image" data-bg-image=<%=phim.getPosterURL()%>>
+                                                <div class="entry-hover">
+                                                    <div class="entry-actions">
+                                                        <a href="https://vimeo.com/28177848" class="btn-trailers video-player">watch
+                                                            trailer</a>
+                                                        <a href="#order" class="btn-ticket order_btn ">buy ticket</a>
+                                                    </div>
+                                                </div>
                                                 <div class="entry-desc">
                                                     <h3 class="entry-title"><%=phim.getTenPhim()%></h3>
                                                 </div>

@@ -22,7 +22,7 @@
                 <%--<a href="#order" class="order_btn">My tickets</a>--%>
                 <%--<span>3</span>--%>
                 <%--</div>--%>
-                <a href="javascript:;" id="header-search"></a>
+                <%--<a href="javascript:;" id="header-search"></a>--%>
                 <div class="button_container" id="toggle">
                     <span class="top"></span>
                     <span class="middle"></span>
