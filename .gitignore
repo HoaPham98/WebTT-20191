@@ -2,3 +2,4 @@
 target/
 com.nhom17.database/dbo_Book.sql
 com.nhom17.database/thuvien_v1.sql
+.idea/misc.xml
