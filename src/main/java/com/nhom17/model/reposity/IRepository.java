@@ -13,6 +13,8 @@ public interface IRepository<T> {
 
     void remove(String ...conditions);
 
+    T getOne(String id);
+
     ArrayList<T> getall();
 
     ArrayList<T> query(String ...conditions);

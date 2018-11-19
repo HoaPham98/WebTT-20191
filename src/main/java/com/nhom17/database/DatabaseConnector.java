@@ -1,9 +1,7 @@
 package com.nhom17.database;
 
-import com.nhom17.model.dto.Phim;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DatabaseConnector {
 
@@ -74,77 +72,5 @@ public class DatabaseConnector {
 
         return result;
     }
-
-    public ArrayList<Phim> getNowShowingMovies() {
-        ArrayList<Phim> arr = new ArrayList<>();
-
-        try {
-            Statement stm = connection.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM [dbo].[DanhSachPhimDangChieu]");
-//            ResultSetMetaData rsmd = rs.getMetaData();
-            while (rs.next()) {
-                Phim phim = new Phim();
-                phim.setId(rs.getInt(1));
-                phim.setMaPhim(rs.getString(2));
-                phim.setTenPhim(rs.getString(3));
-                phim.setQuocGia(rs.getString(4));
-                phim.setThoiLuongPhim(rs.getTime(5).getTime());
-                phim.setNgayBatDau(rs.getDate(6));
-                phim.setNgayKetThuc(rs.getDate(7));
-                String poster = rs.getString(8);
-                if (poster == null){
-                    poster = "images/carousel/movie-1.jpg";
-                }
-                phim.setPosterURL(poster);
-                phim.setMotaPhim(rs.getString(9));
-                phim.setGhiChu(rs.getString(10));
-                phim.setNhanPhim(rs.getString(11));
-                phim.setImdbRank(rs.getFloat(12));
-                phim.setImdbURL(rs.getString(13));
-                arr.add(phim);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return arr;
-    }
-
-    public ArrayList<Phim> getInComingMovies() {
-            ArrayList<Phim> arr = new ArrayList<>();
-
-            try {
-                Statement stm = connection.createStatement();
-                ResultSet rs = stm.executeQuery("SELECT * FROM [dbo].[DanhSachPhimDangChieu]");
-//            ResultSetMetaData rsmd = rs.getMetaData();
-                while (rs.next()) {
-                    Phim phim = new Phim();
-                    phim.setId(rs.getInt(1));
-                    phim.setMaPhim(rs.getString(2));
-                    phim.setTenPhim(rs.getString(3));
-                    phim.setQuocGia(rs.getString(4));
-                    phim.setThoiLuongPhim(rs.getTime(5).getTime());
-                    phim.setNgayBatDau(rs.getDate(6));
-                    phim.setNgayKetThuc(rs.getDate(7));
-                    String poster = rs.getString(8);
-                    if (poster == null){
-                        poster = "images/carousel/movie-1.jpg";
-                    }
-                    phim.setPosterURL(poster);
-                    phim.setMotaPhim(rs.getString(9));
-                    phim.setGhiChu(rs.getString(10));
-                    phim.setNhanPhim(rs.getString(11));
-                    phim.setImdbRank(rs.getFloat(12));
-                    phim.setImdbURL(rs.getString(13));
-                    arr.add(phim);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            return arr;
-        }
-
 
 }
