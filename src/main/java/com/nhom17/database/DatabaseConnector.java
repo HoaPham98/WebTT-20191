@@ -5,9 +5,9 @@ import java.sql.*;
 
 public class DatabaseConnector {
 
-    static final String DATABASE_NAME = "movie";
-    static final String USERNAME = "MOVIE";
-    static final String PASSWORD = "1";
+    static final String DATABASE_NAME = "cinemadatabase";
+    static final String USERNAME = "cinemadatabase";
+    static final String PASSWORD = "Jc20xi_7f44!";
 
     private static DatabaseConnector instance = new DatabaseConnector();
 
@@ -39,7 +39,7 @@ public class DatabaseConnector {
     }
 
     static String getConnectionUrl() {
-        return "jdbc:sqlserver://localhost:1433;" +
+        return "jdbc:sqlserver://den1.mssql6.gear.host:1433;" +
                 "databaseName=" + DATABASE_NAME + ";user=" + USERNAME + ";password=" + PASSWORD + ";";
     }
 
