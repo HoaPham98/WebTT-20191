@@ -1,11 +1,12 @@
 package com.nhom17.model.dto;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class Phim {
     private String maPhim;
     private String imdbURL;
-    private long thoiLuongPhim;
+    private Time thoiLuongPhim;
     private String nhanPhim;
     private String posterURL;
     private String motaPhim;
@@ -40,11 +41,11 @@ public class Phim {
         this.imdbURL = imdbURL;
     }
 
-    public long getThoiLuongPhim() {
+    public Time getThoiLuongPhim() {
         return thoiLuongPhim;
     }
 
-    public void setThoiLuongPhim(long thoiLuongPhim) {
+    public void setThoiLuongPhim(Time thoiLuongPhim) {
         this.thoiLuongPhim = thoiLuongPhim;
     }
 

@@ -1,5 +1,6 @@
 package com.nhom17.controllers;
 
+import com.nhom17.model.dto.MovieShowTimeSchedule;
 import com.nhom17.model.dto.Phim;
 import com.nhom17.model.dto.XuatChieu;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
@@ -22,6 +23,7 @@ public class MovieInfoControllerServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher requestDispatcher = null;
 	MovieInfoService movieInfoService = null;
+	private MovieShowTimeSchedule movieShowTimeSchedule;
 
 	{
 		movieInfoService = (MovieInfoService) new DatabaseInteractionServiceFactory()
@@ -56,17 +58,16 @@ public class MovieInfoControllerServlet extends BaseServlet {
 		if (phim != null) {
 			MovieScheduleService movieScheduleService = (MovieScheduleService) new DatabaseInteractionServiceFactory()
 					.getService(DatabaseInteractionServiceFactory.SERVICE_MOVIE_SCHEDULE);
-			String dateStr = (String) request.getAttribute("date");
-			Date showDate = new SimpleDateFormat("dd-MMM-yy").parse(dateStr);
-			xuatChieus = movieScheduleService.getMovieSchedule(phim, showDate);
-			System.out.println(dateStr);
+			Date showDate = (Date) request.getAttribute("date");
+			movieShowTimeSchedule = movieScheduleService.getMovieSchedule(phim, showDate);
+			movieShowTimeSchedule.setShowDate(showDate);
+			System.out.println(showDate);
+			movieShowTimeSchedule.setMovie(phim);
 		} else {
 			NullPointerException exception = new NullPointerException();
 			throw exception;
 		}
-		request.setAttribute("movie_info", phim);
-		request.setAttribute("showDate", new Date());
-		request.setAttribute("showtimes", xuatChieus);
+		request.setAttribute("movie_info", movieShowTimeSchedule);
 		request.setAttribute("validEntry", true);
 		requestDispatcher = request.getRequestDispatcher("movie_page");
 		try {

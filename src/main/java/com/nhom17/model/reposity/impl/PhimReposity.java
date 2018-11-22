@@ -5,6 +5,7 @@ import com.nhom17.model.dto.Phim;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 import com.nhom17.util.JdbcTemplate;
@@ -52,9 +53,9 @@ public class PhimReposity extends CommonReposity<Phim> {
                 Phim phim = new Phim();
                 phim.setId(rs.getInt(ID));
                 phim.setMaPhim(rs.getString(MA_PHIM));
-                phim.setTenPhim(rs.getString(TEN_PHIM));
-                phim.setQuocGia(rs.getString(QUOC_GIA));
-                phim.setThoiLuongPhim(rs.getTime(THOI_LUONG_PHIM).getTime());
+                phim.setTenPhim(rs.getNString(TEN_PHIM));
+                phim.setQuocGia(rs.getNString(QUOC_GIA));
+                phim.setThoiLuongPhim(rs.getTime(THOI_LUONG_PHIM));
                 phim.setNgayBatDau(rs.getDate(NGAY_BAT_DAU));
                 phim.setNgayKetThuc(rs.getDate(NGAY_KET_THUC));
                 String poster = rs.getString(POSTER_1_URL);
@@ -62,13 +63,13 @@ public class PhimReposity extends CommonReposity<Phim> {
                     poster = "/resources/images/m1.jpg";
                 }
                 phim.setPosterURL(poster);
-                phim.setMotaPhim(rs.getString(MO_TA_PHIM));
+                phim.setMotaPhim(rs.getNString(MO_TA_PHIM));
                 phim.setGhiChu(rs.getString(GHI_CHU));
                 phim.setNhanPhim(rs.getString(NHAN_PHIM));
                 phim.setImdbRank(rs.getFloat(IMDB_RANK));
                 phim.setImdbURL(rs.getString(IMDB_URL));
-                phim.setDaodien(rs.getString(DAO_DIEN));
-                phim.setDienVien(rs.getString(DIEN_VIEN));
+                phim.setDaodien(rs.getNString(DAO_DIEN));
+                phim.setDienVien(rs.getNString(DIEN_VIEN));
 
                 return phim;
             }

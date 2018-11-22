@@ -10,7 +10,7 @@ import com.nhom17.model.dto.XuatChieu;
 
 public interface MovieScheduleService extends DatabaseInteractionService {
 
-	public ArrayList<XuatChieu> getMovieSchedule(Phim phim, Date date) throws ParseException;
+	public MovieShowTimeSchedule getMovieSchedule(Phim phim, Date date);
 
 	public boolean isMoviePlaying(XuatChieu xuatChieu);
 

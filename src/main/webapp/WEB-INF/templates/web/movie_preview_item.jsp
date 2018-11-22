@@ -6,29 +6,30 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.nhom17.model.dto.Phim"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page import="com.nhom17.model.dto.MovieShowTimeSchedule" %>
+<%@ page import="com.nhom17.model.dto.DangPhim" %>
+<%@ page import="java.util.Map" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link
 	href="${pageContext.request.contextPath}/resources/css/showYtVideo.css"
 	rel="stylesheet" />
 </head>
 <body>
-	<%
-		MovieShowTimeSchedule movieShowTimeSchedule = (MovieShowTimeSchedule) request.getAttribute("movie");
-		Phim movie = movieShowTimeSchedule.getMovie();
-		String encodedMovieName = movie.getMovieName().replace(" ", "^");
-		String url = request.getContextPath() + "/movie?movie_name=" + encodedMovieName + "_1";
-	%>
+<%
+	MovieShowTimeSchedule movieShowTimeSchedule = (MovieShowTimeSchedule) request.getAttribute("movie");
+	Phim phim = movieShowTimeSchedule.getMovie();
+	String url = request.getContextPath() + "/movie?id=" + phim.getMaPhim();
+%>
 	<!-- Movie preview item -->
 	<div class="movie movie--preview release">
 		<div class="col-sm-5 col-md-3">
 			<div class="movie__images">
 				<img alt=''
-					src="${pageContext.request.contextPath}/resources/images/movie_posters/<%= movie.getPosterURL()%>">
+					src="<%= phim.getPosterURL()%>">
 			</div>
 			<!-- <div class="movie__feature">
 				<a href="#" class="movie__feature-item movie__feature--comment">123</a>
@@ -37,9 +38,9 @@
 			</div> -->
 		</div>
 		<div class="col-sm-7 col-md-9">
-			<a href='<%=url%>' class="movie__title link--huge"><%=movie.getTenPhim()%></a>
+			<a href='<%=url%>' class="movie__title link--huge"><%=phim.getTenPhim()%></a>
 
-			<p class="movie__time"><%=movie.getThoiLuongPhim()%>
+			<p class="movie__time"><%=phim.getThoiLuongPhim()%>
 				min
 			</p>
 
@@ -98,22 +99,19 @@
 				<strong>Release date: </strong>
 				<%
 					SimpleDateFormat ft = new SimpleDateFormat("MMMM dd, yyyy");
-					String date = ft.format(movie.getNgayBatDau());
+					String date = ft.format(phim.getNgayBatDau());
 				%>
 				<!-- November 1, 2013 --><%=date%>
 			</p>
 			<p class="movie__option">
-				<strong>Director: </strong><a href="#">Jon Turteltaub</a>
+				<strong>Director: </strong><a><%=phim.getDaodien()%></a>
 			</p>
 			<p class="movie__option">
-				<strong>Actors: </strong><a href="#">Robert De Niro</a>, <a href="#">Michael
-					Douglas</a>, <a href="#">Morgan Freeman</a>, <a href="#">Kevin
-					Kline</a>, <a href="#">Mary Steenburgen</a>, <a href="#">Jerry
-					Ferrara</a>, <a href="#">Romany Malco</a> <a href="#">...</a>
+				<strong>Actors: </strong><a><%=phim.getDienVien()%></a>
 			</p>
-			<%--<p class="movie__option">--%>
-				<%--<strong>Maturity: </strong><a href="#"><%=movie.getMaturity()%></a>--%>
-			<%--</p>--%>
+			<p class="movie__option">
+				<strong>Maturity: </strong><a><%=phim.getNhanPhim()%></a>
+			</p>
 
 			<div class="movie__btns">
 				<%-- <%
@@ -138,22 +136,17 @@
 					<span class="movie__rating">5.0</span>
 				</div>
 				<%
-					List<XuatChieu> showTime2d = null;
-					List<XuatChieu> showTime3d = null;
-					if (showTime2d != null && !showTime2d.isEmpty() && showTime3d != null && !showTime3d.isEmpty()) {
+					Map<DangPhim,List<XuatChieu>> map = movieShowTimeSchedule.getShowTimes();
+					int i = 0;
+					for (Map.Entry<DangPhim, List<XuatChieu>> entry : map.entrySet())
+					{
+					    List<XuatChieu> list = entry.getValue();
+						if (!list.isEmpty()) {
+						    i++;
 				%>
-				<a href="#" class="movie__show-btn movie__show-btn1">2D</a> <a
-					href="#" class="movie__show-btn movie__show-btn2"
-					style="margin-right: 40px;">3D</a>
+					<a href="#" class="movie__show-btn movie__show-btn<%=i%>"><%=entry.getKey().getTenDangPhim()%></a>
 				<%
-					} else if (showTime2d != null && !showTime2d.isEmpty() && showTime3d == null) {
-				%>
-				<a href="#" class="movie__show-btn">2D</a>
-				<%
-					} else if (showTime3d != null && !showTime3d.isEmpty() && showTime2d == null) {
-				%>
-				<a href="#" class="movie__show-btn">2D</a>
-				<%
+						}
 					}
 				%>
 			</div>

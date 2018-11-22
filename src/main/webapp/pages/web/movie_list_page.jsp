@@ -1,16 +1,16 @@
-<%@page import="io.github.parthoshuvo.dto.MovieShowTimeSchedule"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="io.github.parthoshuvo.dto.Movie"%>
+<%@page import="com.nhom17.model.dto.Phim"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page import="com.nhom17.model.dto.MovieShowTimeSchedule" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Movie</title>
 <jsp:include page="/WEB-INF/templates/web/include_header_resources.jsp" />
 <jsp:include page="/WEB-INF/templates/web/include_header_resources2.jsp" />

@@ -1,16 +1,15 @@
 <%@page import="com.nhom17.model.dto.XuatChieu"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="com.nhom17.model.dto.Phim"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page import="com.nhom17.model.dto.MovieShowTimeSchedule" %>
+<%@ page import="com.nhom17.model.dto.DangPhim" %>
+<%@ page import="java.util.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Movie</title>
 <jsp:include page="/WEB-INF/templates/web/include_header_resources.jsp" />
 <jsp:include page="/WEB-INF/templates/web/include_header_resources2.jsp" />
@@ -27,11 +26,10 @@
 					<div class="col-sm-12">
 						<div class="movie" style="margin-top: -50px;">
 							<%
-								Phim phim = (Phim) request.getAttribute("movie_info");
-								ArrayList<XuatChieu> showTimes = (ArrayList<XuatChieu>) request.getAttribute("showtimes");
-								request.setAttribute("movie", phim);
-								String movieName = phim.getTenPhim();
-								Date showDate = (Date) request.getAttribute("showDate");
+								MovieShowTimeSchedule movieShowTimeSchedule = (MovieShowTimeSchedule) request.getAttribute("movie_info");
+								request.setAttribute("movie", movieShowTimeSchedule.getMovie());
+								Phim phim = movieShowTimeSchedule.getMovie();
+								Date showDate = movieShowTimeSchedule.getShowDate();
 								System.out.print(showDate);
 								String id = phim.getMaPhim();
 								String url = request.getContextPath() + "/movie?" + "id=" + id + "&date=";
@@ -48,10 +46,15 @@
 							request.setAttribute("showdate", showDate);
 						%>
 						<%
-							if (showTimes != null && !showTimes.isEmpty()) {
-								System.out.println(showTimes);
-								request.setAttribute("format", 2);
-								request.setAttribute("schedule", showTimes);
+							Map<DangPhim,List<XuatChieu>> map = movieShowTimeSchedule.getShowTimes();
+							int i = 0;
+							for (Map.Entry<DangPhim, List<XuatChieu>> entry : map.entrySet())
+							{
+								List<XuatChieu> list = entry.getValue();
+								if (!list.isEmpty()) {
+									i++;
+									request.setAttribute("format", entry.getKey().getTenDangPhim());
+									request.setAttribute("schedule", list);
 						%>
 						<!-- <div class="movie__rate"
 							style="padding-bottom: 50px;">
@@ -59,6 +62,7 @@
 						</div> -->
 						<jsp:include page="/WEB-INF/templates/web/movie_time_schedule.jsp" />
 						<%
+								}
 							}
 						%>
 						<%--<%--%>

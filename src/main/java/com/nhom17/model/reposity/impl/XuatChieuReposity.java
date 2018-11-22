@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class XuatChieuReposity extends CommonReposity<XuatChieu> {
 
@@ -20,12 +21,29 @@ public class XuatChieuReposity extends CommonReposity<XuatChieu> {
     public final static String MA_PHONG = "MaPhong";
 
     public ArrayList<XuatChieu> getByMovie(final Phim phim){
-        return JdbcTemplate.query("SELECT * FROM [dbo].[XuatChieu] WHERE MaPhim = ?", new JdbcTemplate.PreparedStatementSetter() {
+        final Date date = new Date();
+        ArrayList<XuatChieu> xuatChieuList = JdbcTemplate.query("SELECT * FROM [dbo].[XuatChieu] WHERE MaPhim = ? AND NgayChieu >= ?", new JdbcTemplate.PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, phim.getMaPhim());
+                pstmt.setDate(2, new java.sql.Date(date.getTime()));
             }
         }, createHandler());
+
+        return xuatChieuList;
+    }
+
+    public ArrayList<XuatChieu> getByMovie(final Phim phim, final Date date){
+        ArrayList<XuatChieu> xuatChieuList = JdbcTemplate.query("SELECT * FROM [dbo].[XuatChieu] WHERE MaPhim = ? AND NgayChieu = ?", new JdbcTemplate.PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, phim.getMaPhim());
+                java.sql.Date date1 = new java.sql.Date(date.getTime());
+                pstmt.setDate(2, date1);
+            }
+        }, createHandler());
+
+        return xuatChieuList;
     }
 
     private JdbcTemplate.RowCallBackHandler<XuatChieu> createHandler() {

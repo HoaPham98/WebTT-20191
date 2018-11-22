@@ -1,11 +1,11 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.nhom17.model.dto.Phim"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html; charset=UTF-8"
+	%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link
 	href="${pageContext.request.contextPath}/resources/css/showYtVideo.css"
 	rel="stylesheet" />
@@ -20,18 +20,16 @@
 	<div class="movie__info">
 		<div class="col-sm-4 col-md-3 movie-mobile">
 			<div class="movie__images">
-				<span class="movie__rating">5.0</span> <img alt=''
-					src="${pageContext.request.contextPath}/resources/images/movie_posters/<%=movie.getPosterURL()%>">
+				<span class="movie__rating"><%=movie.getImdbRank()%></span> <img alt=''
+					src="<%=movie.getPosterURL()%>">
 			</div>
 			<!-- <div class="movie__rate">Your vote: <div id='score' class="score"></div></div> -->
 		</div>
 		<div class="col-sm-8 col-md-9">
-			<p class="movie__time"><%=movie.getThoiLuongPhim()%>
-				min
-			</p>
+			<p class="movie__time"><%=movie.getThoiLuongPhim()%></p>
 
 			<p class="movie__option">
-				<strong>Country: </strong><a href="#">USA</a>
+				<strong>Country: </strong><a href="#"><%=movie.getQuocGia()%></a>
 			</p>
 
 			<p class="movie__option">
@@ -83,27 +81,20 @@
 						break;
 					}
 				%>
-				<strong>Category: </strong><a href="#"><%=genre%></a>
+				<strong>Category: </strong><a><%=genre%></a>
 			</p>
 			<p class="movie__option">
 				<strong>Release date: </strong>
 				<!-- November 1, 2013 --><%=date%>
 			</p>
 			<p class="movie__option">
-				<strong>Director: </strong><a href="#">Peter Jackson</a>
+				<strong>Director: </strong><a><%=movie.getDaodien()%></a>
 			</p>
 			<p class="movie__option">
-				<strong>Actors: </strong><a href="#">Martin Freeman</a>, <a href="#">Ian
-					McKellen</a>, <a href="#">Richard Armitage</a>, <a href="#">Ken
-					Stott</a>, <a href="#">Graham McTavish</a>, <a href="#">Cate
-					Blanchett</a>, <a href="#">Hugo Weaving</a>, <a href="#">Ian Holm</a>,
-				<a href="#">Elijah Wood</a> <a href="#">...</a>
+				<strong>Actors: </strong><a><%=movie.getDienVien()%></a>
 			</p>
 			<p class="movie__option">
 				<strong>Age restriction: </strong><a href="#"><%=movie.getNhanPhim()%></a>
-			</p>
-			<p class="movie__option">
-				<strong>Box office: </strong><a href="#">$1 017 003 568</a>
 			</p>
 			<%--<div class="movie__btns movie__btns--full">--%>
 				<%--<%--%>

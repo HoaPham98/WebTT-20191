@@ -22,20 +22,33 @@ public class MovieInfoRequestFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String maPhim = request.getParameter("id");
-		String date = request.getParameter("date");
+		String dateString = request.getParameter("date");
 		System.out.println(maPhim);
-		if (maPhim != null && !maPhim.contains(" ")) {
-				request.setAttribute("date",
-						new SimpleDateFormat("dd-MMM-yy").format(new Date()).toString().toUpperCase());
+		try {
+			if (dateString != null && !dateString.isEmpty()) {
+				Date date = new SimpleDateFormat("MM/dd/yyyy").parse(dateString);
+				request.setAttribute("date", date);
+			} else {
+				request.setAttribute("date", new Date());
+			}
+			if (maPhim != null && !maPhim.contains(" ")) {
 
-			request.setAttribute("maPhim", maPhim);
-			chain.doFilter(request, response);
-		} else {
+				request.setAttribute("maPhim", maPhim);
+				chain.doFilter(request, response);
+			} else {
+				System.out.println("error");
+				HttpServletResponse servletResponse = (HttpServletResponse) response;
+				servletResponse.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
+				servletResponse.sendError(404);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
 			System.out.println("error");
 			HttpServletResponse servletResponse = (HttpServletResponse) response;
 			servletResponse.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 			servletResponse.sendError(404);
 		}
+
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

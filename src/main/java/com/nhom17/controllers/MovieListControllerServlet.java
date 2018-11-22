@@ -1,5 +1,6 @@
 package com.nhom17.controllers;
 
+import com.nhom17.model.dto.MovieShowTimeSchedule;
 import com.nhom17.model.dto.Phim;
 import com.nhom17.model.reposity.impl.PhimReposity;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
@@ -8,8 +9,7 @@ import com.nhom17.model.services.internal.database_interaction.interfaces.MovieS
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,16 +46,16 @@ public class MovieListControllerServlet extends BaseServlet {
 		Map<String, String[]> requestParams = request.getParameterMap();
 		if (requestParams.isEmpty()) {
 			switch (requestedURI) {
-//			case "/OnlineMovieTicketManagement/movielist":
-//				nowShowingMovie = movieInfoService.getMovieList(true);
-//				upComingMovie = movieInfoService.getMovieList(false);
-//				try {
-//					respondWithMovieListPageView(nowShowingMovie, upComingMovie, request, response);
-//				} catch (ParseException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				break;
+			case "/movielist":
+				nowShowingMovie = movieInfoService.getMovieList(true);
+				upComingMovie = movieInfoService.getMovieList(false);
+				try {
+					respondWithMovieListPageView(nowShowingMovie, upComingMovie, request, response);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
 //			case "/OnlineMovieTicketManagement/movie-trailer":
 //				respondWithTrailerView(request, response);
 //				break;
@@ -112,31 +112,31 @@ public class MovieListControllerServlet extends BaseServlet {
 		 * List<Movie> nowShowingMovie = dbConnector.getMovieList(true);
 		 * List<Movie> upComingMovie = dbConnector.getMovieList(false);
 		 */
-//		List<MovieShowTimeSchedule> dupNowShowingMovie = null;
-//		if (nowShowingMovie != null && !nowShowingMovie.isEmpty()) {
-//			dupNowShowingMovie = new ArrayList<>();
-//			Iterator<Movie> iterator = nowShowingMovie.iterator();
-//			Date date = new Date();
-//			while (iterator.hasNext()) {
-//				Movie movie = iterator.next();
-//				MovieShowTimeSchedule movieShowTimeSchedule = movieScheduleService
-//						.getMovieSchedule(movie.getMovieName(), new SimpleDateFormat("dd-MMM-yy").format(date));
-//				movieShowTimeSchedule.setMovie(movie);
-//				// iterator.remove();
-//				dupNowShowingMovie.add(movieShowTimeSchedule);
-//			}
-//			System.out.println(dupNowShowingMovie.size());
-//		}
-//		request.setAttribute("Now_Showing_Movie_List", dupNowShowingMovie);
-//		request.setAttribute("Up_Coming_Movie_List", upComingMovie);
-//		request.setAttribute("validEntry", true);
-//		requestDispatcher = request.getRequestDispatcher("movie_list_page");
-//		try {
-//			requestDispatcher.forward(request, response);
-//		} catch (ServletException | IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		List<MovieShowTimeSchedule> dupNowShowingMovie = null;
+		if (nowShowingMovie != null && !nowShowingMovie.isEmpty()) {
+			dupNowShowingMovie = new ArrayList<>();
+			Iterator<Phim> iterator = nowShowingMovie.iterator();
+			Date date = new Date();
+			while (iterator.hasNext()) {
+				Phim movie = iterator.next();
+				MovieShowTimeSchedule movieShowTimeSchedule = movieScheduleService
+						.getMovieSchedule(movie, date);
+				movieShowTimeSchedule.setMovie(movie);
+				// iterator.remove();
+				dupNowShowingMovie.add(movieShowTimeSchedule);
+			}
+			System.out.println(dupNowShowingMovie.size());
+		}
+		request.setAttribute("Now_Showing_Movie_List", dupNowShowingMovie);
+		request.setAttribute("Up_Coming_Movie_List", upComingMovie);
+		request.setAttribute("validEntry", true);
+		requestDispatcher = request.getRequestDispatcher("movie_list_page");
+		try {
+			requestDispatcher.forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
