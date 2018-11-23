@@ -2,8 +2,8 @@
 <%@page import="java.util.LinkedHashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
-<%@page import="io.github.parthoshuvo.dto.CinemaHall"%>
-<%@page import="io.github.parthoshuvo.dto.CinemaHallSeat"%>
+<%@ page import="com.nhom17.model.dto.CinemaHall" %>
+<%@ page import="com.nhom17.model.dto.CinemaHallSeat" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	%>
 <!DOCTYPE html>
@@ -15,23 +15,23 @@
 <jsp:include page="/WEB-INF/templates/web/include_header_resources2.jsp" />
 </head>
 <body>
-	<%
-		CinemaHall cinemaHall = (CinemaHall) request.getAttribute("cinemaHall");
-		List<CinemaHallSeat> seatList = cinemaHall.getSeatList();
-		Map<String, Double> bookedSeatList = (LinkedHashMap<String, Double>) request.getAttribute("bookedSeatList");
-		int k = 0;
-		String[] bookedSeats = null;
-		boolean reservedSeatsFlag = false;
-		double tickerPrice = (double) request.getAttribute("ticketPrice");
-		if (bookedSeatList != null && !bookedSeatList.isEmpty()) {
-			System.out.println(bookedSeatList.size());
-			Set<String> keys = bookedSeatList.keySet();
-			System.out.print(keys);
-			bookedSeats = keys.toArray(new String[keys.size()]);
-			System.out.print(bookedSeats.length);
-			reservedSeatsFlag = true;
-		}
-	%>
+	<%--<%--%>
+		<%--CinemaHall cinemaHall = (CinemaHall) request.getAttribute("cinemaHall");--%>
+		<%--List<CinemaHallSeat> seatList = cinemaHall.getSeatList();--%>
+		<%--Map<String, Double> bookedSeatList = (LinkedHashMap<String, Double>) request.getAttribute("bookedSeatList");--%>
+		<%--int k = 0;--%>
+		<%--String[] bookedSeats = null;--%>
+		<%--boolean reservedSeatsFlag = false;--%>
+		<%--double tickerPrice = (double) request.getAttribute("ticketPrice");--%>
+		<%--if (bookedSeatList != null && !bookedSeatList.isEmpty()) {--%>
+			<%--System.out.println(bookedSeatList.size());--%>
+			<%--Set<String> keys = bookedSeatList.keySet();--%>
+			<%--System.out.print(keys);--%>
+			<%--bookedSeats = keys.toArray(new String[keys.size()]);--%>
+			<%--System.out.print(bookedSeats.length);--%>
+			<%--reservedSeatsFlag = true;--%>
+		<%--}--%>
+	<%--%>--%>
 	<div class="full">
 		<jsp:include page="/WEB-INF/templates/web/menu.jsp" />
 		<div class="main">
@@ -84,8 +84,8 @@
 								<ul>
 									<li class="sits-price marker--none"><strong>Seat
 											Price</strong></li>
-									<li class="sits-price sits-price--cheap">Lower &#2547;<%=tickerPrice%></li>
-									<li class="sits-price sits-price--middle">Upper &#2547;<%=tickerPrice%></li>
+									<li class="sits-price sits-price--cheap">Lower &#2547;1000</li>
+									<li class="sits-price sits-price--middle">Upper &#2547;2000</li>
 									<!-- <li class="sits-price sits-price--expensive">$30</li> -->
 								</ul>
 							</div>
@@ -103,57 +103,57 @@
 
 									<div class="sits">
 										<aside class="sits__line">
-											<%
-												for (CinemaHallSeat cinemaHallSeat : seatList) {
-													if (!cinemaHallSeat.is_extended()) {
-											%>
-											<span class="sits__indecator"><%=cinemaHallSeat.getRow()%></span>
+											<%--<%--%>
+												<%--for (CinemaHallSeat cinemaHallSeat : seatList) {--%>
+													<%--if (!cinemaHallSeat.is_extended()) {--%>
+											<%--%>--%>
+											<%--<span class="sits__indecator"><%=cinemaHallSeat.getRow()%></span>--%>
 
-											<%
-												} else {
-											%>
-											<span class="sits__indecator additional-margin"><%=cinemaHallSeat.getRow()%></span>
-											<%
-												}
-												}
-											%>
+											<%--<%--%>
+												<%--} else {--%>
+											<%--%>--%>
+											<%--<span class="sits__indecator additional-margin"><%=cinemaHallSeat.getRow()%></span>--%>
+											<%--<%--%>
+												<%--}--%>
+												<%--}--%>
+											<%--%>--%>
 										</aside>
-										<%
-											int j = 0;
-											for (CinemaHallSeat cinemaHallSeat : seatList) {
-										%>
-										<div <%if (!cinemaHallSeat.is_extended()) {%>
-											class="sits__row" <%} else {%>
-											class="sits__row additional-margin" <%}%>>
-											<%
-												for (int i = cinemaHallSeat.getStart_seat_no(); i <= cinemaHallSeat.getEnd_seat_no(); i++) {
-											%>
-											<span
-												<%String className = null;
-					if (cinemaHallSeat.getSeat_position().toLowerCase().equals("l")) {
-						className = "sits__place sits-price--cheap";
-					} else if (cinemaHallSeat.getSeat_position().toLowerCase().equals("u")) {
-						className = "sits__place sits-price--middle";
-					}
-					if (reservedSeatsFlag && j < bookedSeats.length
-							&& (bookedSeats[j].toLowerCase().startsWith("l")
-									|| bookedSeats[j].toLowerCase().startsWith("u"))
-							&& bookedSeats[j].substring(2).equals(cinemaHallSeat.getRow() + i)) {
+										<%--<%--%>
+											<%--int j = 0;--%>
+											<%--for (CinemaHallSeat cinemaHallSeat : seatList) {--%>
+										<%--%>--%>
+										<%--<div <%if (!cinemaHallSeat.is_extended()) {%>--%>
+											<%--class="sits__row" <%} else {%>--%>
+											<%--class="sits__row additional-margin" <%}%>>--%>
+											<%--<%--%>
+												<%--for (int i = cinemaHallSeat.getStart_seat_no(); i <= cinemaHallSeat.getEnd_seat_no(); i++) {--%>
+											<%--%>--%>
+											<%--<span--%>
+												<%--<%String className = null;--%>
+					<%--if (cinemaHallSeat.getSeat_position().toLowerCase().equals("l")) {--%>
+						<%--className = "sits__place sits-price--cheap";--%>
+					<%--} else if (cinemaHallSeat.getSeat_position().toLowerCase().equals("u")) {--%>
+						<%--className = "sits__place sits-price--middle";--%>
+					<%--}--%>
+					<%--if (reservedSeatsFlag && j < bookedSeats.length--%>
+							<%--&& (bookedSeats[j].toLowerCase().startsWith("l")--%>
+									<%--|| bookedSeats[j].toLowerCase().startsWith("u"))--%>
+							<%--&& bookedSeats[j].substring(2).equals(cinemaHallSeat.getRow() + i)) {--%>
 
-						className += " " + "sits-state--not";
-						j++;
+						<%--className += " " + "sits-state--not";--%>
+						<%--j++;--%>
 
-					}%>
-												class="<%=className%>"
-												data-place='<%=cinemaHallSeat.getSeat_position()%><%=cinemaHallSeat.getRow()%><%=i%>'
-												data-price='<%=tickerPrice%>'><%=cinemaHallSeat.getRow()%><%=i%></span>
-											<%
-												}
-											%>
-										</div>
-										<%
-											}
-										%>
+					<%--}%>--%>
+												<%--class="<%=className%>"--%>
+												<%--data-place='<%=cinemaHallSeat.getSeat_position()%><%=cinemaHallSeat.getRow()%><%=i%>'--%>
+												<%--data-price='<%=tickerPrice%>'><%=cinemaHallSeat.getRow()%><%=i%></span>--%>
+											<%--<%--%>
+												<%--}--%>
+											<%--%>--%>
+										<%--</div>--%>
+										<%--<%--%>
+											<%--}--%>
+										<%--%>--%>
 
 
 										<aside class="sits__checked">
@@ -161,13 +161,13 @@
 											<div class="checked-result">$0</div>
 										</aside>
 										<footer class="sits__number">
-											<%
-												for (int i = 1; i <= cinemaHall.getNo_of_columns(); i++) {
-											%>
-											<span class="sits__indecator"><%=i%></span>
-											<%
-												}
-											%>
+											<%--<%--%>
+												<%--for (int i = 1; i <= cinemaHall.getNo_of_columns(); i++) {--%>
+											<%--%>--%>
+											<%--<span class="sits__indecator"><%=i%></span>--%>
+											<%--<%--%>
+												<%--}--%>
+											<%--%>--%>
 										</footer>
 									</div>
 								</div>
@@ -179,22 +179,22 @@
 										<div class="sits-select">
 											<select name="sorting_item" class="sits__sort sit-row"
 												tabindex="0">
-												<%
-													for (CinemaHallSeat cinemaHallSeat : seatList) {
-												%>
-												<option value="<%=cinemaHallSeat.getRow()%>"><%=cinemaHallSeat.getRow()%></option>
-												<%
-													}
-												%>
-											</select> <select name="sorting_item" class="sits__sort sit-number"
-												tabindex="1">
-												<%
-													for (int i = 1; i <= cinemaHall.getNo_of_columns(); i++) {
-												%>
-												<option value="<%=i%>" selected='selected'><%=i%></option>
-												<%
-													}
-												%>
+												<%--<%--%>
+													<%--for (CinemaHallSeat cinemaHallSeat : seatList) {--%>
+												<%--%>--%>
+												<%--<option value="<%=cinemaHallSeat.getRow()%>"><%=cinemaHallSeat.getRow()%></option>--%>
+												<%--<%--%>
+													<%--}--%>
+												<%--%>--%>
+											<%--</select> <select name="sorting_item" class="sits__sort sit-number"--%>
+												<%--tabindex="1">--%>
+												<%--<%--%>
+													<%--for (int i = 1; i <= cinemaHall.getNo_of_columns(); i++) {--%>
+												<%--%>--%>
+												<%--<option value="<%=i%>" selected='selected'><%=i%></option>--%>
+												<%--<%--%>
+													<%--}--%>
+												<%--%>--%>
 											</select> <a href="#" class="btn btn-md btn--warning toogle-sits">Choose
 												sit</a>
 										</div>
@@ -280,7 +280,7 @@
 																		url,
 																		{
 																			selected_seats : dup_seatList.toString(),
-																			ticket_price : '<%=tickerPrice%>'
+																			ticket_price : '1000'
 
 																		},
 																		function(status) {
