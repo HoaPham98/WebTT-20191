@@ -1,0 +1,12 @@
+@startuml
+App -> DAO: 1. Create
+DAO -> DataSource: 1.1. Create
+
+App -> DAO: 2. Get Data
+DAO -> DataSource: 2.1. Get Data
+DAO -> Customer: 2.2. Create
+DAO -> App: 2.3. Return Object
+
+App -> Customer: 3. Set Property
+App -> DAO: Set Data
+@enduml

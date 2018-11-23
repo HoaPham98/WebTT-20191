@@ -1,10 +1,10 @@
 package com.nhom17.model.reposity.impl;
 
-import com.nhom17.model.reposity.IRepository;
+import com.nhom17.model.reposity.IDAO;
 
 import java.util.ArrayList;
 
-public class CommonReposity<T> implements IRepository<T> {
+public class CommonDao<T> implements IDAO<T> {
 
     @Override
     public void add(T item) {

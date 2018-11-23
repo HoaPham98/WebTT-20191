@@ -2,7 +2,7 @@ package com.nhom17.controllers;
 
 import com.nhom17.model.dto.MovieShowTimeSchedule;
 import com.nhom17.model.dto.Phim;
-import com.nhom17.model.reposity.impl.PhimReposity;
+import com.nhom17.model.reposity.impl.PhimDao;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
 import com.nhom17.model.services.internal.database_interaction.interfaces.MovieInfoService;
 import com.nhom17.model.services.internal.database_interaction.interfaces.MovieScheduleService;
@@ -153,7 +153,7 @@ public class MovieListControllerServlet extends BaseServlet {
 	}
 
 	private void respondWithHomePageView(HttpServletRequest request, HttpServletResponse response) {
-		PhimReposity repository = new PhimReposity();
+		PhimDao repository = PhimDao.createPhimReposity();
 		List<Phim> nowShowingMovie = repository.getNowShowingMovies();
 		List<Phim> upComingMovie = repository.getUpComingMovies();
 		/*

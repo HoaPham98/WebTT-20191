@@ -1,7 +1,7 @@
 package com.nhom17.controllers;
 
 import com.nhom17.model.dto.Phim;
-import com.nhom17.model.reposity.impl.PhimReposity;
+import com.nhom17.model.reposity.impl.PhimDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +18,7 @@ public class HomeController extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PhimReposity repository = new PhimReposity();
+        PhimDao repository = PhimDao.createPhimReposity();
         ArrayList<Phim> nowShowingMovies = repository.getNowShowingMovies();
         ArrayList<Phim> upComingMovies = repository.getUpComingMovies();
 

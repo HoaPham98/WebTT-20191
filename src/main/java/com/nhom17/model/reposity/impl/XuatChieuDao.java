@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class XuatChieuReposity extends CommonReposity<XuatChieu> {
+public class XuatChieuDao extends CommonDao<XuatChieu> {
 
     public final static String ID = "id";
     public final static String THOI_GIAN_CHIEU = "ThoiGianChieu";
@@ -19,6 +19,13 @@ public class XuatChieuReposity extends CommonReposity<XuatChieu> {
     public final static String MA_DANG_PHIM = "MaDangPhim";
     public final static String MA_XUAT_CHIEU = "MaXuatChieu";
     public final static String MA_PHONG = "MaPhong";
+
+    private XuatChieuDao() {
+    }
+
+    public static XuatChieuDao createXuatChieuReposity() {
+        return new XuatChieuDao();
+    }
 
     public ArrayList<XuatChieu> getByMovie(final Phim phim){
         final Date date = new Date();
