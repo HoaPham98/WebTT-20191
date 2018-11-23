@@ -820,3 +820,38 @@ add DaoDien nvarchar(100);
 
 alter table Phim 
 add DienVien nvarchar(500);
+
+
+
+DBCC CHECKIDENT ('XuatChieu', RESEED, 0) 
+
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P001','PG01','11-27-2018','10:00','3DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P001','PG02','11-27-2018','18:30','2DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P001','PG04','11-27-2018','21:20','2DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P001','PG08','11-27-2018','15:40','3DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P002','PG02','11-27-2018','14:35','3DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P002','PG03','11-27-2018','21:10','2DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P002','PG04','11-27-2018','13:00','2DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P002','PG08','11-27-2018','11:00','3DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P003','PG05','11-27-2018','10:00','3DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P003','PG04','11-27-2018','17:00','2DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P003','PG03','11-27-2018','22:00','2DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P003','PG01','11-27-2018','20:10','3DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P004','PG02','11-27-2018','19:15','3DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P004','PG06','11-27-2018','14:17','2DNO');
+insert into "XuatChieu"("MaPhim","MaPhong","NgayChieu","ThoiGianChieu","MaDangPhim") values
+('P004','PG06','11-27-2018','10:20','2DNO');
