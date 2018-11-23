@@ -1,6 +1,10 @@
 package com.nhom17.model.services.internal.database_interaction.utility;
 
 import com.nhom17.database.DatabaseConnector;
+import com.nhom17.model.dto.Phong;
+import com.nhom17.model.dto.XuatChieu;
+import com.nhom17.model.reposity.impl.PhongDao;
+import com.nhom17.model.reposity.impl.XuatChieuDao;
 import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
 
 import java.sql.CallableStatement;
@@ -17,6 +21,9 @@ public class BookingTicketServiceUtility extends DatabaseServiceUtility implemen
 	public BookingTicketServiceUtility(DatabaseConnector dbConnector) {
 		super(dbConnector);
 	}
+
+	private PhongDao phongDao = PhongDao.createPhongReposity();
+	private XuatChieuDao xuatChieuDao = XuatChieuDao.createXuatChieuReposity();
 
 	@Override
 	public boolean isHouseFull(String showDate, String showTime, int hallNo) {
@@ -211,15 +218,23 @@ public class BookingTicketServiceUtility extends DatabaseServiceUtility implemen
 		return 0;
 	}
 
+	public XuatChieu getMaXuatChieu(String id) {
+		return xuatChieuDao.getOne(id);
+	}
+
+	public Phong getPhong(String id) {
+		return phongDao.getOne(id);
+	}
+
 	@Override
 	public boolean openService() {
-		getDbConnector().createConnection();
+//		getDbConnector().createConnection();
 		return false;
 	}
 
 	@Override
 	public boolean closeService() {
-		getDbConnector().closeConnection();
+//		getDbConnector().closeConnection();
 		return false;
 	}
 

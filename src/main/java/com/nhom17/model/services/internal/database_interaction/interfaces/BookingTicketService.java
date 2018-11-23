@@ -1,5 +1,8 @@
 package com.nhom17.model.services.internal.database_interaction.interfaces;
 
+import com.nhom17.model.dto.Phong;
+import com.nhom17.model.dto.XuatChieu;
+
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +21,8 @@ public interface BookingTicketService extends DatabaseInteractionService {
 			String movieName, int movieFormat);
 
 	public double getTicketPrice(int hallNo, int format);
+
+	public Phong getPhong(String id);
+
+	public XuatChieu getMaXuatChieu(String id);
 }

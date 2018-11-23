@@ -29,6 +29,16 @@ public class XuatChieuDao extends CommonDao<XuatChieu> {
         return new XuatChieuDao();
     }
 
+    @Override
+    public XuatChieu getOne(final String id) {
+        return JdbcTemplate.singleQuery("SELECT * FROM [dbo].[XuatChieu] WHERE MaXuatChieu = ?", new JdbcTemplate.PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, id);
+            }
+        }, createHandler());
+    }
+
     public ArrayList<XuatChieu> getByMovie(final Phim phim){
         final Date date = new Date();
         ArrayList<XuatChieu> xuatChieuList = JdbcTemplate.query("SELECT * FROM [dbo].[XuatChieu] WHERE MaPhim = ? AND NgayChieu >= ?", new JdbcTemplate.PreparedStatementSetter() {

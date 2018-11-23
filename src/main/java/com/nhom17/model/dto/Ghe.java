@@ -4,8 +4,11 @@ public class Ghe {
     private String maGhe;
     private String maLoaiGhe;
     private String maPhong;
-    private int idGhe;
+    private String idGhe;
     private String tinhTrangGhe;
+    private String hang;
+    private int cot;
+    private String tenLoaiGhe;
 
     public Ghe() {
 
@@ -25,6 +28,7 @@ public class Ghe {
 
     public void setMaLoaiGhe(String maLoaiGhe) {
         this.maLoaiGhe = maLoaiGhe;
+        this.tenLoaiGhe = LoaiGhe.allLoaiGhe.get(maLoaiGhe);
     }
 
     public String getMaPhong() {
@@ -35,12 +39,14 @@ public class Ghe {
         this.maPhong = maPhong;
     }
 
-    public int getIdGhe() {
+    public String getIdGhe() {
         return idGhe;
     }
 
-    public void setIdGhe(int idGhe) {
+    public void setIdGhe(String idGhe) {
         this.idGhe = idGhe;
+        this.hang = idGhe.substring(idGhe.length() - 3, idGhe.length() - 2);
+        this.cot = Integer.parseInt(idGhe.substring(idGhe.length() - 2));
     }
 
     public String getTinhTrangGhe() {
@@ -49,6 +55,14 @@ public class Ghe {
 
     public void setTinhTrangGhe(String tinhTrangGhe) {
         this.tinhTrangGhe = tinhTrangGhe;
+    }
+
+    public String getHang() {
+        return hang;
+    }
+
+    public int getCot() {
+        return cot;
     }
 }
 

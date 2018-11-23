@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.nhom17.model.dto.CinemaHall;
-import com.nhom17.model.dto.CinemaHallSeat;
-import com.nhom17.model.dto.PurchaseTicket;
+import com.nhom17.model.dto.*;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
 import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
 
@@ -69,11 +67,8 @@ public class BookingTicketStepController extends BaseServlet {
 		HttpSession session = request.getSession();
 		String movieID = (String) request.getAttribute("movieID");
 		String date = (String) request.getAttribute("showDate");
-		String time = (String) request.getAttribute("showTime");
+		String showTimeID = (String) request.getAttribute("showTimeID");
 
-//		String showDateTime = date + " " + time + ":00";
-//		Map<String, Double> seatPriceMap = bookingTicketService.getBookedSeatsWithPrices(hallNo, date, time, format);
-//		System.out.println("Booked Seats" + seatPriceMap);
 //		PurchaseTicket purchaseTicket = new PurchaseTicket();
 //		purchaseTicket.setHallNo(hallNo);
 //		purchaseTicket.setMovie(movieName);
@@ -82,13 +77,18 @@ public class BookingTicketStepController extends BaseServlet {
 //		purchaseTicket.setMovieFormat(format);
 //		purchaseTicket.setEachTicketPrice(bookingTicketService.getTicketPrice(hallNo, format));
 //		session.setAttribute("purchaseTicket", purchaseTicket);
-//		session.setAttribute("bookingStep", String.valueOf(2));
-//		session.setAttribute("bookingStep2Url", request.getAttribute("bookingStep2Url"));
+		session.setAttribute("bookingStep", String.valueOf(2));
+		session.setAttribute("bookingStep2Url", request.getAttribute("bookingStep2Url"));
 //		CinemaHall cinemaHall = getCinemaHall(hallNo, purchaseTicket.getMovieFormat(), category, 100);
-//		request.setAttribute("cinemaHall", cinemaHall);
-//		request.setAttribute("bookedSeatList", seatPriceMap);
+		XuatChieu showTime = bookingTicketService.getMaXuatChieu(showTimeID);
+		Phong phong = bookingTicketService.getPhong(showTime.getMaPhong());
+		Map<String, Integer> seatPriceMap = Gia.giaVe.get(showTime.getMaDangPhim());
+		System.out.println("Booked Seats" + seatPriceMap);
+		request.setAttribute("cinemaHall", phong);
+		request.setAttribute("showTime", showTime);
+		request.setAttribute("bookedSeatList", seatPriceMap);
 //		request.setAttribute("ticketPrice", purchaseTicket.getEachTicketPrice());
-//		request.setAttribute("validEntry", true);
+		request.setAttribute("validEntry", true);
 		requestDispatcher = request.getRequestDispatcher("booking_step2_page");
 		requestDispatcher.forward(request, response);
 	}

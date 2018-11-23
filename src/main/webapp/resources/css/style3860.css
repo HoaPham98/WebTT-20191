@@ -7213,7 +7213,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 .sits-anchor:before {
 	content: '';
 	background-color: #969b9f;
-	width: 380px;
+	width: 480px;
 	height: 5px;
 	position: absolute;
 	bottom: -9px;
@@ -7309,6 +7309,19 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 	position: relative;
 	margin: 5px;
 	width: 30px;
+	height: 30px;
+	display: inline-block;
+	line-height: 30px;
+	font-size: 10px;
+	color: #ffffff;
+	z-index: 13;
+	text-indent: -9999px;
+}
+
+.sits .sits__row .sits__place__sweetbox {
+	position: relative;
+	margin: 5px;
+	width: 60px;
 	height: 30px;
 	display: inline-block;
 	line-height: 30px;
@@ -9908,6 +9921,11 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 	background-color: #fff0c7;
 }
 
+.sits-price--sweetbox:before {
+	background-color: #fff0c7;
+	width: 60px;
+}
+
 .sits-price--middle:before {
 	background-color: #ffc8cb;
 }
@@ -10242,6 +10260,11 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 	}
 	.sits .sits__row .sits__place {
 		width: 25px;
+		height: 25px;
+		margin: 4px;
+	}
+	.sits .sits__row .sits__place__sweetbox {
+		width: 50px;
 		height: 25px;
 		margin: 4px;
 	}
