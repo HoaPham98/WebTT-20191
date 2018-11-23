@@ -2,7 +2,7 @@ package com.nhom17.model.reposity;
 
 import java.util.ArrayList;
 
-public interface IRepository<T> {
+public interface IDAO<T> {
     void add(T item);
 
     void add(Iterable<T> items);

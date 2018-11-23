@@ -5,12 +5,11 @@ import com.nhom17.model.dto.Phim;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 
 import com.nhom17.util.JdbcTemplate;
 
-public class PhimReposity extends CommonReposity<Phim> {
+public class PhimDao extends CommonDao<Phim> {
 
     public static String ID = "ID";
     public static String MA_PHIM = "MaPhim";
@@ -28,6 +27,13 @@ public class PhimReposity extends CommonReposity<Phim> {
     public static String POSTER_2_URL = "PosterURL2";
     public static String DAO_DIEN = "DaoDien";
     public static String DIEN_VIEN = "DienVien";
+
+    private PhimDao() {
+    }
+
+    public static PhimDao createPhimReposity() {
+        return new PhimDao();
+    }
 
     public ArrayList<Phim> getNowShowingMovies() {
         return JdbcTemplate.query("SELECT * FROM [dbo].[DanhSachPhimDangChieu]",createHandler());

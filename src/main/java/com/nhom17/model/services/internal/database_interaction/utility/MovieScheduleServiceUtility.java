@@ -1,21 +1,20 @@
 package com.nhom17.model.services.internal.database_interaction.utility;
 
-import java.text.ParseException;
 import java.util.*;
 
 import com.nhom17.database.DatabaseConnector;
 import com.nhom17.model.dto.*;
-import com.nhom17.model.reposity.impl.XuatChieuReposity;
+import com.nhom17.model.reposity.impl.XuatChieuDao;
 import com.nhom17.model.services.internal.database_interaction.interfaces.MovieScheduleService;
 
 public class MovieScheduleServiceUtility extends DatabaseServiceUtility implements MovieScheduleService {
 
 	public MovieScheduleServiceUtility(DatabaseConnector dbConnector) {
 		super(dbConnector);
-		reposity = new XuatChieuReposity();
+		reposity = XuatChieuDao.createXuatChieuReposity();
 	}
 
-	private XuatChieuReposity reposity;
+	private XuatChieuDao reposity;
 
 	@Override
 	public boolean openService() {

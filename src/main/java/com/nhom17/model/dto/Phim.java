@@ -2,6 +2,7 @@ package com.nhom17.model.dto;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 public class Phim {
     private String maPhim;
@@ -20,6 +21,7 @@ public class Phim {
     private String daodien;
     private String dienVien;
     private String poster2URL;
+    private List<TheLoai> theLoaiList;
 
     public Phim() {
 
@@ -151,5 +153,13 @@ public class Phim {
 
     public void setPoster2URL(String poster2URL) {
         this.poster2URL = poster2URL;
+    }
+
+    public List<TheLoai> getTheLoaiList() {
+        return theLoaiList;
+    }
+
+    public void setTheLoaiList(List<TheLoai> theLoaiList) {
+        this.theLoaiList = theLoaiList;
     }
 }

@@ -94,7 +94,7 @@
 				<strong>Actors: </strong><a><%=movie.getDienVien()%></a>
 			</p>
 			<p class="movie__option">
-				<strong>Age restriction: </strong><a href="#"><%=movie.getNhanPhim()%></a>
+				<strong>Age restriction: </strong><a><%=movie.getNhanPhim()%></a>
 			</p>
 			<%--<div class="movie__btns movie__btns--full">--%>
 				<%--<%--%>

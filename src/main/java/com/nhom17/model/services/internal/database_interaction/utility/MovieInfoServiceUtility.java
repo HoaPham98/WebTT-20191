@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 import com.nhom17.database.DatabaseConnector;
 import com.nhom17.model.dto.Phim;
-import com.nhom17.model.reposity.impl.PhimReposity;
+import com.nhom17.model.reposity.impl.PhimDao;
 import com.nhom17.model.services.internal.database_interaction.interfaces.MovieInfoService;
 
 public class MovieInfoServiceUtility extends DatabaseServiceUtility implements MovieInfoService {
 
 	public MovieInfoServiceUtility(DatabaseConnector dbConnector) {
 		super(dbConnector);
-		reposity = new PhimReposity();
+		reposity = PhimDao.createPhimReposity();
 	}
 
-	private PhimReposity reposity;
+	private PhimDao reposity;
 
 	@Override
 	public boolean openService() {

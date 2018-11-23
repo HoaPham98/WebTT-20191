@@ -6,7 +6,7 @@ import com.nhom17.util.JdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PhongReposity extends  CommonReposity<Phong> {
+public class PhongDao extends CommonDao<Phong> {
 
     public final static String ID = "id";
     public final static String MA_PHONG = "MaPhong";
@@ -14,6 +14,13 @@ public class PhongReposity extends  CommonReposity<Phong> {
     public final static String SO_LUONG_GHE_MOI_DAY = "SoLuongGheMoiDay";
     public final static String SO_LUONG_GHE = "SoLuongGhe";
     public final static String TRANG_THAI_PHONG = "TrangThaiPhong";
+
+    private PhongDao() {
+    }
+
+    public static PhongDao createPhongReposity() {
+        return new PhongDao();
+    }
 
     @Override
     public Phong getOne(String id) {
