@@ -78,16 +78,16 @@
     <url-pattern>/home</url-pattern>
     <url-pattern></url-pattern>
   </servlet-mapping>
-  <!--<servlet>-->
-    <!--<servlet-name>BookingTicketStepController</servlet-name>-->
-    <!--<servlet-class>com.nhom17.controllerss.BookingTicketStepController</servlet-class>-->
-  <!--</servlet>-->
-  <!--<servlet-mapping>-->
-    <!--<servlet-name>BookingTicketStepController</servlet-name>-->
-    <!--<url-pattern>/booking_step2</url-pattern>-->
-    <!--<url-pattern>/booking_step3</url-pattern>-->
-    <!--<url-pattern>/submit_selected_seats</url-pattern>-->
-  <!--</servlet-mapping>-->
+  <servlet>
+    <servlet-name>BookingTicketStepController</servlet-name>
+    <servlet-class>com.nhom17.controllers.BookingTicketStepController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BookingTicketStepController</servlet-name>
+    <url-pattern>/booking_step2</url-pattern>
+    <url-pattern>/booking_step3</url-pattern>
+    <url-pattern>/submit_selected_seats</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>MovieInfoControllerServlet</servlet-name>
     <servlet-class>com.nhom17.controllers.MovieInfoControllerServlet</servlet-class>
@@ -120,14 +120,14 @@
     <filter-name>MovieInfoRequestFilter</filter-name>
     <servlet-name>MovieInfoControllerServlet</servlet-name>
   </filter-mapping>
-  <!--<filter>-->
-    <!--<filter-name>BookingTicketRequestFilter</filter-name>-->
-    <!--<filter-class>io.github.parthoshuvo.controllers.filters.BookingTicketRequestFilter</filter-class>-->
-  <!--</filter>-->
-  <!--<filter-mapping>-->
-    <!--<filter-name>BookingTicketRequestFilter</filter-name>-->
-    <!--<servlet-name>BookingTicketStepController</servlet-name>-->
-  <!--</filter-mapping>-->
+  <filter>
+    <filter-name>BookingTicketRequestFilter</filter-name>
+    <filter-class>com.nhom17.controllers.filters.BookingTicketRequestFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>BookingTicketRequestFilter</filter-name>
+    <servlet-name>BookingTicketStepController</servlet-name>
+  </filter-mapping>
   <!--<filter>-->
     <!--<filter-name>PurchaseTicketRequestFilter</filter-name>-->
     <!--<filter-class>io.github.parthoshuvo.controllers.filters.PurchaseTicketRequestFilter</filter-class>-->

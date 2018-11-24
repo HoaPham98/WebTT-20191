@@ -1,11 +1,22 @@
 package com.nhom17.model.dto;
 
+import com.nhom17.util.JdbcTemplate;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Gia {
     private String maGia;
     private int gia;
     private String maLoaiGhe;
     private String maDangPhim;
     private int id;
+
+    public static Map<String, Map<String, Integer>> giaVe = getAllGiaVe();
 
     public Gia() {
 
@@ -49,5 +60,31 @@ public class Gia {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public static Map<String, Map<String, Integer>> getAllGiaVe() {
+        final Map<String, Map<String, Integer>> map = new HashMap<>();
+        ArrayList<Gia> gias = JdbcTemplate.query("SELECT * FROM [dbo].[Gia]", new JdbcTemplate.RowCallBackHandler<Gia>() {
+            @Override
+            public Gia processRow(ResultSet rs) throws SQLException {
+                Gia gia = new Gia();
+                gia.setMaDangPhim(rs.getString("MaDangPhim"));
+                gia.setGia(rs.getInt("Gia"));
+                gia.setMaLoaiGhe(rs.getString("MaLoaiGhe"));
+
+                return gia;
+            }
+        });
+
+        List<DangPhim> dangPhims = DangPhim.allDangPhim;
+        for (DangPhim type: dangPhims) {
+            map.put(type.getMaDangPhim(), new HashMap<String, Integer>());
+        }
+
+        for (Gia gia: gias) {
+            map.get(gia.getMaDangPhim()).put(gia.getMaLoaiGhe(), gia.getGia());
+        }
+
+        return map;
     }
 }

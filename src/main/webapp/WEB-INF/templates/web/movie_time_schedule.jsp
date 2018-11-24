@@ -62,10 +62,6 @@
 	</div>
 
 	<div class="clearfix"></div>
-	<%!int getCategory(int hallNo) {
-		int category = 1;
-		return category;
-	}%>
 
 	<div class="time-select">
 		<div class="time-select__group">
@@ -82,15 +78,25 @@
 								break;
 							case 1:
 								clsName = "";
-								showURL = bookingURL + "&time=" + showTime.getMaXuatChieu().replaceAll(" ", "_");
+								showURL = bookingURL + "&time=" + showTime.getThoiGianChieu() + "&showtime=" + showTime.getMaXuatChieu().replaceAll(" ", "_");
 								break;
 							default:
-
+								Date dupShowTime = new SimpleDateFormat("MM/dd/yyyy hh:mm")
+										.parse(datePickerDate + " " + showTime.getThoiGianChieu());
+								System.out.println(dupShowTime);
+								System.out.println(todayDate);
+								System.out.println(dupShowTime.compareTo(todayDate));
+								if (dupShowTime.compareTo(todayDate) <= 0) {
+									clsName = "active";
+								} else {
+									clsName = "";
+									showURL = bookingURL + "&time=" + showTime.getThoiGianChieu() + "&showtime=" + showTime.getMaXuatChieu().replaceAll(" ", "_");
+								}
 								break;
 						}
 				%>
 				<li class="time-select__item <%=clsName%>"
-					data-time='showTime.getTime().substring(0, 5)'
+					data-time='<%=showTime.getThoiGianChieu().substring(0, 5)%>'
 					onclick="bookSeat('<%=showURL%>')"><%=showTime.getThoiGianChieu().substring(0, 5)%></li>
 				<%
 					}

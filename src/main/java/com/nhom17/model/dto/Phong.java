@@ -1,5 +1,7 @@
 package com.nhom17.model.dto;
 
+import java.util.List;
+
 public class Phong {
     private String maPhong;
     private int soLuongGhe;
@@ -7,6 +9,8 @@ public class Phong {
     private int soLuongGheMoiDay;
     private int id;
     private String trangThaiPhong;
+
+    private List<HangGhe> hangGheList;
 
     public Phong() {
 
@@ -58,5 +62,13 @@ public class Phong {
 
     public void setTrangThaiPhong(String trangThaiPhong) {
         this.trangThaiPhong = trangThaiPhong;
+    }
+
+    public List<HangGhe> getHangGheList() {
+        return hangGheList;
+    }
+
+    public void setHangGheList(List<HangGhe> hangGheList) {
+        this.hangGheList = hangGheList;
     }
 }

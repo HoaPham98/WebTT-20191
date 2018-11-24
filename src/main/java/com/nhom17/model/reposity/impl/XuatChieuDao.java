@@ -7,6 +7,8 @@ import com.nhom17.util.JdbcTemplate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,6 +27,16 @@ public class XuatChieuDao extends CommonDao<XuatChieu> {
 
     public static XuatChieuDao createXuatChieuReposity() {
         return new XuatChieuDao();
+    }
+
+    @Override
+    public XuatChieu getOne(final String id) {
+        return JdbcTemplate.singleQuery("SELECT * FROM [dbo].[XuatChieu] WHERE MaXuatChieu = ?", new JdbcTemplate.PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, id);
+            }
+        }, createHandler());
     }
 
     public ArrayList<XuatChieu> getByMovie(final Phim phim){
@@ -63,7 +75,10 @@ public class XuatChieuDao extends CommonDao<XuatChieu> {
                 xuatChieu.setMaPhim(rs.getString(MA_PHIM));
                 xuatChieu.setMaPhong(rs.getString(MA_PHONG));
                 xuatChieu.setMaXuatChieu(rs.getString(MA_XUAT_CHIEU));
-                xuatChieu.setThoiGianChieu(rs.getString(THOI_GIAN_CHIEU));
+                String time = String.valueOf(rs.getTime(THOI_GIAN_CHIEU));
+                time = time.substring(0,5);
+
+                xuatChieu.setThoiGianChieu(time);
                 xuatChieu.setNgayChieu(rs.getDate(NGAY_CHIEU));
 
                 return xuatChieu;
