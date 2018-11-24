@@ -7340,7 +7340,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 .sits .sits__row .sits__place__sweetbox {
 	position: relative;
 	margin: 5px;
-	width: 60px;
+	width: 70px;
 	height: 30px;
 	display: inline-block;
 	line-height: 30px;
@@ -7352,7 +7352,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 
 .sits .sits__row .sits__place__sweetbox:before {
 	content: '';
-	width: 60px;
+	width: 70px;
 	height: 30px;
 	position: absolute;
 	top: 0px;
