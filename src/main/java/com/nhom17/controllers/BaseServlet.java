@@ -28,8 +28,6 @@ public abstract class BaseServlet extends HttpServlet {
     @Override
     public void destroy() {
         super.destroy();
-        dbConnector.closeConnection();
-        destroyDatabaseConnectorInstance();
     }
 
     protected DatabaseConnector getDatabaseConnectorInstance() {
