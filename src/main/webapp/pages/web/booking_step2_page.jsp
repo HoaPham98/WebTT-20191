@@ -84,9 +84,9 @@
                             <ul>
                                 <li class="sits-price marker--none"><strong>Seat
                                     Price</strong></li>
-                                <li class="sits-price sits-price--cheap">Lower &#2547;1000</li>
-                                <li class="sits-price sits-price--middle">Upper &#2547;2000</li>
-                                <%--<li class="sits-price sits-price--expensive">$30</li>--%>
+                                <li class="sits-price sits-price--cheap">Thường (<%=bookedSeatList.get("NORMAL")%> VNĐ)</li>
+                                <li class="sits-price sits-price--middle">Vip (<%=bookedSeatList.get("VIP")%> VNĐ)</li>
+                                <li class="sits-price sits-price--expensive">SweetBox (<%=bookedSeatList.get("SWEETBOX")%> VNĐ)</li>
                             </ul>
                         </div>
 
@@ -132,12 +132,16 @@
                                         <span
                                                 <%
                                                     String className = null;
+                                                    int price = 0;
                                                     if (ghe.getIdGhe().startsWith("N")) {
                                                         className = "sits__place sits-price--cheap";
+                                                        price = bookedSeatList.get("NORMAL");
                                                     } else if (ghe.getIdGhe().startsWith("V")) {
                                                         className = "sits__place sits-price--middle";
+                                                        price = bookedSeatList.get("VIP");
                                                     } else {
-                                                        className = "sits__place__sweetbox sits-price--sweetbox";
+                                                        className = "sits__place sits__place__sweetbox sits-price--sweetbox";
+                                                        price = bookedSeatList.get("SWEETBOX");
                                                     }
 //                                                    if (reservedSeatsFlag && j < bookedSeats.length
 //                                                            && (bookedSeats[j].toLowerCase().startsWith("l")
@@ -151,7 +155,7 @@
                                                 %>
                                                 class="<%=className%>"
                                                 data-place='<%=ghe.getIdGhe()%>'
-                                                data-price=''><%=ghe.getIdGhe()%></span>
+                                                data-price='<%=price%>'></span>
                                         <%
                                             }
                                         %>

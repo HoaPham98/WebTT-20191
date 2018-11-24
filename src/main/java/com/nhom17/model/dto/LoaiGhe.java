@@ -41,7 +41,7 @@ public class LoaiGhe {
             @Override
             public LoaiGhe processRow(ResultSet rs) throws SQLException {
                 String id = rs.getString("MaLoaiGhe");
-                String name = rs.getString("TenLoaiGhe");
+                String name = rs.getNString("TenLoaiGhe");
 
                 map.put(id, name);
                 return null;
