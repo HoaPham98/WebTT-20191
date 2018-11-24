@@ -137,7 +137,7 @@
                                                     } else if (ghe.getIdGhe().startsWith("V")) {
                                                         className = "sits__place sits-price--middle";
                                                     } else {
-                                                        className = "sits__place sits-price--expensive";
+                                                        className = "sits__place__sweetbox sits-price--sweetbox";
                                                     }
 //                                                    if (reservedSeatsFlag && j < bookedSeats.length
 //                                                            && (bookedSeats[j].toLowerCase().startsWith("l")
