@@ -415,6 +415,36 @@ i.contact1 {
 	height: 35px;
 }
 
+.textfeild {
+	position: relative;
+	padding: 8px 10px;
+	width: 18%;
+	border: 1px solid #f0f0f0;
+}
+
+.textfeild input[type="text"] {
+	outline: none;
+	color: #b3b3b3;
+	background: none;
+	font-size: 16px;
+	border: none;
+	width: 84.33%;
+}
+
+.textfeild input[type="submit"] {
+	background: #272e34;
+	padding: 0.7em 2.5em;
+	display: inline-block;
+	color: #FFF;
+	text-decoration: none;
+	margin-top: 1em;
+}
+
+.textfeild input[type="submit"]:hover {
+	background: #fc5700;
+}
+
+
 #flexiselDemo1, #flexiselDemo2, #flexiselDemo3 {
 	display: none;
 }
