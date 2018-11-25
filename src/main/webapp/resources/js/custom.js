@@ -633,6 +633,7 @@ function init_BookingTwo() {
 						e.preventDefault();
 						var place = $(this).attr('data-place');
 						var ticketPrice = $(this).attr('data-price');
+						console.log("Giá: " + ticketPrice);
 
 						if (!$(e.target).hasClass('sits-state--your')) {
 
@@ -655,7 +656,7 @@ function init_BookingTwo() {
 											.stringify(seats));
 								}
 								sum += parseFloat(ticketPrice);
-								$('.checked-result').text('\u09F3' + sum);
+								$('.checked-result').text(sum + ' VNĐ');
 							}
 						}
 
@@ -682,7 +683,7 @@ function init_BookingTwo() {
 							}
 
 							sum -= parseFloat(ticketPrice);
-							$('.checked-result').text('\u09F3' + sum)
+							$('.checked-result').text(sum + ' VNĐ')
 						}
 
 						// data element init
@@ -703,7 +704,7 @@ function init_BookingTwo() {
 
 						// data element set
 						sits.val(chooseSits.substr(2));
-					});
+                    });
 
 	// --- Step for data ---//
 	// Get data from pvevius page

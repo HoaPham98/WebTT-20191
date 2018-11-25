@@ -84,41 +84,41 @@ public class BookingTicketRequestFilter implements Filter {
 		if (parameters != null && parameters.hasMoreElements()) {
 			int i = 1;
 			boolean errorFlag = true;
-//			while (parameters.hasMoreElements()) {
-//				String parameter = parameters.nextElement();
-//				if (i <= 4) {
-//					if (i == 1 && parameter.equals("movie_id") && request.getParameter(parameter) != null) {
-//						errorFlag = false;
-//						System.out.println("1");
-//						// is_movie_playin check() here
-//					} else if (i == 2 && parameter.equals("date") && request.getParameter(parameter) != null
-//							&& request.getParameter(parameter).matches("\\d{2}/\\d{2}/\\d{4}")) {
-//						errorFlag = false;
-//						System.out.println("2");
-//					} else if (i == 3 && parameter.equals("time") && request.getParameter(parameter) != null) {
-//						errorFlag = false;
-//						System.out.println("3");
-//					} else if (i == 4 && parameter.equals("showtime")) {
-//						errorFlag = false;
-//						System.out.println("4");
-//					}
-//					if (errorFlag) {
-//						System.out.println("error param pattrn problem");
-//						response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-//						response.sendError(404);
-//						return;
-//					} else {
-//						errorFlag = true;
-//						i++;
-//					}
-//
-//				} else {
-//					System.out.println("error extra param");
-//					response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-//					response.sendError(404);
-//					return;
-//				}
-//			}
+			while (parameters.hasMoreElements()) {
+				String parameter = parameters.nextElement();
+				if (i <= 4) {
+					if (i == 1 && parameter.equals("movie_id") && request.getParameter(parameter) != null) {
+						errorFlag = false;
+						System.out.println("1");
+						// is_movie_playin check() here
+					} else if (i == 2 && parameter.equals("date") && request.getParameter(parameter) != null
+							&& request.getParameter(parameter).matches("\\d{2}/\\d{2}/\\d{4}")) {
+						errorFlag = false;
+						System.out.println("2");
+					} else if (i == 3 && parameter.equals("time") && request.getParameter(parameter) != null) {
+						errorFlag = false;
+						System.out.println("3");
+					} else if (i == 4 && parameter.equals("showtime")) {
+						errorFlag = false;
+						System.out.println("4");
+					}
+					if (errorFlag) {
+						System.out.println("error param pattrn problem");
+						response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
+						response.sendError(404);
+						return;
+					} else {
+						errorFlag = true;
+						i++;
+					}
+
+				} else {
+					System.out.println("error extra param");
+					response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
+					response.sendError(404);
+					return;
+				}
+			}
 
 			String booking_step_2_url = request.getRequestURI() + "?" + "movie_id="
 					+ request.getParameter("movie_id") + "&" + "date=" + request.getParameter("date") + "&" + "time="
