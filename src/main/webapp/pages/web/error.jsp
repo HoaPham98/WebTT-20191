@@ -16,7 +16,7 @@
 				<div class="error-404 text-center">
 					<h2>404</h2>
 					<p>Sorry this was unexpected</p>
-					<a class="b-home" href="index-2.html">Back to Home</a>
+					<a class="b-home" href="/">Back to Home</a>
 				</div>
 			</div>
 			<jsp:include page="/WEB-INF/templates/web/footer.jsp" />
