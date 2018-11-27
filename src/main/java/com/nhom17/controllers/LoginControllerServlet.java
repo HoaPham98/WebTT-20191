@@ -24,14 +24,45 @@ public class LoginControllerServlet extends BaseServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        String userName = request.getParameter("userName");
+        String password = request.getParameter("password");
+        ThanhVien userAccount = ThanhVienDAO.getInstance().getByUserNamePass(userName, password);
+ 
+        if (userAccount == null) {
+            String errorMessage = "Invalid userName or Password";
+ 
+            request.setAttribute("errorMessage", errorMessage);
+ 
+            RequestDispatcher dispatcher //
+                    = this.getServletContext().getRequestDispatcher("/login_page");
+ 
+            dispatcher.forward(request, response);
+            return;
+        }
+ 
+        AppUtils.storeLoginedUser(request.getSession(), userAccount);
+ 
+        // 
+        int redirectId = -1;
+        try {
+            redirectId = Integer.parseInt(request.getParameter("redirectId"));
+        } catch (Exception e) {
+        }
+        String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
+        if (requestUri != null) {
+            response.sendRedirect(requestUri);
+        } else {
+            // Mặc định sau khi đăng nhập thành công
+            // chuyển hướng về trang /userInfo
+            response.sendRedirect(request.getContextPath() + "/userInfo");
+        }
     }
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher //
-                = request.getRequestDispatcher("/pages/web/login.jsp");
+                = request.getRequestDispatcher("/login_page");
         dispatcher.forward(request, response);
         String userName = request.getParameter("email");
         String password = request.getParameter("pass");
@@ -43,7 +74,7 @@ public class LoginControllerServlet extends BaseServlet {
             request.setAttribute("errorMessage", errorMessage);
 
             dispatcher //
-                    = request.getRequestDispatcher("/pages/web/login.jsp");
+                    = request.getRequestDispatcher("/login_page");
 
             dispatcher.forward(request, response);
             return;

@@ -35,6 +35,10 @@
     <servlet-name>Movie Info Page</servlet-name>
     <url-pattern>/movie_page</url-pattern>
   </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/login_page</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>Final Ticket Page</servlet-name>
     <jsp-file>/pages/web/final_ticket_page.jsp</jsp-file>
@@ -62,6 +66,10 @@
   <servlet>
     <servlet-name>Error Page</servlet-name>
     <jsp-file>/pages/web/error.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>Login</servlet-name>
+    <jsp-file>/pages/web/login.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
     <servlet-name>Error Page</servlet-name>
