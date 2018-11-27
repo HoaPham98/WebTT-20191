@@ -22,27 +22,27 @@ public class LoginControllerServlet extends BaseServlet {
 //    }
 
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher //
                 = request.getRequestDispatcher("/pages/web/login.jsp");
         dispatcher.forward(request, response);
-    }
-
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
         String userName = request.getParameter("email");
         String password = request.getParameter("pass");
         ThanhVien userAccount = ThanhVienDAO.getInstance().getByUserNamePass(userName, password);
-        System.out.println("Da query ra 1 user = null");
+
         if (userAccount == null) {
             String errorMessage = "Invalid userName or Password";
 
             request.setAttribute("errorMessage", errorMessage);
 
-            RequestDispatcher dispatcher //
+            dispatcher //
                     = request.getRequestDispatcher("/pages/web/login.jsp");
 
             dispatcher.forward(request, response);
