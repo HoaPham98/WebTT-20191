@@ -8,6 +8,7 @@ import com.nhom17.util.JdbcTemplate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +52,60 @@ public class ThanhVienDAO extends CommonDao<ThanhVien> {
                 pstmt.setString(3, pass);
             }
         }, callBackHandler());
+    }
+
+    //Tim thanh vien theo ten dang nhap
+    public ThanhVien getByUserName(final String username) {
+        return JdbcTemplate.singleQuery("SELECT * FROM [dbo].[ThanhVien] WHERE TenDangNhap = ?", new JdbcTemplate.PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, username);
+            }
+        }, callBackHandler());
+    }
+
+    //Tim thanh vien theo email
+    public ThanhVien getByEmail(final String email) {
+        return JdbcTemplate.singleQuery("SELECT * FROM [dbo].[ThanhVien] WHERE Email = ?", new JdbcTemplate.PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, email);
+            }
+        }, callBackHandler());
+    }
+
+    //Them thanh vien
+    public int addThanhVien(
+            final String email,
+            final String loaiTV,
+            final String matKhau,
+            final int gioiTinh,
+            final String soDienThoai,
+            final String tenDangNhap,
+            final Date ngaySinh,
+            final String hoTen,
+            final String diaChi,
+            final int soDu
+    ) {
+        return JdbcTemplate.update(
+                "INSERT INTO ThanhVien (TenDangNhap, MatKhau, HoTen, NgaySinh, GioiTinh, DiaChi, SoDienThoai, Email, SoDu, LoaiTV) values " +
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new JdbcTemplate.PreparedStatementSetter() {
+                    @Override
+                    public void setValues(PreparedStatement pstmt) throws SQLException {
+                        pstmt.setString(1, tenDangNhap);
+                        pstmt.setString(2, matKhau);
+                        pstmt.setString(3, hoTen);
+                        pstmt.setDate(4, (java.sql.Date) ngaySinh);
+                        pstmt.setInt(5, gioiTinh);
+                        pstmt.setString(6, diaChi);
+                        pstmt.setString(7, soDienThoai);
+                        pstmt.setString(8, email);
+                        pstmt.setInt(9, soDu);
+                        pstmt.setString(10, loaiTV);
+
+                    }
+                });
+
     }
 
 
