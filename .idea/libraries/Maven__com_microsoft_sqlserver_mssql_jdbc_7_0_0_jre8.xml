@@ -2,6 +2,7 @@
   <library name="Maven: com.microsoft.sqlserver:mssql-jdbc:7.0.0.jre8">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/microsoft/sqlserver/mssql-jdbc/7.0.0.jre8/mssql-jdbc-7.0.0.jre8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../sqljdbc_6.0/enu/jre8/sqljdbc42.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/com/microsoft/sqlserver/mssql-jdbc/7.0.0.jre8/mssql-jdbc-7.0.0.jre8-javadoc.jar!/" />

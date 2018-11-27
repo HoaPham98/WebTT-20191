@@ -96,6 +96,14 @@
     <servlet-name>MovieInfoControllerServlet</servlet-name>
     <url-pattern>/movie</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>LoginControllerServlet</servlet-name>
+    <servlet-class>com.nhom17.controllers.LoginControllerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginControllerServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
   <!--<servlet>-->
     <!--<servlet-name>PurchaseTicketControllerServlet</servlet-name>-->
     <!--<servlet-class>com.nhom17.controllerss.PurchaseTicketControllerServlet</servlet-class>-->
@@ -127,6 +135,14 @@
   <filter-mapping>
     <filter-name>BookingTicketRequestFilter</filter-name>
     <servlet-name>BookingTicketStepController</servlet-name>
+  </filter-mapping>
+  <filter>
+    <filter-name>SecurityFilter</filter-name>
+    <filter-class>com.nhom17.controllers.filters.SecurityFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <servlet-name>LoginControllerServlet</servlet-name>
   </filter-mapping>
   <!--<filter>-->
     <!--<filter-name>PurchaseTicketRequestFilter</filter-name>-->

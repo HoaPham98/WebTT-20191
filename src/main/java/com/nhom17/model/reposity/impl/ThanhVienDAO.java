@@ -26,12 +26,23 @@ public class ThanhVienDAO extends CommonDao<ThanhVien> {
     private ThanhVienDAO() {
 
     }
+
+    private static ThanhVienDAO instance = new ThanhVienDAO();
+
+    public static ThanhVienDAO getInstance() {
+        return instance;
+    }
+
+    public void setInstance(ThanhVienDAO instance) {
+        this.instance = instance;
+    }
+
     public static ThanhVienDAO createThanhVienReposity() {
         return new ThanhVienDAO();
     }
 
     //Tim thanh vien theo ten dang nhap va mat khau
-    public List<ThanhVien> getByUserNamePass(final String username, final String pass) {
+    public ThanhVien getByUserNamePass(final String username, final String pass) {
         return JdbcTemplate.query("SELECT * FROM [dbo].[ThanhVien] WHERE TenDangNhap = ? " +
                 "AND MatKhau =?", new JdbcTemplate.PreparedStatementSetter() {
             @Override
@@ -39,8 +50,10 @@ public class ThanhVienDAO extends CommonDao<ThanhVien> {
                 pstmt.setString(1, username);
                 pstmt.setString(2, pass);
             }
-        }, callBackHandler());
+        }, callBackHandler()).get(0);
     }
+
+
 
     private JdbcTemplate.RowCallBackHandler<ThanhVien> callBackHandler() {
         return new JdbcTemplate.RowCallBackHandler<ThanhVien>() {
