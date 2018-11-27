@@ -24,8 +24,8 @@ public class LoginControllerServlet extends BaseServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
+        String userName = request.getParameter("username");
+        String password = request.getParameter("pass");
         ThanhVien userAccount = ThanhVienDAO.getInstance().getByUserNamePass(userName, password);
  
         if (userAccount == null) {
@@ -54,7 +54,7 @@ public class LoginControllerServlet extends BaseServlet {
         } else {
             // Mặc định sau khi đăng nhập thành công
             // chuyển hướng về trang /userInfo
-            response.sendRedirect(request.getContextPath() + "/userInfo");
+            response.sendRedirect(request.getContextPath() + "/");
         }
     }
 

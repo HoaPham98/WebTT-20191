@@ -1,16 +1,15 @@
 package com.nhom17.model.services.internal.database_interaction.utility;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import com.nhom17.database.DatabaseConnector;
 import com.nhom17.model.dto.Phim;
 import com.nhom17.model.reposity.impl.PhimDao;
 import com.nhom17.model.services.internal.database_interaction.interfaces.MovieInfoService;
 
 public class MovieInfoServiceUtility extends DatabaseServiceUtility implements MovieInfoService {
 
-	public MovieInfoServiceUtility(DatabaseConnector dbConnector) {
-		super(dbConnector);
+	public MovieInfoServiceUtility() {
 		reposity = PhimDao.createPhimReposity();
 	}
 
@@ -18,19 +17,17 @@ public class MovieInfoServiceUtility extends DatabaseServiceUtility implements M
 
 	@Override
 	public boolean openService() {
-//		getDbConnector().createConnection();
 		return false;
 	}
 
 	@Override
 	public boolean closeService() {
-//		getDbConnector().closeConnection();
 		return false;
 	}
 
 
 	@Override
-	public ArrayList<Phim> getMovieList(boolean nowShowingFlag) {
+	public List<Phim> getMovieList(boolean nowShowingFlag) {
 		if (nowShowingFlag) {
 			return reposity.getNowShowingMovies();
 		}

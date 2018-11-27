@@ -3,6 +3,8 @@
   <welcome-file-list>
     <welcome-file>home</welcome-file>
   </welcome-file-list>
+
+  <!--JSP Mapper-->
   <servlet>
     <servlet-name>Home Page</servlet-name>
     <jsp-file>/pages/web/index.jsp</jsp-file>
@@ -31,6 +33,8 @@
     <servlet-name>Movie Info Page</servlet-name>
     <jsp-file>/pages/web/movie_page.jsp</jsp-file>
   </servlet>
+
+  <!--JSP mapper to url-->
   <servlet-mapping>
     <servlet-name>Movie Info Page</servlet-name>
     <url-pattern>/movie_page</url-pattern>
@@ -71,6 +75,8 @@
     <servlet-name>Login</servlet-name>
     <jsp-file>/pages/web/login.jsp</jsp-file>
   </servlet>
+
+  <!--URL mapper to Servlet Controller-->
   <servlet-mapping>
     <servlet-name>Error Page</servlet-name>
     <url-pattern>/error</url-pattern>
@@ -120,6 +126,8 @@
     <!--<servlet-name>PurchaseTicketControllerServlet</servlet-name>-->
     <!--<url-pattern>/purchase_ticket</url-pattern>-->
   <!--</servlet-mapping>-->
+
+  <!--Filer Mapper-->
   <filter>
     <filter-name>MovieListRequestFilter</filter-name>
     <filter-class>com.nhom17.controllers.filters.MovieListRequestFilter</filter-class>
@@ -144,14 +152,14 @@
     <filter-name>BookingTicketRequestFilter</filter-name>
     <servlet-name>BookingTicketStepController</servlet-name>
   </filter-mapping>
-  <filter>
-    <filter-name>SecurityFilter</filter-name>
-    <filter-class>com.nhom17.controllers.filters.SecurityFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <servlet-name>LoginControllerServlet</servlet-name>
-  </filter-mapping>
+  <!--<filter>-->
+    <!--<filter-name>SecurityFilter</filter-name>-->
+    <!--<filter-class>com.nhom17.controllers.filters.SecurityFilter</filter-class>-->
+  <!--</filter>-->
+  <!--<filter-mapping>-->
+    <!--<filter-name>SecurityFilter</filter-name>-->
+    <!--<servlet-name>LoginControllerServlet</servlet-name>-->
+  <!--</filter-mapping>-->
   <!--<filter>-->
     <!--<filter-name>PurchaseTicketRequestFilter</filter-name>-->
     <!--<filter-class>io.github.parthoshuvo.controllers.filters.PurchaseTicketRequestFilter</filter-class>-->

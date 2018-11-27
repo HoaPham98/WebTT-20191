@@ -7,7 +7,7 @@ import com.nhom17.util.JdbcTemplate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TheLoaiDao extends CommonDao<TheLoai> {
 
@@ -24,11 +24,11 @@ public class TheLoaiDao extends CommonDao<TheLoai> {
 
 
     @Override
-    public ArrayList<TheLoai> getall() {
+    public List<TheLoai> getall() {
         return JdbcTemplate.query("SELECT * FROM [dbo].[TheLoai]", createHandler());
     }
 
-    public ArrayList<TheLoai> getByMovie(final Phim phim) {
+    public List<TheLoai> getByMovie(final Phim phim) {
         return JdbcTemplate.query("SELECT TenTheLoai FROM Phim natural join TheLoaiPhim NATURAL JOIN TheLoai WHERE MaPhim = ?", new JdbcTemplate.PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {

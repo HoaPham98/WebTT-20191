@@ -73,4 +73,13 @@ public class SecurityFilter implements Filter {
         filterChain.doFilter(wrapRequest, response);
     }
 
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 }

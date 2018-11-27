@@ -1,6 +1,5 @@
 package com.nhom17.model.services.internal.database_interaction;
 
-import com.nhom17.database.DatabaseConnector;
 import com.nhom17.model.services.internal.database_interaction.interfaces.DatabaseInteractionService;
 import com.nhom17.model.services.internal.database_interaction.utility.BookingTicketServiceUtility;
 import com.nhom17.model.services.internal.database_interaction.utility.MovieInfoServiceUtility;
@@ -18,16 +17,15 @@ public class DatabaseInteractionServiceFactory {
 
 	public DatabaseInteractionService getService(int service) {
 		DatabaseInteractionService databaseInteractionService = null;
-		DatabaseConnector dbConnector = DatabaseConnector.getInstance();
 		switch (service) {
 		case DatabaseInteractionServiceFactory.SERVICE_MOVIE_INFO:
-			databaseInteractionService = new MovieInfoServiceUtility(dbConnector);
+			databaseInteractionService = new MovieInfoServiceUtility();
 			break;
 		case DatabaseInteractionServiceFactory.SERVICE_MOVIE_SCHEDULE:
-			databaseInteractionService = new MovieScheduleServiceUtility(dbConnector);
+			databaseInteractionService = new MovieScheduleServiceUtility();
 			break;
 		case DatabaseInteractionServiceFactory.SERVICE_BOOKING_TICKET:
-			databaseInteractionService = new BookingTicketServiceUtility(dbConnector);
+			databaseInteractionService = new BookingTicketServiceUtility();
 		default:
 			break;
 		}

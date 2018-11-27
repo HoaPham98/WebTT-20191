@@ -1,24 +1,24 @@
 package com.nhom17.util;
 
-import com.nhom17.database.DatabaseConnector;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class JdbcTemplate {
-    public static <T> ArrayList<T> query(String sql, RowCallBackHandler<T> handler) {
+
+    public static <T> List<T> query(String sql, RowCallBackHandler<T> handler) {
         return query(sql, null, handler);
     }
 
-    public static <T> ArrayList<T> query(String sql, PreparedStatementSetter setter,
+    public static <T> List<T> query(String sql, PreparedStatementSetter setter,
                                     RowCallBackHandler<T> handler) {
         ResultSet rs = null;
-        ArrayList<T> list = null;
+        List<T> list = null;
         try {
             rs = query(sql, setter);
             if (handler != null) {
@@ -55,21 +55,29 @@ public final class JdbcTemplate {
         return null;
     }
 
-    private static ResultSet query(String sql, PreparedStatementSetter setter)
+    public static ResultSet query(String sql)
             throws SQLException {
-        PreparedStatement pstmt = DatabaseConnector.getInstance().getConnection()
+        PreparedStatement pstmt = ConnectionManager.getConnection()
                 .prepareStatement(sql);
-        if (null != setter)
-            setter.setValues(pstmt);
         return pstmt.executeQuery();
     }
 
-    public static int[] batch(String sql, PreparedStatementSetter...setters) {
+    public static ResultSet query(String sql, PreparedStatementSetter setter)
+            throws SQLException {
+        PreparedStatement pstmt = ConnectionManager.getConnection()
+                .prepareStatement(sql);
+        if (null != setter) {
+            setter.setValues(pstmt);
+        }
+        return pstmt.executeQuery();
+    }
+
+    public static int[] batch(String sql, BatchPreparedStatementSetter setter) {
         PreparedStatement pstmt = null;
         try {
-            pstmt = DatabaseConnector.getInstance().getConnection().prepareStatement(sql);
-            for (PreparedStatementSetter setter : setters){
-                setter.setValues(pstmt);
+            pstmt = ConnectionManager.getConnection().prepareStatement(sql);
+            for (int i=0; i< setter.getBatchSize(); i++) {
+                setter.setValues(pstmt, i);
                 pstmt.addBatch();
             }
             return pstmt.executeBatch();
@@ -85,13 +93,20 @@ public final class JdbcTemplate {
         PreparedStatement pstmt = null;
         boolean isInsert = sql.toLowerCase().startsWith("insert");
         try {
-            pstmt = DatabaseConnector.getInstance().getConnection().prepareStatement(sql);
+            pstmt = ConnectionManager.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             if (null != setter) {
                 setter.setValues(pstmt);
             }
             int row = pstmt.executeUpdate();
+
             if (isInsert) {
-                return getPrimaryKey(sql);
+                // get candidate id
+                int candidateId = 0;
+                ResultSet rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    candidateId = rs.getInt(1);
+                }
+                return candidateId;
             }
             return row;
         } catch (SQLException e) {
@@ -106,11 +121,12 @@ public final class JdbcTemplate {
         String seqName = "seq_" + tableName + "_id";
         ResultSet rs = null;
         try {
-            rs = DatabaseConnector.getInstance().getConnection()
+            rs = ConnectionManager.getConnection()
                     .prepareStatement("select " + seqName + ".currval from dual")
                     .executeQuery();
-            if(rs.next())
+            if (rs.next()) {
                 return rs.getInt(1);
+            }
         } catch (SQLException e) {
             DBUtil.release(rs);
         }
@@ -128,6 +144,7 @@ public final class JdbcTemplate {
     }
 
     public static class JdbcTemplateException extends RuntimeException {
+
         private static final long serialVersionUID = -7127691293598353977L;
 
         public JdbcTemplateException() {
@@ -154,10 +171,18 @@ public final class JdbcTemplate {
     }
 
     public static interface PreparedStatementSetter {
+
         void setValues(PreparedStatement pstmt) throws SQLException;
     }
 
+    public static interface BatchPreparedStatementSetter {
+
+        void setValues(PreparedStatement pstmt, int i) throws SQLException;
+        int getBatchSize();
+    }
+
     public static interface RowCallBackHandler<T> {
+
         T processRow(ResultSet rs) throws SQLException;
     }
 }

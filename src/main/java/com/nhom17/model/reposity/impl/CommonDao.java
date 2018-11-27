@@ -3,6 +3,7 @@ package com.nhom17.model.reposity.impl;
 import com.nhom17.model.reposity.IDAO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CommonDao<T> implements IDAO<T> {
 
@@ -37,7 +38,7 @@ public class CommonDao<T> implements IDAO<T> {
     }
 
     @Override
-    public ArrayList<T> getall() {
+    public List<T> getall() {
         return null;
     }
 

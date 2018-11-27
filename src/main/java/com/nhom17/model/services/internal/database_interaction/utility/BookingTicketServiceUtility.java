@@ -1,25 +1,18 @@
 package com.nhom17.model.services.internal.database_interaction.utility;
 
-import com.nhom17.database.DatabaseConnector;
 import com.nhom17.model.dto.Phong;
 import com.nhom17.model.dto.XuatChieu;
 import com.nhom17.model.reposity.impl.PhongDao;
 import com.nhom17.model.reposity.impl.XuatChieuDao;
 import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
 
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class BookingTicketServiceUtility extends DatabaseServiceUtility implements BookingTicketService {
 
-	public BookingTicketServiceUtility(DatabaseConnector dbConnector) {
-		super(dbConnector);
+	public BookingTicketServiceUtility() {
 	}
 
 	private PhongDao phongDao = PhongDao.createPhongReposity();
