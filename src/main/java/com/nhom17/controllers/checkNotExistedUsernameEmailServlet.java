@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/ajax/user")
-public class checkExistedUsernameOrEmailServlet extends BaseServlet{
+public class checkNotExistedUsernameEmailServlet extends BaseServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("username");
@@ -30,7 +30,7 @@ public class checkExistedUsernameOrEmailServlet extends BaseServlet{
             //false;
             //response.setContentType("application/json");
             try {
-                json.put("status", "false");
+                json.put("status", "true");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -39,7 +39,7 @@ public class checkExistedUsernameOrEmailServlet extends BaseServlet{
             //true;
             //response.setContentType("application/json");
             try {
-                json.put("status", "true");
+                json.put("status", "false");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
