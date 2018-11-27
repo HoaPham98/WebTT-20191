@@ -2,15 +2,13 @@ package com.nhom17.model.services.internal.database_interaction.utility;
 
 import java.util.*;
 
-import com.nhom17.database.DatabaseConnector;
 import com.nhom17.model.dto.*;
 import com.nhom17.model.reposity.impl.XuatChieuDao;
 import com.nhom17.model.services.internal.database_interaction.interfaces.MovieScheduleService;
 
 public class MovieScheduleServiceUtility extends DatabaseServiceUtility implements MovieScheduleService {
 
-	public MovieScheduleServiceUtility(DatabaseConnector dbConnector) {
-		super(dbConnector);
+	public MovieScheduleServiceUtility() {
 		reposity = XuatChieuDao.createXuatChieuReposity();
 	}
 
@@ -18,13 +16,11 @@ public class MovieScheduleServiceUtility extends DatabaseServiceUtility implemen
 
 	@Override
 	public boolean openService() {
-		getDbConnector().createConnection();
 		return false;
 	}
 
 	@Override
 	public boolean closeService() {
-		getDbConnector().closeConnection();
 		return false;
 	}
 
@@ -32,7 +28,7 @@ public class MovieScheduleServiceUtility extends DatabaseServiceUtility implemen
 	public MovieShowTimeSchedule getMovieSchedule(Phim phim, Date date){
 		Map<DangPhim,List<XuatChieu>> showTimes = new HashMap<>();
 		MovieShowTimeSchedule movieShowTimeSchedule = new MovieShowTimeSchedule();
-		ArrayList<XuatChieu> showtimes = reposity.getByMovie(phim, date);
+		List<XuatChieu> showtimes = reposity.getByMovie(phim, date);
 		for (DangPhim dangPhim: DangPhim.allDangPhim) {
 			showTimes.put(dangPhim, new ArrayList<XuatChieu>());
 		}

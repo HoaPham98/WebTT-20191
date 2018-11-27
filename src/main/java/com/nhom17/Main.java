@@ -1,10 +1,16 @@
 package com.nhom17;
 
-import com.nhom17.database.DatabaseConnector;
+import com.nhom17.util.ConnectionManager;
+
+import java.sql.SQLException;
 
 public class Main {
 
     public static void main(String args[]) {
-        DatabaseConnector.getInstance().createConnection();
+        try {
+            System.out.println(ConnectionManager.getConnection().isClosed());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

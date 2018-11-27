@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.nhom17.util.JdbcTemplate;
 
@@ -35,11 +36,11 @@ public class PhimDao extends CommonDao<Phim> {
         return new PhimDao();
     }
 
-    public ArrayList<Phim> getNowShowingMovies() {
+    public List<Phim> getNowShowingMovies() {
         return JdbcTemplate.query("SELECT * FROM [dbo].[DanhSachPhimDangChieu]",createHandler());
     }
 
-    public ArrayList<Phim> getUpComingMovies() {
+    public List<Phim> getUpComingMovies() {
         return JdbcTemplate.query("SELECT * FROM [dbo].[DanhSachPhimSapChieu]",createHandler());
     }
 

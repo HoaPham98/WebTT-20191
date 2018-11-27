@@ -2,13 +2,9 @@ package com.nhom17.model.services.internal.database_interaction.utility;
 
 import java.sql.SQLException;
 
-import com.nhom17.database.DatabaseConnector;
-
 public abstract class DatabaseServiceUtility {
-	private DatabaseConnector dbConnector;
 
-	protected DatabaseServiceUtility(DatabaseConnector dbConnector) {
-		this.dbConnector = dbConnector;
+	protected DatabaseServiceUtility() {
 	}
 
 	protected void printSQLERRM(SQLException e) {
@@ -21,13 +17,4 @@ public abstract class DatabaseServiceUtility {
 
 	}
 
-	public void setDbConnector(DatabaseConnector dbConnector) {
-		this.dbConnector = dbConnector;
-	}
-
-	public DatabaseConnector getDbConnector() {
-		return dbConnector;
-	}
-	
-	
 }

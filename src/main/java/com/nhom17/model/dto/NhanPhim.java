@@ -34,7 +34,7 @@ public class NhanPhim {
     }
 
     public static List<NhanPhim> getAllNhanPhim() {
-        ArrayList<NhanPhim> types = new ArrayList<>();
+        List<NhanPhim> types;
         types = JdbcTemplate.query("SELECT * FROM [dbo].[NhanPhim]", new JdbcTemplate.RowCallBackHandler<NhanPhim>() {
             @Override
             public NhanPhim processRow(ResultSet rs) throws SQLException {

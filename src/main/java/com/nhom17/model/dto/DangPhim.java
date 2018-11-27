@@ -43,7 +43,7 @@ public class DangPhim {
     }
 
     public static List<DangPhim> getAllDangPhim() {
-        ArrayList<DangPhim> types = new ArrayList<>();
+        List<DangPhim> types;
         types = JdbcTemplate.query("SELECT * FROM [dbo].[DangPhim]", new JdbcTemplate.RowCallBackHandler<DangPhim>() {
             @Override
             public DangPhim processRow(ResultSet rs) throws SQLException {

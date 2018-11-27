@@ -1,6 +1,7 @@
 package com.nhom17.model.reposity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IDAO<T> {
     void add(T item);
@@ -15,7 +16,7 @@ public interface IDAO<T> {
 
     T getOne(String id);
 
-    ArrayList<T> getall();
+    List<T> getall();
 
-    ArrayList<T> query(String ...conditions);
+    List<T> query(String ...conditions);
 }

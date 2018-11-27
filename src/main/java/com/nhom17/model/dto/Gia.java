@@ -64,7 +64,7 @@ public class Gia {
 
     public static Map<String, Map<String, Integer>> getAllGiaVe() {
         final Map<String, Map<String, Integer>> map = new HashMap<>();
-        ArrayList<Gia> gias = JdbcTemplate.query("SELECT * FROM [dbo].[Gia]", new JdbcTemplate.RowCallBackHandler<Gia>() {
+        List<Gia> gias = JdbcTemplate.query("SELECT * FROM [dbo].[Gia]", new JdbcTemplate.RowCallBackHandler<Gia>() {
             @Override
             public Gia processRow(ResultSet rs) throws SQLException {
                 Gia gia = new Gia();

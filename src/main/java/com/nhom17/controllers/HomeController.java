@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeController extends BaseServlet {
 
@@ -19,8 +20,8 @@ public class HomeController extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PhimDao repository = PhimDao.createPhimReposity();
-        ArrayList<Phim> nowShowingMovies = repository.getNowShowingMovies();
-        ArrayList<Phim> upComingMovies = repository.getUpComingMovies();
+        List<Phim> nowShowingMovies = repository.getNowShowingMovies();
+        List<Phim> upComingMovies = repository.getUpComingMovies();
 
         HttpSession httpSession = request.getSession(false);
         if (httpSession != null) {

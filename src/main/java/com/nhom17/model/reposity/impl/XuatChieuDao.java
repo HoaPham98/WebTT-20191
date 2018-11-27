@@ -11,6 +11,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class XuatChieuDao extends CommonDao<XuatChieu> {
 
@@ -39,9 +40,9 @@ public class XuatChieuDao extends CommonDao<XuatChieu> {
         }, createHandler());
     }
 
-    public ArrayList<XuatChieu> getByMovie(final Phim phim){
+    public List<XuatChieu> getByMovie(final Phim phim){
         final Date date = new Date();
-        ArrayList<XuatChieu> xuatChieuList = JdbcTemplate.query("SELECT * FROM [dbo].[XuatChieu] WHERE MaPhim = ? AND NgayChieu >= ?", new JdbcTemplate.PreparedStatementSetter() {
+        List<XuatChieu> xuatChieuList = JdbcTemplate.query("SELECT * FROM [dbo].[XuatChieu] WHERE MaPhim = ? AND NgayChieu >= ?", new JdbcTemplate.PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, phim.getMaPhim());
@@ -52,8 +53,8 @@ public class XuatChieuDao extends CommonDao<XuatChieu> {
         return xuatChieuList;
     }
 
-    public ArrayList<XuatChieu> getByMovie(final Phim phim, final Date date){
-        ArrayList<XuatChieu> xuatChieuList = JdbcTemplate.query("SELECT * FROM [dbo].[XuatChieu] WHERE MaPhim = ? AND NgayChieu = ?", new JdbcTemplate.PreparedStatementSetter() {
+    public List<XuatChieu> getByMovie(final Phim phim, final Date date){
+        List<XuatChieu> xuatChieuList = JdbcTemplate.query("SELECT * FROM [dbo].[XuatChieu] WHERE MaPhim = ? AND NgayChieu = ?", new JdbcTemplate.PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, phim.getMaPhim());
