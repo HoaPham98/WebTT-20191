@@ -56,11 +56,20 @@ public class ThanhVienDAO extends CommonDao<ThanhVien> {
 
     //Tim thanh vien theo ten dang nhap
     public ThanhVien getByUserName(final String username) {
-        return JdbcTemplate.singleQuery("SELECT * FROM [dbo].[ThanhVien] WHERE (TenDangNhap = ? OR Email = ?)", new JdbcTemplate.PreparedStatementSetter() {
+        return JdbcTemplate.singleQuery("SELECT * FROM [dbo].[ThanhVien] WHERE TenDangNhap = ?", new JdbcTemplate.PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, username);
-                pstmt.setString(2, username);
+            }
+        }, callBackHandler());
+    }
+
+    //Tim thanh vien theo email
+    public ThanhVien getByEmail(final String email) {
+        return JdbcTemplate.singleQuery("SELECT * FROM [dbo].[ThanhVien] WHERE Email = ?", new JdbcTemplate.PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, email);
             }
         }, callBackHandler());
     }

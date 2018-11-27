@@ -18,13 +18,15 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/ajax/user")
-public class checkExistedUsernameServlet extends BaseServlet{
+public class checkExistedUsernameOrEmailServlet extends BaseServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("username");
-        ThanhVien thanhVien = ThanhVienDAO.getInstance().getByUserName(userName);
+        String email = request.getParameter("email");
+        ThanhVien thanhVien1 = ThanhVienDAO.getInstance().getByUserName(userName);
+        ThanhVien thanhVien2 = ThanhVienDAO.getInstance().getByEmail(email);
         JSONObject json = new JSONObject();
-        if(thanhVien == null) {
+        if(thanhVien1 == null && thanhVien2 == null) {
             //false;
             //response.setContentType("application/json");
             try {
