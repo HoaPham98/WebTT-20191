@@ -2276,19 +2276,22 @@ function init_login() {
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100');
-    console.log("init login!")
+    var password = "";
+    var email = "";
+    var username = "";
+    var checkEmail = true;
+    var checkUsername = true;
 
-    $('.validate-form').on('submit',function(){
+    $('.validate-form').submit(function( event ) {
         var check = true;
 
         for(var i=0; i<input.length; i++) {
             if(validate(input[i]) == false){
                 showValidate(input[i]);
                 check=false;
+                event.preventDefault();
             }
         }
-
-        return check;
     });
 
 
@@ -2296,22 +2299,70 @@ function init_login() {
         $(this).focus(function(){
            hideValidate(this);
         });
+        $(this).blur(function () {
+            if(validate($(this)) == false){
+                showValidate($(this));
+                return;
+            }
+			if ($(this).attr('name') == 'pass') {
+				password = $(this).val();
+			}
+            if ($(this).attr('name') == 'email') {
+            	if (email != $(this).val()) {
+                    email = $(this).val();
+                    $.getJSON('/ajax/user', { 'email': email }, function(data) {
+                    	checkEmail = data.status;
+						if (data.status != "true") {
+                            $(this).attr({'data-validate': '"This email has been registered!"'});
+                            console.log("False");
+                            showValidate($(this));
+						}
+                    });
+				}
+            }
+            if ($(this).attr('name') == 'username') {
+                if (username != $(this).val()) {
+                    username = $(this).val();
+                    $.getJSON('/ajax/user', { 'username': username }, function(data) {
+                    	checkUsername = data.status;
+                        if (data.status != "true") {
+                            $(this).attr({'data-validate': '"This username has been registered!"'});
+                            console.log("False");
+                            showValidate($(this));
+                        }
+                    });
+                }
+            }
+        });
     });
 
     function validate (input) {
         if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+            if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+            	$(input).attr('data-validate', '"Valid email is required: ex@abc.xyz"');
+                return false;
+            } else return checkEmail;
+        } else if ($(input).attr('name') == 'pass-retype'){
+			if ($(input).val() != password) {
+				return false;
+			}
+		} else if ($(input).attr('type') == 'retype-email') {
+            if ($(input).val() != email) {
                 return false;
             }
+		} else if ($(input).attr('name') == 'username'){
+        	return checkUsername;
         }
         else {
             if($(input).val().trim() == ''){
+                $(input).attr('data-validate', '"Field required!"');
                 return false;
             }
         }
     }
 
     function showValidate(input) {
+    	console.log($(input).attr('data-validate'));
         var thisAlert = $(input).parent();
 
         $(thisAlert).addClass('alert-validate');
