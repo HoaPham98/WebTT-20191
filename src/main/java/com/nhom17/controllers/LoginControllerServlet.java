@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
 public class LoginControllerServlet extends BaseServlet {
     private static final long serialVersionUID = 1L;
 

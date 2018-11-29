@@ -7,6 +7,7 @@ import com.nhom17.util.JdbcTemplate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GheDao extends CommonDao<Ghe> {
@@ -32,6 +33,18 @@ public class GheDao extends CommonDao<Ghe> {
             }
         }, callBackHandler());
     }
+
+    public ArrayList<Ghe> getSoldByXuatChieu(final String maXuatChieu) {
+        return JdbcTemplate.query("SELECT * FROM [dbo].[Ve]" +
+                "WHERE MaXuatChieu = ? AND MaTrangThaiVe = 1", new JdbcTemplate.PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, maXuatChieu );
+            }
+        }, callBackHandler());
+    }
+
+
 
     private JdbcTemplate.RowCallBackHandler<Ghe> callBackHandler() {
         return new JdbcTemplate.RowCallBackHandler<Ghe>() {
