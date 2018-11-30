@@ -44,6 +44,10 @@ public class PhimDao extends CommonDao<Phim> {
         return JdbcTemplate.query("SELECT * FROM [dbo].[DanhSachPhimSapChieu]",createHandler());
     }
 
+    public ArrayList<Phim> getAllMovies() {
+        return JdbcTemplate.query("SELECT * FROM [dbo].[Phim]",createHandler());
+    }
+
     public Phim getMovie(final String id) {
         return JdbcTemplate.singleQuery("SELECT * FROM [dbo].[Phim] WHERE MaPhim=?", new JdbcTemplate.PreparedStatementSetter() {
             @Override
