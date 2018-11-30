@@ -23,10 +23,15 @@ public class checkNotExistedUsernameEmailServlet extends BaseServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("username");
         String email = request.getParameter("email");
-        ThanhVien thanhVien1 = ThanhVienDAO.getInstance().getByUserName(userName);
-        ThanhVien thanhVien2 = ThanhVienDAO.getInstance().getByEmail(email);
+        ThanhVien thanhVien = null;
+        if (userName != null) {
+            thanhVien = ThanhVienDAO.getInstance().getByUserName(userName);
+        } else if (email != null) {
+            thanhVien = ThanhVienDAO.getInstance().getByEmail(email);
+        }
+        
         JSONObject json = new JSONObject();
-        if(thanhVien1 == null && thanhVien2 == null) {
+        if(thanhVien == null) {
             //false;
             //response.setContentType("application/json");
             try {

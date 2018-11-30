@@ -33,8 +33,6 @@
     <servlet-name>Movie Info Page</servlet-name>
     <jsp-file>/pages/web/movie_page.jsp</jsp-file>
   </servlet>
-
-  <!--JSP mapper to url-->
   <servlet-mapping>
     <servlet-name>Movie Info Page</servlet-name>
     <url-pattern>/movie_page</url-pattern>
@@ -42,6 +40,10 @@
     <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/login_page</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Signup</servlet-name>
+    <url-pattern>/signup_page</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Final Ticket Page</servlet-name>
@@ -74,6 +76,10 @@
   <servlet>
     <servlet-name>Login</servlet-name>
     <jsp-file>/pages/web/login.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>Signup</servlet-name>
+    <jsp-file>/pages/web/signup.jsp</jsp-file>
   </servlet>
 
   <!--URL mapper to Servlet Controller-->
@@ -118,6 +124,14 @@
     <servlet-name>LoginControllerServlet</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>SignupControllerServlet</servlet-name>
+    <servlet-class>com.nhom17.controllers.SignupControllerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignupControllerServlet</servlet-name>
+    <url-pattern>/signup</url-pattern>
+  </servlet-mapping>
   <!--<servlet>-->
     <!--<servlet-name>PurchaseTicketControllerServlet</servlet-name>-->
     <!--<servlet-class>com.nhom17.controllerss.PurchaseTicketControllerServlet</servlet-class>-->
@@ -153,14 +167,6 @@
     <servlet-name>BookingTicketStepController</servlet-name>
   </filter-mapping>
   <!--<filter>-->
-    <!--<filter-name>SecurityFilter</filter-name>-->
-    <!--<filter-class>com.nhom17.controllers.filters.SecurityFilter</filter-class>-->
-  <!--</filter>-->
-  <!--<filter-mapping>-->
-    <!--<filter-name>SecurityFilter</filter-name>-->
-    <!--<servlet-name>LoginControllerServlet</servlet-name>-->
-  <!--</filter-mapping>-->
-  <!--<filter>-->
     <!--<filter-name>PurchaseTicketRequestFilter</filter-name>-->
     <!--<filter-class>io.github.parthoshuvo.controllers.filters.PurchaseTicketRequestFilter</filter-class>-->
   <!--</filter>-->
@@ -170,6 +176,6 @@
   <!--</filter-mapping>-->
   <error-page>
     <error-code>404</error-code>
-    <location>/pages/web/error.jsp</location>
+    <location>/pages/web/signup.jsp</location>
   </error-page>
 </web-app>
