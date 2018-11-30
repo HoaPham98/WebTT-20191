@@ -1,4 +1,4 @@
-package dto;
+package com.nhom17.model.dto;
 
 public class ChiTietGiaoDich {
     private int id;

@@ -29,7 +29,7 @@ public class LoginControllerServlet extends BaseServlet {
  
         if (userAccount == null) {
             String errorMessage = "Invalid userName or Password";
- 
+            System.out.println(errorMessage);
             request.setAttribute("errorMessage", errorMessage);
  
             RequestDispatcher dispatcher //
@@ -63,38 +63,38 @@ public class LoginControllerServlet extends BaseServlet {
         RequestDispatcher dispatcher //
                 = request.getRequestDispatcher("/login_page");
         dispatcher.forward(request, response);
-        String userName = request.getParameter("email");
-        String password = request.getParameter("pass");
-        ThanhVien userAccount = ThanhVienDAO.getInstance().getByUserNamePass(userName, password);
-
-        if (userAccount == null) {
-            String errorMessage = "Invalid userName or Password";
-
-            request.setAttribute("errorMessage", errorMessage);
-
-            dispatcher //
-                    = request.getRequestDispatcher("/login_page");
-
-            dispatcher.forward(request, response);
-            return;
-        }
-        System.out.println("Da query ra 1 user != null");
-        AppUtils.storeLoginedUser(request.getSession(), userAccount);
-
-        //
-        int redirectId = -1;
-        try {
-            redirectId = Integer.parseInt(request.getParameter("redirectId"));
-        } catch (Exception e) {
-        }
-        String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
-        if (requestUri != null) {
-            response.sendRedirect(requestUri);
-        } else {
-            // Mặc định sau khi đăng nhập thành công
-            // chuyển hướng về trang /home
-            response.sendRedirect(request.getContextPath() + "/home");
-        }
+//        String userName = request.getParameter("email");
+//        String password = request.getParameter("pass");
+//        ThanhVien userAccount = ThanhVienDAO.getInstance().getByUserNamePass(userName, password);
+//
+//        if (userAccount == null) {
+//            String errorMessage = "Invalid userName or Password";
+//
+//            request.setAttribute("errorMessage", errorMessage);
+//
+//            dispatcher //
+//                    = request.getRequestDispatcher("/login_page");
+//
+//            dispatcher.forward(request, response);
+//            return;
+//        }
+//        System.out.println("Da query ra 1 user != null");
+//        AppUtils.storeLoginedUser(request.getSession(), userAccount);
+//
+//        //
+//        int redirectId = -1;
+//        try {
+//            redirectId = Integer.parseInt(request.getParameter("redirectId"));
+//        } catch (Exception e) {
+//        }
+//        String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
+//        if (requestUri != null) {
+//            response.sendRedirect(requestUri);
+//        } else {
+//            // Mặc định sau khi đăng nhập thành công
+//            // chuyển hướng về trang /home
+//            response.sendRedirect(request.getContextPath() + "/home");
+//        }
 
     }
 }

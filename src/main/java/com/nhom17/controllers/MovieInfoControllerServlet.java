@@ -33,10 +33,6 @@ public class MovieInfoControllerServlet extends BaseServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession httpSession = request.getSession(false);
-		if (httpSession != null) {
-			httpSession.invalidate();
-		}
 		MovieInfoService movieInfoService = (MovieInfoService) new DatabaseInteractionServiceFactory()
 				.getService(DatabaseInteractionServiceFactory.SERVICE_MOVIE_INFO);
 //		String maPhjmovieName = (String) request.getAttribute("movieName");

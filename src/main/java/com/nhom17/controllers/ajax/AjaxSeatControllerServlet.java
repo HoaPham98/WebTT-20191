@@ -1,9 +1,11 @@
-package com.nhom17.controllers;
+package com.nhom17.controllers.ajax;
 
+import com.nhom17.controllers.BaseServlet;
 import com.nhom17.model.dto.Ghe;
 import com.nhom17.model.dto.Ve;
 import com.nhom17.model.reposity.impl.GheDao;
 import com.nhom17.model.reposity.impl.VeDAO;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -13,20 +15,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/ajax/seat")
-public class GheServlet extends BaseServlet {
-
+public class AjaxSeatControllerServlet extends BaseServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String maXuatChieu = request.getParameter("maXuatChieu");
-        ArrayList<Ghe> gheList = GheDao.createGheReposity().getSoldByXuatChieu(maXuatChieu);
+        if (maXuatChieu == null) {
+            PrintWriter writer = response.getWriter();
+            String output = "{ \"status\" : \"false\", \"data\" : \"maXuatChieu is not available!\" }";
+            writer.write(output);
+            writer.close();
+            return;
+        }
+        List<Ghe> gheList = GheDao.createGheReposity().getSoldByXuatChieu(maXuatChieu);
         JSONObject maGhe = null;
+        JSONArray data = new JSONArray();
         for (Ghe ghe : gheList) {
             try {
                 maGhe = new JSONObject();
                 maGhe.put("maGhe", ghe.getMaGhe());
+                data.put(maGhe);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -34,7 +44,7 @@ public class GheServlet extends BaseServlet {
         JSONObject json = new JSONObject();
         try {
             json.put("status", "true");
-            json.put("data", maGhe);
+            json.put("data", data);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -48,25 +58,35 @@ public class GheServlet extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String maGhe = request.getParameter("maGhe");
         String maXuatChieu = request.getParameter("maXuatchieu");
-        ArrayList<Ve> veList = VeDAO.createVeReposity().getVeByMaXCMaGhe(maXuatChieu,maGhe);
-        for (Ve ve: veList) {
-            ve.setMaTrangThaiVe(2);
-        }
-        JSONObject json = new JSONObject();
+        int trangthai = 2;
         try {
-            json.put("status", "true");
+            trangthai = Integer.parseInt(request.getParameter("trangthai"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            trangthai = 2;
+        }
+        Ve ve = VeDAO.createVeReposity().getVeByMaXCMaGhe(maXuatChieu, maGhe);
+        ve.setMaTrangThaiVe(trangthai);
+        int update = VeDAO.createVeReposity().update(ve);
+        JSONObject json = new JSONObject();
+
+        try {
+            if (update > 0) {
+                json.put("status", "true");
+            } else {
+                json.put("status", "false");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         String output = json.toString();
-        PrintWriter writer = null;
         try {
-            writer = response.getWriter();
+            PrintWriter writer = response.getWriter();
+            writer.write(output);
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        writer.write(output);
-        writer.close();
 
     }
 }

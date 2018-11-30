@@ -30,7 +30,7 @@
 </head>
 <body>
 <div class="full">
-	<jsp:include page="/WEB-INF/templates/web/menu.jsp" />
+	<jsp:include page="/WEB-INF/templates/web/menu.jsp"/>
 	<div class="main">
 		<div class="error-content">
 			<jsp:include page="/WEB-INF/templates/web/header.jsp" />

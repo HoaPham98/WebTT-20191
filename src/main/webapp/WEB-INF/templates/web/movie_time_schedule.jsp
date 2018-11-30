@@ -87,7 +87,7 @@
 								System.out.println(todayDate);
 								System.out.println(dupShowTime.compareTo(todayDate));
 								if (dupShowTime.compareTo(todayDate) <= 0) {
-									clsName = "active";
+									clsName = "disable";
 								} else {
 									clsName = "";
 									showURL = bookingURL + "&time=" + showTime.getThoiGianChieu() + "&showtime=" + showTime.getMaXuatChieu().replaceAll(" ", "_");

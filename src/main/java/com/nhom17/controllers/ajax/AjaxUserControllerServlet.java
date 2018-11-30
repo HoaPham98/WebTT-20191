@@ -1,5 +1,6 @@
-package com.nhom17.controllers;
+package com.nhom17.controllers.ajax;
 
+import com.nhom17.controllers.BaseServlet;
 import com.nhom17.model.dto.Phim;
 import com.nhom17.model.dto.ThanhVien;
 import com.nhom17.model.reposity.impl.PhimDao;
@@ -18,7 +19,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/ajax/user")
-public class checkNotExistedUsernameEmailServlet extends BaseServlet{
+public class AjaxUserControllerServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("username");

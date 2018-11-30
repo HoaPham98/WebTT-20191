@@ -1,4 +1,4 @@
-package dto;
+package com.nhom17.model.dto;
 
 import java.sql.Time;
 import java.util.Date;

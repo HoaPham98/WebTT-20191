@@ -1,4 +1,4 @@
-package dto;
+package com.nhom17.model.dto;
 
 public class TrangThaiGiaoDich {
     private String trangThaiGiaoDich;

@@ -22,7 +22,8 @@ public class SecurityConfig {
 ////        case "/movie-trailer":
 ////        case "/home":
 ////        case "/":
-        urlPattern1.add("/movie-trailer");
+        urlPattern1.add("/booking_step2");
+        urlPattern1.add("/booking_step3");
         // co the them sau
         mapConfig.put(ROLE_USER, urlPattern1);
 

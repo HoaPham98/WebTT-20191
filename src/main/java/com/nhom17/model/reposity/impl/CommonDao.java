@@ -18,8 +18,8 @@ public class CommonDao<T> implements IDAO<T> {
     }
 
     @Override
-    public void update(T item) {
-
+    public int update(T item) {
+        return 0;
     }
 
     @Override
@@ -45,5 +45,10 @@ public class CommonDao<T> implements IDAO<T> {
     @Override
     public ArrayList<T> query(String... conditions) {
         return null;
+    }
+
+    @Override
+    public int[] batch(List<T> items) {
+        return new int[0];
     }
 }

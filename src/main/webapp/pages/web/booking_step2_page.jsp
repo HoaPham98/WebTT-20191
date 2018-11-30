@@ -155,6 +155,8 @@
                                                 %>
                                                 class="<%=className%>"
                                                 data-place='<%=ghe.getIdGhe()%>'
+                                                data-id='<%=ghe.getMaGhe()%>'
+                                                data-showtime='<%=showtime.getMaXuatChieu()%>'
                                                 data-price='<%=price%>'></span>
                                         <%
                                             }
@@ -294,10 +296,7 @@
 
                                         },
                                         function (status) {
-                                            if (status == "success") {
-                                                window.location.href = '<%=request.getContextPath()%>' + '/booking_step3'
-
-                                            }
+                                            window.location.href = '<%=request.getContextPath()%>' + '/booking_step3'
                                         });
                                 }
                             } else {

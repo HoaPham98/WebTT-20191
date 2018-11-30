@@ -5,6 +5,7 @@
 <meta charset="ISO-8859-1">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/css/bootstrap-datepicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Custom Theme files -->
 <link href="${pageContext.request.contextPath }/resources/css/style.css"
 	rel="stylesheet" type="text/css" media="all" />
