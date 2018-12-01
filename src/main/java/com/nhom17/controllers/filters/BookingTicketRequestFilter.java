@@ -1,10 +1,7 @@
 package com.nhom17.controllers.filters;
 
 import com.nhom17.model.dto.GiaoDich;
-import com.nhom17.model.dto.PurchaseTicket;
-import com.nhom17.model.reposity.impl.XuatChieuDao;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
-import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
 import com.nhom17.model.services.internal.database_interaction.interfaces.MovieScheduleService;
 
 import java.io.IOException;
@@ -12,8 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -26,23 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class BookingTicketRequestFilter implements Filter {
-	private BookingTicketService bookingTicketService = null;
-	private MovieScheduleService movieScheduleService = null;
 
 	public void destroy() {
-		bookingTicketService.closeService();
-		movieScheduleService.closeService();
 	}
 
-	{
-		DatabaseInteractionServiceFactory databaseInteractionServiceFactory = new DatabaseInteractionServiceFactory();
-		bookingTicketService = (BookingTicketService) databaseInteractionServiceFactory
-				.getService(DatabaseInteractionServiceFactory.SERVICE_BOOKING_TICKET);
-		bookingTicketService.openService();
-		movieScheduleService = (MovieScheduleService) databaseInteractionServiceFactory
-				.getService(DatabaseInteractionServiceFactory.SERVICE_MOVIE_SCHEDULE);
-		movieScheduleService.openService();
-	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {

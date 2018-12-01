@@ -1,12 +1,9 @@
 package com.nhom17.controllers.filters;
 
 import com.nhom17.model.dto.GiaoDich;
-import com.nhom17.model.dto.PurchaseTicket;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
-import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
 
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
