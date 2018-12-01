@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div class="full">
-		<jsp:include page="/WEB-INF/templates/web/menu.jsp" />
+		<jsp:include page="/WEB-INF/templates/web/menu.jsp"/>
 		<div class="main">
 			<div class="single-content">
 				<jsp:include page="/WEB-INF/templates/web/header.jsp" />
@@ -56,10 +56,6 @@
 									request.setAttribute("format", entry.getKey().getTenDangPhim());
 									request.setAttribute("schedule", list);
 						%>
-						<!-- <div class="movie__rate"
-							style="padding-bottom: 50px;">
-							<span class="movie__rating">2D</span>
-						</div> -->
 						<jsp:include page="/WEB-INF/templates/web/movie_time_schedule.jsp" />
 						<%
 								}

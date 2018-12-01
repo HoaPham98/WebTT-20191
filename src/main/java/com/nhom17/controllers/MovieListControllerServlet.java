@@ -35,10 +35,6 @@ public class MovieListControllerServlet extends BaseServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession httpSession = request.getSession(false);
-		if (httpSession != null) {
-			httpSession.invalidate();
-		}
 		String requestedURI = new String(request.getRequestURI());
 		System.out.println(requestedURI);
 		List<Phim> nowShowingMovie = null;

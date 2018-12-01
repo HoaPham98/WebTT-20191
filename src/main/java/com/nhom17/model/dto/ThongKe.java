@@ -1,4 +1,4 @@
-package dto;
+package com.nhom17.model.dto;
 
 import java.util.Date;
 

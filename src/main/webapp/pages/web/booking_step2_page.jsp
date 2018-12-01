@@ -1,8 +1,8 @@
 <%@page import="java.util.Set" %>
-<%@page import="java.util.LinkedHashMap" %>
 <%@page import="java.util.Map" %>
 <%@page import="java.util.List" %>
 <%@ page import="com.nhom17.model.dto.*" %>
+<%@ page import="com.nhom17.util.CustomTimer" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 %>
 <!DOCTYPE html>
@@ -23,12 +23,9 @@
     String[] bookedSeats = null;
     boolean reservedSeatsFlag = false;
     if (bookedSeatList != null && !bookedSeatList.isEmpty()) {
-        System.out.println(bookedSeatList.size());
         Set<String> keys = bookedSeatList.keySet();
         System.out.print(keys);
         bookedSeats = keys.toArray(new String[keys.size()]);
-        System.out.print(bookedSeats.length);
-        reservedSeatsFlag = true;
     }
 %>
 <div class="full">
@@ -69,6 +66,7 @@
                             </p>
                             <div class="order__control">
                                 <a href="#" class="order__control-btn active">Purchase</a>
+                                <a href="#" class="order__control-btn" id="hms_timer"></a>
                             </div>
                         </div>
                     </div>
@@ -126,7 +124,7 @@
                                             class="sits__row" <%} else {%>
                                             class="sits__row additional-margin" <%}%>>
                                         <%
-                                            System.out.println(String.format("Hang: %s, so ghe: %d",cinemaHallSeat.getHang(), cinemaHallSeat.getGheList().size()));
+//                                            System.out.println(String.format("Hang: %s, so ghe: %d",cinemaHallSeat.getHang(), cinemaHallSeat.getGheList().size()));
                                             for (Ghe ghe: cinemaHallSeat.getGheList()) {
                                         %>
                                         <span
@@ -155,6 +153,8 @@
                                                 %>
                                                 class="<%=className%>"
                                                 data-place='<%=ghe.getIdGhe()%>'
+                                                data-id='<%=ghe.getMaGhe()%>'
+                                                data-showtime='<%=showtime.getMaXuatChieu()%>'
                                                 data-price='<%=price%>'></span>
                                         <%
                                             }
@@ -245,8 +245,7 @@
                         <a href="book1.html" class="booking-pagination__prev"> <span
                                 class="arrow__text arrow--prev">prev step</span> <span
                                 class="arrow__info">what&amp;where&amp;when</span>
-                        </a> <a href="javascript:void(0);" class="booking-pagination__next"
-                                onclick="my_function()"> <span
+                        </a> <a href="javascript:void(0);" class="booking-pagination__next"> <span
                             class="arrow__text arrow--next">next step</span> <span
                             class="arrow__info">checkout</span>
                     </a>
@@ -266,45 +265,37 @@
         .ready(
             function () {
                 init_BookingTwo();
-                $('.booking-pagination__next')
-                    .click(
-                        function () {
 
-                            if (typeof (Storage) !== "undefined") {
-                                var seatList = JSON
-                                    .parse(localStorage
-                                        .getItem("seatList"));
-
-                                if (seatList == null || seatList.length == 0) {
-                                    alert('please select your seats for acessin to further process');
-                                } else {
-                                    console.log(seatList);
-                                    var dup_seatList = [];
-                                    for (var i = 0; i < seatList.length; i++) {
-                                        dup_seatList.push(seatList[i].charAt(0) + '#' + seatList[i].substring(1, seatList[i].length));
-                                    }
-                                    console.log(dup_seatList.toString());
-                                    console.log('<%=request.getContextPath()%>');
-                                    var url = '<%=request.getContextPath()%>' + '/' + 'submit_selected_seats';
-                                    $.post(
-                                        url,
-                                        {
-                                            selected_seats: dup_seatList.toString(),
-                                            ticket_price: '1000'
-
-                                        },
-                                        function (status) {
-                                            if (status == "success") {
-                                                window.location.href = '<%=request.getContextPath()%>' + '/booking_step3'
-
-                                            }
-                                        });
-                                }
-                            } else {
-                                alert('please update your browser');
-                            }
-                        });
             });
 </script>
+<%
+    CustomTimer timer = (CustomTimer) session.getAttribute("Timer");
+    long timeInterval = 0;
+    try {
+        timeInterval = timer.getTimeRemaining();
+    } catch (Exception e) {
+        timeInterval = 0;
+    }
+    long seconds = timeInterval / 1000;
+    long minutes = seconds / 60;
+    seconds = seconds % 60;
+    if (timeInterval > 0) {
+%>
+<script type="text/javascript">
+    $(document)
+        .ready(function(){
+        $('#hms_timer').countdowntimer({
+            minutes :<%=minutes%>,
+            seconds : <%=seconds%>,
+            size : "lg",
+            timeUp : function() {
+                alert("Time out");
+            }
+        });
+    });
+</script>
+<%
+    }
+%>
 </body>
 </html>

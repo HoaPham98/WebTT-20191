@@ -123,7 +123,7 @@ public class BookingTicketServiceUtility extends DatabaseServiceUtility implemen
 //		/*
 //		 * System.out.println(areAvailable);
 //		 */ return areAvailable;
-		return false;
+		return true;
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class BookingTicketServiceUtility extends DatabaseServiceUtility implemen
 //			isAvailable = false;
 //		}
 //		return isAvailable;
-		return false;
+		return true;
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class BookingTicketServiceUtility extends DatabaseServiceUtility implemen
 //			System.out.println(e.getLocalizedMessage());
 //		}
 //		return purchaseId;
-		return 0;
+		return 1;
 	}
 
 	@Override

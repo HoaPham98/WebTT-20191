@@ -34,9 +34,9 @@ public class GheDao extends CommonDao<Ghe> {
         }, callBackHandler());
     }
 
-    public ArrayList<Ghe> getSoldByXuatChieu(final String maXuatChieu) {
+    public List<Ghe> getSoldByXuatChieu(final String maXuatChieu) {
         return JdbcTemplate.query("SELECT * FROM [dbo].[Ve]" +
-                "WHERE MaXuatChieu = ? AND MaTrangThaiVe = 1", new JdbcTemplate.PreparedStatementSetter() {
+                "WHERE MaXuatChieu = ? AND NOT MaTrangThaiVe = 0", new JdbcTemplate.PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, maXuatChieu );

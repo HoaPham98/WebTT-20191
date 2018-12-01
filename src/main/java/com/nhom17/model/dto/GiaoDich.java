@@ -1,7 +1,8 @@
-package dto;
+package com.nhom17.model.dto;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 public class GiaoDich {
     private String maGiaoDich;
@@ -12,6 +13,7 @@ public class GiaoDich {
     private String maXuatChieu;
     private int idTrangThaiGiaodich;
     private int id;
+    private List<String> listMaGhe;
 
     public GiaoDich() {
 
@@ -79,5 +81,13 @@ public class GiaoDich {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<String> getListMaGhe() {
+        return listMaGhe;
+    }
+
+    public void setListMaGhe(List<String> listMaGhe) {
+        this.listMaGhe = listMaGhe;
     }
 }

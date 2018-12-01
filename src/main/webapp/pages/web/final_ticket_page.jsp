@@ -1,4 +1,4 @@
-<%@page import="io.github.parthoshuvo.dto.PurchaseTicket"%>
+<%@ page import="com.nhom17.model.dto.PurchaseTicket" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	%>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
 		}
 	%>
 	<div class="full">
-		<jsp:include page="/WEB-INF/templates/web/menu.jsp" />
+		<!--<jsp:include page="/WEB-INF/templates/web/menu.jsp"/>-->
 		<div class="main">
 			<div class="single-content">
 				<jsp:include page="/WEB-INF/templates/web/header.jsp" />

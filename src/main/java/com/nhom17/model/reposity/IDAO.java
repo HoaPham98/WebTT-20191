@@ -8,7 +8,9 @@ public interface IDAO<T> {
 
     void add(Iterable<T> items);
 
-    void update(T item);
+    int update(T item);
+
+    int[] batch(List<T> items);
 
     void remove(T item);
 

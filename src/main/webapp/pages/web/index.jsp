@@ -24,7 +24,7 @@
 </head>
 <body>
 	<div class="full">
-		<jsp:include page="/WEB-INF/templates/web/menu.jsp" />
+		<jsp:include page="/WEB-INF/templates/web/menu.jsp"/>
 		<div class="main">
 			<div class="header">
 				<!-- includes header file here -->
