@@ -1,8 +1,7 @@
 package com.nhom17.controllers.filters;
 
-import com.nhom17.model.dto.PurchaseTicket;
+import com.nhom17.model.dto.GiaoDich;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
-import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -34,22 +33,12 @@ public class PurchaseTicketRequestFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        String userName = request.getParameter("user-name");
-        String userEmail = request.getParameter("user-email");
-        String userPhone = request.getParameter("user-phone");
         HttpSession session = ((HttpServletRequest) request).getSession(false);
-        PurchaseTicket purchaseTicket = (PurchaseTicket) session.getAttribute("purchaseTicket");
+        GiaoDich giaoDich = (GiaoDich) session.getAttribute("giaoDich");
         String selectedSeats = (String) session.getAttribute("selectedSeats");
-        if (((HttpServletRequest) request).getMethod().equals("POST") && session != null && purchaseTicket != null
+        if (((HttpServletRequest) request).getMethod().equals("POST") && session != null && giaoDich != null
                 && session.getAttribute("bookingStep").equals("3")) {
-            if (bookingTicketService.areSeatsAvailable(purchaseTicket.getShowDate(), purchaseTicket.getShowTime(),
-                    purchaseTicket.getHallNo(), selectedSeats)) {
-                chain.doFilter(request, response);
-            } else {
-                System.out.println("error");
-                httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-                httpServletResponse.sendError(404);
-            }
+            chain.doFilter(request, response);
             return;
         } else {
             System.out.println("error");

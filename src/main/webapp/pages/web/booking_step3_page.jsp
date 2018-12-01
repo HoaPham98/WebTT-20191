@@ -12,12 +12,11 @@
 <body>
 	<%
 		int totalTickets = 0;
-		double ticketPrice = 0.0;
-		double totalCost = 0.0;
+		int ticketPrice = 0;
+		int totalCost = 0;
 		if (request.getAttribute("noOfTickets") != null && request.getAttribute("ticketPrice") != null) {
 			totalTickets = (int) request.getAttribute("noOfTickets");
-			ticketPrice = (double) request.getAttribute("ticketPrice");
-			totalCost = totalTickets * ticketPrice;
+			ticketPrice = (int) request.getAttribute("ticketPrice");
 		}
 	%>
 	<div class="full">
@@ -60,10 +59,8 @@
 									style="margin-top: 20px; margin-bottom: 50px;">
 									<li class="book-result__item">Tickets: <span
 										class="book-result__count booking-ticket"><%=totalTickets%></span></li>
-									<li class="book-result__item">One item price: <span
-										class="book-result__count booking-price">&#2547;<%=ticketPrice%></span></li>
 									<li class="book-result__item">Total: <span
-										class="book-result__count booking-cost">&#2547;<%=totalCost%></span></li>
+										class="book-result__count booking-cost">&#2547;<%=ticketPrice%></span></li>
 								</ul>
 
 								<h2 class="page-heading">Choose payment method</h2>
@@ -91,19 +88,19 @@
 								<form id='contact-info'
 									action="<%=request.getContextPath() + "/" + "purchase_ticket"%>"
 									method="POST" class="form contact-info">
-									<div class="contact-info__field contact-info__field-user">
-										<input type="text" name='user-name' id="user-name"
-											class="form__mail" placeholder='Your Name'
-											pattern="(^[A-Z]+[a-zA-Z\\. ]*){6,30}$" required>
-									</div>
-									<div class="contact-info__field contact-info__field-mail">
-										<input type='email' name='user-email' id="user-email"
-											placeholder='Your email' required class="form__mail">
-									</div>
-									<div class="contact-info__field contact-info__field-tel">
-										<input type='tel' name='user-phone' id="user-phn"
-											placeholder='Phone number' class="form__mail">
-									</div>
+									<%--<div class="contact-info__field contact-info__field-user">--%>
+										<%--<input type="text" name='user-name' id="user-name"--%>
+											<%--class="form__mail" placeholder='Your Name'--%>
+											<%--pattern="(^[A-Z]+[a-zA-Z\\. ]*){6,30}$" required>--%>
+									<%--</div>--%>
+									<%--<div class="contact-info__field contact-info__field-mail">--%>
+										<%--<input type='email' name='user-email' id="user-email"--%>
+											<%--placeholder='Your email' required class="form__mail">--%>
+									<%--</div>--%>
+									<%--<div class="contact-info__field contact-info__field-tel">--%>
+										<%--<input type='tel' name='user-phone' id="user-phn"--%>
+											<%--placeholder='Phone number' class="form__mail">--%>
+									<%--</div>--%>
 								</form>
 
 
@@ -192,7 +189,8 @@
                 seconds : <%=seconds%>,
                 size : "lg",
                 timeUp : function() {
-                    alert("Time out");
+                    alert("Your booking session is expired. Please booking later!");
+                    window.location.href = window.location.href;
                 }
             });
         });

@@ -1,13 +1,13 @@
 package com.nhom17.model.dto;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class GiaoDich {
     private String maGiaoDich;
-    private Date ngayDat;
-    private Time gioDat;
+    private LocalDate ngayDat;
+    private LocalTime gioDat;
     private int tongTien;
     private String nguoiDat;
     private String maXuatChieu;
@@ -27,19 +27,19 @@ public class GiaoDich {
         this.maGiaoDich = maGiaoDich;
     }
 
-    public Date getNgayDat() {
+    public LocalDate getNgayDat() {
         return ngayDat;
     }
 
-    public void setNgayDat(Date ngayDat) {
+    public void setNgayDat(LocalDate ngayDat) {
         this.ngayDat = ngayDat;
     }
 
-    public Time getGioDat() {
+    public LocalTime getGioDat() {
         return gioDat;
     }
 
-    public void setGioDat(Time gioDat) {
+    public void setGioDat(LocalTime gioDat) {
         this.gioDat = gioDat;
     }
 

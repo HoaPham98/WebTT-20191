@@ -59,17 +59,11 @@ public class AjaxSeatControllerServlet extends BaseServlet {
             writer.close();
             return;
         }
-        List<Ghe> gheList = GheDao.createGheReposity().getSoldByXuatChieu(maXuatChieu);
+        List<String> gheList = GheDao.createGheReposity().getSoldByXuatChieu(maXuatChieu);
         JSONObject maGhe = null;
         JSONArray data = new JSONArray();
-        for (Ghe ghe : gheList) {
-            try {
-                maGhe = new JSONObject();
-                maGhe.put("maGhe", ghe.getMaGhe());
-                data.put(maGhe);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        for (String ghe : gheList) {
+            data.put(ghe);
         }
         JSONObject json = new JSONObject();
         try {

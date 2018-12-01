@@ -8,13 +8,13 @@ import java.util.List;
 public class CommonDao<T> implements IDAO<T> {
 
     @Override
-    public void add(T item) {
-
+    public int add(T item) {
+        return 0;
     }
 
     @Override
-    public void add(Iterable<T> items) {
-
+    public int[] add(Iterable<T> items) {
+        return null;
     }
 
     @Override
@@ -23,13 +23,13 @@ public class CommonDao<T> implements IDAO<T> {
     }
 
     @Override
-    public void remove(T item) {
-
+    public int remove(T item) {
+        return 0;
     }
 
     @Override
-    public void remove(String... conditions) {
-
+    public int remove(String... conditions) {
+        return 0;
     }
 
     @Override

@@ -608,6 +608,22 @@ function init_BookingOne() {
     })
 }
 
+function checkReverseSeats(showtimeID) {
+    $.getJSON('/ajax/seat', {'maXuatChieu': showtimeID}, function (data) {
+        if (data.status) {
+            var ids = data.data;
+            var sits = $('.sits__place');
+            for (var i = 0; i < sits.length; i++) {
+                var sit = sits[i];
+                var id = $(sit).attr('data-id');
+                if (ids.includes(id) && !$(sit).hasClass('sits-state--your')) {
+                    $(sit).addClass('sits-state--not');
+                }
+            }
+        }
+    });
+}
+
 function init_BookingTwo() {
     "use strict";
 
@@ -625,6 +641,7 @@ function init_BookingTwo() {
     var numberTicket = $('.choosen-number'), sumTicket = $('.choosen-cost'), cheapTicket = $('.choosen-number--cheap'),
         middleTicket = $('.choosen-number--middle'), expansiveTicket = $('.choosen-number--expansive'),
         sits = $('.choosen-sits');
+    var showtimeID = $('.choose-sits').attr('data-showtime');
 
     // 3. Choose sits (and count price for them)
     // users choose sits
@@ -635,9 +652,12 @@ function init_BookingTwo() {
     var middle = 0;
     var expansive = 0;
     var seats = [];
+    var seatsCode = [];
     if (typeof (Storage) !== "undefined") {
         localStorage.removeItem("seatList");
     }
+
+    checkReverseSeats(showtimeID);
 
     $('.sits__place')
         .click(
@@ -645,6 +665,7 @@ function init_BookingTwo() {
                 e.preventDefault();
                 var place = $(this).attr('data-place');
                 var ticketPrice = $(this).attr('data-price');
+                var id = $(this).attr('data-id');
                 console.log("Giá: " + ticketPrice);
 
                 if (!$(e.target).hasClass('sits-state--your')) {
@@ -652,28 +673,31 @@ function init_BookingTwo() {
                     if (!$(this).hasClass('sits-state--not')) {
                         $(this).addClass('sits-state--your');
                         console.log($(this).attr("data-id"));
-                        console.log($(this).attr("data-showtime"));
                         $.post("/ajax/seat",
                             {
                                 maGhe: $(this).attr("data-id"),
-                                maXuatchieu: $(this).attr("data-showtime"),
+                                maXuatchieu: showtimeID,
                                 trangthai: 2
                             },
                             function (data, status) {
                                 if (status == "success") {
+
                                     $('.checked-place').prepend(
                                         '<span class="choosen-place ' + place
                                         + '">' + place + '</span>');
 
                                     if (typeof (Storage) !== "undefined") {
                                         seats.push(place);
+                                        seatsCode.push(id);
                                         localStorage.setItem("seatList", JSON
                                             .stringify(seats));
+                                        localStorage.setItem("maGhe", JSON.stringify(seatsCode))
                                     }
                                     sum += parseFloat(ticketPrice);
                                     $('.checked-result').text(sum + ' VNĐ');
                                 } else {
-                                    alert("This seat has reversed");
+                                    alert("Something failed");
+                                    checkReverseSeats(showtimeID);
                                 }
                             });
 
@@ -685,11 +709,11 @@ function init_BookingTwo() {
 
                     $('.' + place + '').remove();
                     console.log($(this).attr("data-id"));
-                    console.log($(this).attr("data-showtime"));
+                    console.log(showtimeID);
                     $.post("/ajax/seat",
                         {
                             maGhe: $(this).attr("data-id"),
-                            maXuatchieu: $(this).attr("data-showtime"),
+                            maXuatchieu: showtimeID,
                             trangthai: 0
                         },
                         function (data, status) {
@@ -697,18 +721,25 @@ function init_BookingTwo() {
                                 if (typeof (Storage) !== "undefined") {
                                     var json_text = localStorage
                                         .getItem("seatList");
+                                    var json_code = localStorage.getItem("maGhe");
+                                    seatsCode = JSON.parse(json_code);
                                     seats = JSON.parse(json_text);
                                     delete seats[seats.indexOf(place)];
+                                    delete seatsCode[seatsCode.indexOf(place)];
                                     seats = seats.filter(Boolean);
+                                    seatsCode = seatsCode.filter(Boolean);
                                     console.log(seats);
+                                    console.log(seatsCode);
                                     localStorage.setItem("seatList", JSON
                                         .stringify(seats));
+                                    localStorage.setItem("maGhe", JSON.stringify(seatsCode));
                                 }
 
                                 sum -= parseFloat(ticketPrice);
                                 $('.checked-result').text(sum + ' VNĐ')
                             } else {
                                 alert("Something failed!");
+                                checkReverseSeats(showtimeID);
                             }
                         });
                 }
@@ -741,21 +772,29 @@ function init_BookingTwo() {
                     var seatList = JSON
                         .parse(localStorage
                             .getItem("seatList"));
+                    var seatCode = JSON.parse(localStorage.getItem("maGhe"));
 
                     if (seatList == null || seatList.length == 0) {
                         alert('please select your seats for acessin to further process');
                     } else {
                         console.log(seatList);
+                        console.log(seatCode);
                         var dup_seatList = [];
+                        var dup_seatCode = [];
                         for (var i = 0; i < seatList.length; i++) {
                             dup_seatList.push(seatList[i]);
                         }
+                        for (var i = 0; i < seatCode.length; i++) {
+                            dup_seatCode.push(seatCode[i]);
+                        }
                         console.log(dup_seatList.toString());
+                        console.log(dup_seatCode.toString());
                         var url = '/submit_selected_seats';
                         $.post(
                             url,
                             {
                                 selected_seats: dup_seatList.toString(),
+                                seats_codes: dup_seatCode.toString(),
                                 ticket_price: sum
 
                             },

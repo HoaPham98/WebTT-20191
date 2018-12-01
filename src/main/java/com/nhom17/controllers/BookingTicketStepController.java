@@ -1,13 +1,7 @@
 package com.nhom17.controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TimerTask;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,9 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.nhom17.model.dto.*;
+import com.nhom17.model.reposity.impl.GiaoDichDao;
 import com.nhom17.model.reposity.impl.VeDAO;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
-import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
+import com.nhom17.util.AppUtils;
 import com.nhom17.util.CustomTimer;
 
 
@@ -55,14 +50,17 @@ public class BookingTicketStepController extends BaseServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			CustomTimer timer = (CustomTimer) session.getAttribute("Timer");
-			System.out.println(String.format("Timer delay: %d", timer.getTimeRemaining()));
-			PurchaseTicket purchaseTicket = (PurchaseTicket) session.getAttribute("purchaseTicket");
-			purchaseTicket.setSeats((String) session.getAttribute("selectedSeats"));
-			request.setAttribute("noOfTickets", purchaseTicket.getNo_of_tickets());
-			request.setAttribute("ticketPrice", purchaseTicket.getEachTicketPrice());
+			GiaoDich giaoDich = (GiaoDich) session.getAttribute("giaoDich");
+			giaoDich.setIdTrangThaiGiaodich(3);
+			giaoDich.setListMaGhe( (List<String>) session.getAttribute("maGhe"));
+
+			int id = GiaoDichDao.createGiaoDichDao().add(giaoDich);
+			giaoDich.setId(id);
+
+			request.setAttribute("noOfTickets", giaoDich.getListMaGhe().size());
+			request.setAttribute("ticketPrice", giaoDich.getTongTien());
 			session.setAttribute("bookingStep", String.valueOf(3));
-			session.setAttribute("purchaseTicket", purchaseTicket);
+			session.setAttribute("giaoDich", giaoDich);
 			requestDispatcher = request.getRequestDispatcher("booking_step3_page");
 			requestDispatcher.forward(request, response);
 		} else {
@@ -88,14 +86,11 @@ public class BookingTicketStepController extends BaseServlet {
 		System.out.println("Set up timer");
 		session.setAttribute("Timer", timer);
 
-		PurchaseTicket purchaseTicket = new PurchaseTicket();
-		purchaseTicket.setHallNo(4);
-		purchaseTicket.setMovie(movieID);
-		purchaseTicket.setShowDate(date);
-		purchaseTicket.setShowTime("20:10");
-		purchaseTicket.setMovieFormat(2);
-		purchaseTicket.setEachTicketPrice(60);
-		session.setAttribute("purchaseTicket", purchaseTicket);
+		GiaoDich giaoDich = new GiaoDich();
+		giaoDich.setMaXuatChieu(showTimeID);
+		giaoDich.setNguoiDat(AppUtils.getLoginedUser(session).getTenDangNhap());
+
+		session.setAttribute("giaoDich", giaoDich);
 		session.setAttribute("bookingStep", String.valueOf(2));
 		session.setAttribute("bookingStep2Url", request.getAttribute("bookingStep2Url"));
 		XuatChieu showTime = bookingTicketService.getMaXuatChieu(showTimeID);
@@ -120,15 +115,21 @@ public class BookingTicketStepController extends BaseServlet {
 		switch (url) {
 		case "/submit_selected_seats":
 			String selectedSeats = (String) request.getAttribute("selectedSeats");
+			String codes = (String) request.getAttribute("seatCodes");
+			String[] maGhe = codes.split(",");
+
 			double ticketPrice = (double) request.getAttribute("ticketPrice");
 			HttpSession httpSession = request.getSession(false);
 			if (httpSession == null) {
 				response.getWriter().write("error");
 			} else {
-				PurchaseTicket purchaseTicket = (PurchaseTicket) httpSession.getAttribute("purchaseTicket");
-				purchaseTicket.setEachTicketPrice(ticketPrice);
-				httpSession.setAttribute("selectedSeats", selectedSeats);
-				httpSession.setAttribute("purchaseTicket", purchaseTicket);
+//				PurchaseTicket purchaseTicket = (PurchaseTicket) httpSession.getAttribute("purchaseTicket");
+//				purchaseTicket.setEachTicketPrice(ticketPrice);
+				GiaoDich giaoDich = (GiaoDich) httpSession.getAttribute("giaoDich");
+				giaoDich.setTongTien((int) ticketPrice);
+				httpSession.setAttribute("selectedSeats",selectedSeats);
+				httpSession.setAttribute("maGhe", Arrays.asList(maGhe));
+				httpSession.setAttribute("giaoDich", giaoDich);
 				response.getWriter().write("success");
 			}
 			break;
@@ -148,7 +149,7 @@ public class BookingTicketStepController extends BaseServlet {
 		List<Ve> veList = veDAO.getByShowTimeID(showtimeID);
 		List<Ve> veChanges = new ArrayList<>();
 		for (Ve ve: veList) {
-			if (ve.getMaTrangThaiVe() > 0) {
+			if (ve.getMaTrangThaiVe() == 2) {
 				ve.setMaTrangThaiVe(0);
 				veChanges.add(ve);
 			}
