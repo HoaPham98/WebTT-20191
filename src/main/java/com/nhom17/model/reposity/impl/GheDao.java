@@ -34,14 +34,25 @@ public class GheDao extends CommonDao<Ghe> {
         }, callBackHandler());
     }
 
-    public List<Ghe> getSoldByXuatChieu(final String maXuatChieu) {
-        return JdbcTemplate.query("SELECT * FROM [dbo].[Ve]" +
-                "WHERE MaXuatChieu = ? AND NOT MaTrangThaiVe = 0", new JdbcTemplate.PreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, maXuatChieu );
+    public List<String> getSoldByXuatChieu(final String maXuatChieu) {
+        List<String> list = new ArrayList<>();
+        try {
+            ResultSet rs = JdbcTemplate.query("SELECT * FROM [dbo].[Ve]" +
+                    "WHERE MaXuatChieu = ? AND NOT MaTrangThaiVe = 0", new JdbcTemplate.PreparedStatementSetter() {
+                @Override
+                public void setValues(PreparedStatement pstmt) throws SQLException {
+                    pstmt.setString(1, maXuatChieu );
+                }
+            });
+            while (rs.next()) {
+                String ghe = rs.getString("MaGhe");
+                list.add(ghe);
             }
-        }, callBackHandler());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
 

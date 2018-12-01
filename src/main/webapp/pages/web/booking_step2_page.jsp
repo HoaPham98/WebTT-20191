@@ -25,7 +25,6 @@
     if (bookedSeatList != null && !bookedSeatList.isEmpty()) {
         Set<String> keys = bookedSeatList.keySet();
         System.out.print(keys);
-        bookedSeats = keys.toArray(new String[keys.size()]);
     }
 %>
 <div class="full">
@@ -77,7 +76,7 @@
                         <div class="order-step second--step">2. Choose a sit</div>
                     </div>
 
-                    <div class="choose-sits">
+                    <div class="choose-sits" data-showtime='<%=showtime.getMaXuatChieu()%>'>
                         <div class="choose-sits__info choose-sits__info--first">
                             <ul>
                                 <li class="sits-price marker--none"><strong>Seat
@@ -154,7 +153,6 @@
                                                 class="<%=className%>"
                                                 data-place='<%=ghe.getIdGhe()%>'
                                                 data-id='<%=ghe.getMaGhe()%>'
-                                                data-showtime='<%=showtime.getMaXuatChieu()%>'
                                                 data-price='<%=price%>'></span>
                                         <%
                                             }
@@ -265,7 +263,7 @@
         .ready(
             function () {
                 init_BookingTwo();
-
+                checkReverseSeats('<%=showtime.getMaXuatChieu()%>');
             });
 </script>
 <%
@@ -282,14 +280,14 @@
     if (timeInterval > 0) {
 %>
 <script type="text/javascript">
-    $(document)
-        .ready(function(){
+    $(function(){
         $('#hms_timer').countdowntimer({
             minutes :<%=minutes%>,
             seconds : <%=seconds%>,
             size : "lg",
             timeUp : function() {
-                alert("Time out");
+                alert("Your booking session is expired. Please booking later!");
+                window.location.href = window.location.href;
             }
         });
     });

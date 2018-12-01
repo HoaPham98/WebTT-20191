@@ -49,7 +49,7 @@
             <ul class="auth__function">
                 <li><a href="#" class="auth__function-item">User Detail</a></li>
                 <li><a href="#" class="auth__function-item">Booked tickets</a></li>
-                <li><a href="#" class="auth__function-item">Logout</a></li>
+                <li><a href="/logout" class="auth__function-item">Logout</a></li>
             </ul>
 
         </div>

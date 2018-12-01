@@ -1,5 +1,6 @@
 package com.nhom17.controllers.filters;
 
+import com.nhom17.model.dto.GiaoDich;
 import com.nhom17.model.dto.PurchaseTicket;
 import com.nhom17.model.reposity.impl.XuatChieuDao;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
@@ -64,6 +66,7 @@ public class BookingTicketRequestFilter implements Filter {
 			System.out.print("submitted");
 			String selectedSeats = request.getParameter("selected_seats");
 			String ticketPrice = request.getParameter("ticket_price");
+			String seatCode = request.getParameter("seats_codes");
 			if ((selectedSeats == null || selectedSeats == "") && (ticketPrice == null || ticketPrice == "")
 					&& ((HttpServletRequest) request).getSession(false) == null) {
 				response.getWriter().write("error");
@@ -71,6 +74,7 @@ public class BookingTicketRequestFilter implements Filter {
 			} else {
 				request.setAttribute("selectedSeats", selectedSeats);
 				request.setAttribute("ticketPrice", Double.parseDouble(ticketPrice));
+				request.setAttribute("seatCodes", seatCode);
 				chain.doFilter(request, response);
 			}
 		default:
@@ -163,24 +167,10 @@ public class BookingTicketRequestFilter implements Filter {
 		HttpSession session = request.getSession(false);
 		String selectedSeats = (String) session.getAttribute("selectedSeats");
 		String currentStep = (String) session.getAttribute("bookingStep");
-		PurchaseTicket purchaseTicket = (PurchaseTicket) session.getAttribute("purchaseTicket");
+		GiaoDich giaoDich = (GiaoDich) session.getAttribute("giaoDich");
 		if (session != null && (selectedSeats != null && !selectedSeats.equals(""))
-				&& (currentStep.equals("2") || currentStep.equals("3")) && purchaseTicket != null) {
-			if (bookingTicketService.areSeatsAvailable(purchaseTicket.getShowDate(), purchaseTicket.getShowTime(),
-					purchaseTicket.getHallNo(), selectedSeats)) {
-				chain.doFilter(request, response);
-			} else {
-				System.out.println("error");
-				response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-				response.sendError(404);
-				return;
-			}
-
-		} else {
-			System.out.println("error");
-			response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-			response.sendError(404);
-			return;
+				&& (currentStep.equals("2") || currentStep.equals("3")) && giaoDich != null) {
+			chain.doFilter(request, response);
 		}
 	}
 

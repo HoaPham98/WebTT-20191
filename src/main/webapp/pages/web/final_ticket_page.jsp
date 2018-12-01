@@ -1,4 +1,9 @@
-<%@ page import="com.nhom17.model.dto.PurchaseTicket" %>
+<%@ page import="com.nhom17.model.dto.GiaoDich" %>
+<%@ page import="com.nhom17.model.dto.ChiTietVe" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	%>
 <!DOCTYPE html>
@@ -11,17 +16,20 @@
 </head>
 <body>
 	<%
-		PurchaseTicket purchaseTicket = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy");
+		GiaoDich giaoDich = null;
+		ChiTietVe chiTietVe = null;
 		String selectedSeats = null;
 		HttpSession httpSession = request.getSession(false);
 		if (httpSession == null) {
 
 		} else {
-			purchaseTicket = (PurchaseTicket) httpSession.getAttribute("purchaseTicket");
+			giaoDich = (GiaoDich) httpSession.getAttribute("giaoDich");
 			selectedSeats = (String) httpSession.getAttribute("selectedSeats");
+			chiTietVe = (ChiTietVe) httpSession.getAttribute("chiTietVe");
 			if (!(httpSession.getAttribute("bookingStep") != null
-					&& httpSession.getAttribute("bookingStep").equals("4") && purchaseTicket != null
-					&& selectedSeats != null && !selectedSeats.equals(""))) {
+					&& httpSession.getAttribute("bookingStep").equals("4") && giaoDich != null
+					&& selectedSeats != null && !selectedSeats.isEmpty())) {
 
 			}
 		}
@@ -53,19 +61,17 @@
 
 										<div class="ticket-secondary">
 											<span class="ticket__item">Ticket number <strong
-												class="ticket__number"><%=purchaseTicket.getPurchaseTicketId()%></strong></span>
-											<span class="ticket__item ticket__date"><%=purchaseTicket.getPurchaseDate()%></span>
-											<span class="ticket__item ticket__time"><%=purchaseTicket.getPurchaseTime()%></span>
-											<span class="ticket__item">Cinema: <span
-												class="ticket__cinema"><%="Cinema XXII"%></span></span> <span
-												class="ticket__item">Hall: <span class="ticket__hall"><%=purchaseTicket.getHallNo()%></span></span>
+												class="ticket__number"><%=giaoDich.getMaGiaoDich()%></strong></span>
+											<span class="ticket__item ticket__date"><%=giaoDich.getNgayDat().format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))%></span>
+											<span class="ticket__item ticket__time"><%=giaoDich.getGioDat().format(DateTimeFormatter.ofPattern("HH:mm"))%></span>
+											<span class="ticket__item"><%=chiTietVe.getPhongChieu()%></span>
 											<span class="ticket__item ticket__price">price: <strong
-												class="ticket__cost">&#2547;<%=purchaseTicket.getTotalCost()%></strong></span>
+												class="ticket__cost"><%=giaoDich.getTongTien()%> VNĐ</strong></span>
 										</div>
 
 										<div class="ticket-primery">
 											<span class="ticket__item ticket__item--primery ticket__film">Film<br>
-												<strong class="ticket__movie"><%=purchaseTicket.getMovie()%></strong></span>
+												<strong class="ticket__movie"><%=chiTietVe.getTenPhim()%></strong></span>
 											<span class="ticket__item ticket__item--primery">Sits:
 												<span class="ticket__place"><%=selectedSeats%></span>
 											</span>
