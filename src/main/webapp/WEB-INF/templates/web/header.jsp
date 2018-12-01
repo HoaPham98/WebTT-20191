@@ -7,6 +7,7 @@
     <jsp:include page="/WEB-INF/templates/web/include_header_resources.jsp"/>
 </head>
 <body>
+<jsp:include page="/WEB-INF/templates/web/menu.jsp"/>
 <script type="text/javascript">
     $(document)
         .ready(

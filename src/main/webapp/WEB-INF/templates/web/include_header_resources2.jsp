@@ -5,9 +5,7 @@
 <head>
 <!-- Fonts -->
 <!-- Font awesome - icon font -->
-<link
-	href="${pageContext.request.contextPath}/resources/fonts/font-awesome.css"
-	rel="stylesheet">
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <!-- Roboto -->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,700'
 	rel='stylesheet' type='text/css'>
