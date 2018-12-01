@@ -35,6 +35,8 @@ $window.scroll(function () {
     }
 });
 
+console.log("Khong can cai dat");
+
 // functions
 function hideElem() {
     $block.fadeOut();
@@ -228,6 +230,14 @@ function init_Elements() {
         $('.auth__function').toggleClass('open-function')
     });
 
+}
+
+function checkSessionExpired() {
+    var path = window.location.pathname;
+    if (path == "/booking_step2" || path == "/booking_step3") {
+        alert("Expired!")
+        window.location.href = window.location.origin
+    }
 }
 
 function init_Home() {
@@ -650,19 +660,23 @@ function init_BookingTwo() {
                                 trangthai: 2
                             },
                             function (data, status) {
-                                alert("Data: " + data + "\nStatus: " + status);
-                            });
-                        $('.checked-place').prepend(
-                            '<span class="choosen-place ' + place
-                            + '">' + place + '</span>');
+                                if (status == "success") {
+                                    $('.checked-place').prepend(
+                                        '<span class="choosen-place ' + place
+                                        + '">' + place + '</span>');
 
-                        if (typeof (Storage) !== "undefined") {
-                            seats.push(place);
-                            localStorage.setItem("seatList", JSON
-                                .stringify(seats));
-                        }
-                        sum += parseFloat(ticketPrice);
-                        $('.checked-result').text(sum + ' VNĐ');
+                                    if (typeof (Storage) !== "undefined") {
+                                        seats.push(place);
+                                        localStorage.setItem("seatList", JSON
+                                            .stringify(seats));
+                                    }
+                                    sum += parseFloat(ticketPrice);
+                                    $('.checked-result').text(sum + ' VNĐ');
+                                } else {
+                                    alert("This seat has reversed");
+                                }
+                            });
+
                     }
                 }
 
@@ -679,22 +693,24 @@ function init_BookingTwo() {
                             trangthai: 0
                         },
                         function (data, status) {
-                            alert("Data: " + data + "\nStatus: " + status);
+                            if (status == "success") {
+                                if (typeof (Storage) !== "undefined") {
+                                    var json_text = localStorage
+                                        .getItem("seatList");
+                                    seats = JSON.parse(json_text);
+                                    delete seats[seats.indexOf(place)];
+                                    seats = seats.filter(Boolean);
+                                    console.log(seats);
+                                    localStorage.setItem("seatList", JSON
+                                        .stringify(seats));
+                                }
+
+                                sum -= parseFloat(ticketPrice);
+                                $('.checked-result').text(sum + ' VNĐ')
+                            } else {
+                                alert("Something failed!");
+                            }
                         });
-
-                    if (typeof (Storage) !== "undefined") {
-                        var json_text = localStorage
-                            .getItem("seatList");
-                        seats = JSON.parse(json_text);
-                        delete seats[seats.indexOf(place)];
-                        seats = seats.filter(Boolean);
-                        console.log(seats);
-                        localStorage.setItem("seatList", JSON
-                            .stringify(seats));
-                    }
-
-                    sum -= parseFloat(ticketPrice);
-                    $('.checked-result').text(sum + ' VNĐ')
                 }
 
                 // data element init
@@ -715,6 +731,41 @@ function init_BookingTwo() {
 
                 // data element set
                 sits.val(chooseSits.substr(2));
+            });
+
+    $('.booking-pagination__next')
+        .click(
+            function () {
+
+                if (typeof (Storage) !== "undefined") {
+                    var seatList = JSON
+                        .parse(localStorage
+                            .getItem("seatList"));
+
+                    if (seatList == null || seatList.length == 0) {
+                        alert('please select your seats for acessin to further process');
+                    } else {
+                        console.log(seatList);
+                        var dup_seatList = [];
+                        for (var i = 0; i < seatList.length; i++) {
+                            dup_seatList.push(seatList[i]);
+                        }
+                        console.log(dup_seatList.toString());
+                        var url = '/submit_selected_seats';
+                        $.post(
+                            url,
+                            {
+                                selected_seats: dup_seatList.toString(),
+                                ticket_price: sum
+
+                            },
+                            function (status) {
+                                window.location.href = window.location.origin + '/booking_step3'
+                            });
+                    }
+                } else {
+                    alert('please update your browser');
+                }
             });
 
     // --- Step for data ---//
@@ -2508,3 +2559,5 @@ function init_Trailer() {
                 '.hidden-content').slideDown(500);
         })
 }
+
+

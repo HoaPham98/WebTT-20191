@@ -3,7 +3,11 @@ package com.nhom17.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TimerTask;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +19,7 @@ import com.nhom17.model.dto.*;
 import com.nhom17.model.reposity.impl.VeDAO;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
 import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
+import com.nhom17.util.CustomTimer;
 
 
 public class BookingTicketStepController extends BaseServlet {
@@ -50,6 +55,8 @@ public class BookingTicketStepController extends BaseServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
+			CustomTimer timer = (CustomTimer) session.getAttribute("Timer");
+			System.out.println(String.format("Timer delay: %d", timer.getTimeRemaining()));
 			PurchaseTicket purchaseTicket = (PurchaseTicket) session.getAttribute("purchaseTicket");
 			purchaseTicket.setSeats((String) session.getAttribute("selectedSeats"));
 			request.setAttribute("noOfTickets", purchaseTicket.getNo_of_tickets());
@@ -70,16 +77,16 @@ public class BookingTicketStepController extends BaseServlet {
 		String date = (String) request.getAttribute("showDate");
 		final String showTimeID = (String) request.getAttribute("showTimeID");
 
-		Timer timer = new Timer();
-		final HttpServletRequest _request = request;
-		System.out.println("Set up timer");
-		timer.schedule(new TimerTask() {
+		CustomTimer timer = new CustomTimer("Booking", 3 * 60 * 1000, new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println("Reset");
-				resetSession(_request, showTimeID);
+				System.out.println("Expired!");
+				resetSession(showTimeID);
 			}
-		}, 60 * 1000);
+		});
+
+		System.out.println("Set up timer");
+		session.setAttribute("Timer", timer);
 
 		PurchaseTicket purchaseTicket = new PurchaseTicket();
 		purchaseTicket.setHallNo(4);
@@ -94,7 +101,7 @@ public class BookingTicketStepController extends BaseServlet {
 		XuatChieu showTime = bookingTicketService.getMaXuatChieu(showTimeID);
 		Phong phong = bookingTicketService.getPhong(showTime.getMaPhong());
 		Map<String, Integer> seatPriceMap = Gia.giaVe.get(showTime.getMaDangPhim());
-		System.out.println("Booked Seats" + seatPriceMap);
+//		System.out.println("Booked Seats" + seatPriceMap);
 		request.setAttribute("cinemaHall", phong);
 		request.setAttribute("showTime", showTime);
 		request.setAttribute("bookedSeatList", seatPriceMap);
@@ -136,7 +143,7 @@ public class BookingTicketStepController extends BaseServlet {
 		super.destroy();
 	}
 
-	public void resetSession(HttpServletRequest request,String showtimeID) {
+	public void resetSession(String showtimeID) {
 		VeDAO veDAO = VeDAO.createVeReposity();
 		List<Ve> veList = veDAO.getByShowTimeID(showtimeID);
 		List<Ve> veChanges = new ArrayList<>();

@@ -15,12 +15,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/ajax/seat")
+@WebServlet("/ajax/seat/*")
 public class AjaxSeatControllerServlet extends BaseServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String requestedURI = new String(request.getRequestURI());
+        switch (requestedURI) {
+            case "/ajax/seat":
+                getEmptySeats(request, response);
+                break;
+            case "/ajax/seat/resetSeat":
+                resetSession(request, response);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void resetSession(HttpServletRequest request, HttpServletResponse response) throws ServletException{
+        String maXuatChieu = request.getParameter("maXuatChieu");
+        VeDAO veDAO = VeDAO.createVeReposity();
+        List<Ve> veList = veDAO.getByShowTimeID(maXuatChieu);
+        List<Ve> veChanges = new ArrayList<>();
+        for (Ve ve: veList) {
+            if (ve.getMaTrangThaiVe() > 0) {
+                ve.setMaTrangThaiVe(0);
+                veChanges.add(ve);
+            }
+        }
+        veDAO.update(veChanges);
+    }
+
+    private void getEmptySeats(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String maXuatChieu = request.getParameter("maXuatChieu");
         if (maXuatChieu == null) {
             PrintWriter writer = response.getWriter();

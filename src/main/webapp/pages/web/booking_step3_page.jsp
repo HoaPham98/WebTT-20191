@@ -1,3 +1,4 @@
+<%@ page import="com.nhom17.util.CustomTimer" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	%>
 <!DOCTYPE html>
@@ -37,6 +38,7 @@
 								</p>
 								<div class="order__control">
 									<a href="#" class="order__control-btn active">Purchase</a>
+									<a href="#" class="order__control-btn" id="hms_timer"></a>
 									<!-- <a
 									href="book3-reserve.html" class="order__control-btn">Reserve</a> -->
 								</div>
@@ -140,34 +142,63 @@
 				.ready(
 						function() {
 							var userInfoForm = $('#contact-info');
-							var userName = $('#user-name');
-							var userEmail = $('#user-email');
-							var userPhn = $('#user-phn');
+							var userName =  'Hoa Pham'  //$('#user-name');
+							var userEmail = 'rubik0403'  //$('#user-email');
+							var userPhn = '0917035238'  //$('#user-phn');
 							$('#purchaseBtn')
 									.click(
 											function() {
+                                                userInfoForm.submit();
 												/* alert("dd"); */
-												var regExpUserName = "^\\b(?:[A-Z][a-zA-Z]+\\b(?:\\.?\\s*)?)";
-												var regExpUserMail = "^\\w+([\\.-]?\w+)*@\\w+([\\.-]?\w+)*(\\.\\w{2,3})+$";
-												var regExpUserPhn = "^(?:015|016|017|018|019)?(?:\\d{8})$";
-												/* alert(userEmail.val()); */
-												if ((new RegExp(regExpUserName)
-														.test(userName.val()))
-														&& (new RegExp(
-																regExpUserPhn)
-																.test(userPhn
-																		.val()))
-														&& (new RegExp(
-																regExpUserMail)
-																.test(userEmail
-																		.val()))) {
-													/* alert("jddj"); */
-													userInfoForm.submit();
-												} else {
-													alert("Please input in correct order");
-												}
+												// var regExpUserName = "^\\b(?:[A-Z][a-zA-Z]+\\b(?:\\.?\\s*)?)";
+												// var regExpUserMail = "^\\w+([\\.-]?\w+)*@\\w+([\\.-]?\w+)*(\\.\\w{2,3})+$";
+												// var regExpUserPhn = "^(?:015|016|017|018|019)?(?:\\d{8})$";
+												// /* alert(userEmail.val()); */
+												// if ((new RegExp(regExpUserName)
+												// 		.test(userName.val()))
+												// 		&& (new RegExp(
+												// 				regExpUserPhn)
+												// 				.test(userPhn
+												// 						.val()))
+												// 		&& (new RegExp(
+												// 				regExpUserMail)
+												// 				.test(userEmail
+												// 						.val()))) {
+												// 	/* alert("jddj"); */
+												//
+												// } else {
+												// 	alert("Please input in correct order");
+												// }
 											});
 						});
 	</script>
+	<%
+		CustomTimer timer = (CustomTimer) session.getAttribute("Timer");
+		long timeInterval = 0;
+		try {
+			timeInterval = timer.getTimeRemaining();
+		} catch (Exception e) {
+			timeInterval = 0;
+		}
+		long seconds = timeInterval / 1000;
+		long minutes = seconds / 60;
+		seconds = seconds % 60;
+		if (timeInterval > 0) {
+	%>
+	<script type="text/javascript">
+        $(function(){
+            $('#hms_timer').countdowntimer({
+                minutes :<%=minutes%>,
+                seconds : <%=seconds%>,
+                size : "lg",
+                timeUp : function() {
+                    alert("Time out");
+                }
+            });
+        });
+	</script>
+	<%
+		}
+	%>
 </body>
 </html>

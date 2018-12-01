@@ -6,14 +6,7 @@
 </head>
 <body>
 	<!-- JavaScript-->
-	<!-- jQuery 1.9.1-->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-	<script>
-		window.jQuery
-				|| document
-						.write('<script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.1.min.js"><\/script>')
-	</script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<!-- Migrate -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.1.min.js"></script>
@@ -45,6 +38,9 @@
 	<!-- Custom -->
 	
 	<script src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
+
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jQuery.countdownTimer.js"></script>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/jQuery.countdownTimer.css" />
 	
 </body>
 </html>
