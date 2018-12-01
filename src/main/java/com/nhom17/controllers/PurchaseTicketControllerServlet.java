@@ -1,13 +1,21 @@
 package com.nhom17.controllers;
 
 import com.nhom17.model.dto.ChiTietVe;
+import com.nhom17.model.dto.Customer;
 import com.nhom17.model.dto.GiaoDich;
+import com.nhom17.model.dto.PurchaseTicket;
 import com.nhom17.model.reposity.impl.GiaoDichDao;
 import com.nhom17.model.services.internal.database_interaction.DatabaseInteractionServiceFactory;
+import com.nhom17.model.services.internal.database_interaction.interfaces.BookingTicketService;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

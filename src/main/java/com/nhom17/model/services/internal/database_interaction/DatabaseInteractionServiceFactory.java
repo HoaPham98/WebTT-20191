@@ -1,6 +1,7 @@
 package com.nhom17.model.services.internal.database_interaction;
 
 import com.nhom17.model.services.internal.database_interaction.interfaces.DatabaseInteractionService;
+import com.nhom17.model.services.internal.database_interaction.utility.BookingTicketServiceUtility;
 import com.nhom17.model.services.internal.database_interaction.utility.MovieInfoServiceUtility;
 import com.nhom17.model.services.internal.database_interaction.utility.MovieScheduleServiceUtility;
 
