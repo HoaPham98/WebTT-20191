@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.nhom17</OriginalElement>
+  <nodes>
+    <node x="78.0" y="210.0">com.nhom17.database.DatabaseConnector</node>
+    <node x="-37.5" y="2003.5">com.nhom17.model.reposity.impl.PhongReposity</node>
+    <node x="623.0" y="2065.5">com.nhom17.model.reposity.impl.GheReposity</node>
+    <node x="352.0" y="1959.5">com.nhom17.model.dto.Phong</node>
+    <node x="337.0" y="32.5">com.nhom17.controllers.MovieInfoControllerServlet</node>
+    <node x="438.5" y="1632.5">com.nhom17.model.reposity.impl.TheLoaiReposity</node>
+    <node x="1633.0" y="1312.5">com.nhom17.model.reposity.impl.XuatChieuReposity</node>
+    <node x="1006.5" y="901.0">com.nhom17.model.reposity.impl.PhimReposity</node>
+    <node x="519.0" y="1169.5">com.nhom17.model.dto.Phim</node>
+    <node x="1719.5" y="-11.5">com.nhom17.model.dto.XuatChieu</node>
+    <node x="1383.0" y="494.5">com.nhom17.controllers.HomeController</node>
+    <node x="847.5" y="1632.5">com.nhom17.model.dto.TheLoai</node>
+    <node x="288.5" y="690.5">com.nhom17.controllers.MovieListControllerServlet</node>
+    <node x="601.0" y="1850.5">com.nhom17.model.dto.Ghe</node>
+    <node x="425.5" y="439.5">com.nhom17.controllers.BaseServlet</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.nhom17.controllers.MovieListControllerServlet" target="com.nhom17.controllers.BaseServlet">
+      <point x="0.0" y="-69.5" />
+      <point x="0.0" y="80.5" />
+    </edge>
+    <edge source="com.nhom17.model.reposity.impl.PhongReposity" target="com.nhom17.model.dto.Phong">
+      <point x="0.0" y="-36.5" />
+      <point x="120.0" y="1880.0" />
+      <point x="440.0" y="1880.0" />
+      <point x="0.0" y="-80.5" />
+    </edge>
+    <edge source="com.nhom17.controllers.BaseServlet" target="com.nhom17.database.DatabaseConnector">
+      <point x="-174.5" y="0.0" />
+      <point x="200.0" y="520.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="com.nhom17.controllers.MovieInfoControllerServlet" target="com.nhom17.model.dto.Phim">
+      <point x="-263.0" y="0.0" />
+      <point x="0.0" y="80.0" />
+      <point x="0.0" y="1360.0" />
+      <point x="-81.0" y="0.0" />
+    </edge>
+    <edge source="com.nhom17.controllers.HomeController" target="com.nhom17.controllers.BaseServlet">
+      <point x="-177.0" y="0.0" />
+      <point x="174.5" y="0.0" />
+    </edge>
+    <edge source="com.nhom17.model.reposity.impl.TheLoaiReposity" target="com.nhom17.model.dto.TheLoai">
+      <point x="161.5" y="0.0" />
+      <point x="-72.5" y="0.0" />
+    </edge>
+    <edge source="com.nhom17.model.reposity.impl.XuatChieuReposity" target="com.nhom17.model.dto.XuatChieu">
+      <point x="167.0" y="0.0" />
+      <point x="2040.0" y="1360.0" />
+      <point x="2040.0" y="80.0" />
+      <point x="80.5" y="0.0" />
+    </edge>
+    <edge source="com.nhom17.controllers.MovieInfoControllerServlet" target="com.nhom17.controllers.BaseServlet">
+      <point x="0.0" y="47.5" />
+      <point x="0.0" y="-80.5" />
+    </edge>
+    <edge source="com.nhom17.model.reposity.impl.GheReposity" target="com.nhom17.model.dto.Ghe">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="69.5" />
+    </edge>
+    <edge source="com.nhom17.model.reposity.impl.PhimReposity" target="com.nhom17.model.dto.Phim">
+      <point x="-153.5" y="0.0" />
+      <point x="760.0" y="960.0" />
+      <point x="760.0" y="1240.0" />
+      <point x="81.0" y="-120.0" />
+    </edge>
+    <edge source="com.nhom17.controllers.HomeController" target="com.nhom17.model.reposity.impl.PhimReposity">
+      <point x="-177.0" y="20.0" />
+      <point x="1160.0" y="540.0" />
+      <point x="0.0" y="-59.0" />
+    </edge>
+    <edge source="com.nhom17.controllers.MovieInfoControllerServlet" target="com.nhom17.model.dto.XuatChieu">
+      <point x="263.0" y="0.0" />
+      <point x="-80.5" y="0.0" />
+    </edge>
+    <edge source="com.nhom17.controllers.HomeController" target="com.nhom17.model.dto.Phim">
+      <point x="0.0" y="25.5" />
+      <point x="1560.0" y="1320.0" />
+      <point x="81.0" y="-40.0" />
+    </edge>
+    <edge source="com.nhom17.model.reposity.impl.TheLoaiReposity" target="com.nhom17.model.dto.Phim">
+      <point x="0.0" y="-47.5" />
+      <point x="0.0" y="190.5" />
+    </edge>
+    <edge source="com.nhom17.controllers.MovieListControllerServlet" target="com.nhom17.model.dto.Phim">
+      <point x="0.0" y="69.5" />
+      <point x="0.0" y="-190.5" />
+    </edge>
+    <edge source="com.nhom17.controllers.MovieListControllerServlet" target="com.nhom17.model.reposity.impl.PhimReposity">
+      <point x="311.5" y="0.0" />
+      <point x="1120.0" y="760.0" />
+      <point x="-40.0" y="-59.0" />
+    </edge>
+    <edge source="com.nhom17.model.reposity.impl.XuatChieuReposity" target="com.nhom17.model.dto.Phim">
+      <point x="-167.0" y="0.0" />
+      <point x="81.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.1" x="3617.000000000001" y="-2127.999999999998" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

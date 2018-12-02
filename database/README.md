@@ -22,7 +22,7 @@ Mô hình cơ sở dữ liệu quản lý hệ thống rạp chiếu phim
 
 ### Installing
 
-Có 2 file sql hoặc bak. dùng 1 trong 2 file để restore lại database
+Có 2 file sql hoặc bak. dùng 1 trong 2 file để restore lại com.nhom17.database
 
 ## Structure
 
