@@ -1,0 +1,11 @@
+{
+  "name": "webtt-20191",
+  "version": "1.0.0",
+  "description": "BTL WebTT 20191",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nhom 04",
+  "license": "ISC"
+}
