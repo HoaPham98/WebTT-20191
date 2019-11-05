@@ -7,5 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nhom 04",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "knex": "^0.20.1",
+    "morgan": "^1.9.1",
+    "mysql2": "^2.0.0",
+    "objection": "^1.6.11",
+    "path": "^0.12.7"
+  }
 }
