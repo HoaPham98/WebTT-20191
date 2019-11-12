@@ -4,7 +4,8 @@
   "description": "BTL WebTT 20191",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
   },
   "author": "Nhom 04",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "morgan": "^1.9.1",
     "mysql2": "^2.0.0",
     "objection": "^1.6.11",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "sqlite3": "^4.1.0"
   }
 }
