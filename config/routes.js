@@ -1,8 +1,9 @@
 var home = require('../app/controllers/home');
+var admin = require('../app/controllers/admin');
 
 //you can include all your controllers
 
-module.exports = function (app) {
+module.exports = function (app, passport) {
 
     app.get('/', home.home);//home
     app.get('/home', home.home);//home
@@ -11,5 +12,14 @@ module.exports = function (app) {
     app.get('/news', home.news);
     app.get('/contact', home.contact);
 
-
+    app.post('/admin/dramatics', admin.insertDramatic);
+    app.get('/admin/dramatics', admin.getDramatic);
+    
+    app.get('/login', admin.login);
+    app.get('/ok', admin.ok);
+    app.post('/login', passport.authenticate("login", {
+        successRedirect : '/ok',
+        failureRedirect : '/login',
+        failureFlash : true
+    }));
 }

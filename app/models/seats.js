@@ -1,5 +1,5 @@
 const Knex = require('knex')
-const connection = require('../knexfile')
+const connection = require('../../knexfile')
 const { Model } = require('objection')
 const { Dramatic } = require('./dramatic')
 

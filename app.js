@@ -8,6 +8,7 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var passport = require('passport');
 
 var port = process.env.PORT || 8080;
 
@@ -39,12 +40,14 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+// config passport
+require('./config/passport.js')(passport); 
 // routes ======================================================================
-require('./config/routes.js')(app); // load our routes and pass in our app and fully configured passport
+require('./config/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 
 //launch ======================================================================
