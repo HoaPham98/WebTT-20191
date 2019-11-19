@@ -69,6 +69,18 @@ exports.insertSeat = async function (req, res) {
     res.send(idea)
 }
 
+exports.updateSeat = async function (req, res) {
+    const room = await Room.query()
+        .findById(req.body.id)
+        .patch({
+            room_id: req.body.room_id,
+            type_id: req.body.type_id,
+            row: req.body.row,
+            col: req.body.col
+        })
+        .then(res.send("okUpdateRoom"))
+}
+
 // exports.insertShowtime = async function (req, res) {
 //     const newShowtime = req.body;
 //     const showtime = await Dramatic.query()
