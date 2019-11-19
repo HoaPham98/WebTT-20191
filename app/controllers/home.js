@@ -1,19 +1,32 @@
 
-exports.home = function(req, res) {
+const DramaticRepository = require('../repositories/dramatics')
+const SeatRepository = require('../repositories/seats')
+
+exports.home = async function(req, res) {
+
+	const dramatics = await DramaticRepository.getDramatics()
+	const rooms = await SeatRepository.getRooms()
+
+	const room = rooms[0]
+
+	const seats = await room.$relatedQuery('seats')
+
 	res.render('index.ejs', {
 		error: req.flash("error"),
 		success: req.flash("success"),
 		session: req.session,
+		dramatics: dramatics,
 		title: "Nhóm 04"
 	});
 }
-	exports.schedule = function(req, res) {
-		res.render('schedule.ejs', {
-			error : req.flash("error"),
-			success: req.flash("success"),
-			session:req.session,
-			title: "Lịch diễn"
-		});
+
+exports.schedule = function(req, res) {
+	res.render('schedule.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Lịch diễn"
+	});
 	 
 }
 
