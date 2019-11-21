@@ -2,6 +2,8 @@ const Knex = require('knex')
 const connection = require('../../knexfile')
 const { Model } = require('objection')
 const { Dramatic } = require('./dramatic')
+const { Ticket } = require('./tickets')
+const { SeatType, Room, Seat } = require('./seats')
 
 const knexConnection = Knex(connection)
 
@@ -29,7 +31,7 @@ class ShowTime extends Model {
                 }
             },
             showtime_type: {
-                relation: Model.HasOneRelation,
+                relation: Model.BelongsToOneRelation,
                 modelClass: ShowTimeType,
                 join: {
                     from: 'showtime.type_id',
@@ -37,11 +39,19 @@ class ShowTime extends Model {
                 }
             },
             dramatics: {
-                relation: Model.HasOneRelation,
+                relation: Model.BelongsToOneRelation,
                 modelClass: Dramatic,
                 join: {
                     from: 'showtime.dramatic_id',
                     to: 'dramatics.id'
+                }
+            },
+            ticket: {
+                relation: Model.HasManyRelation,
+                modelClass: Ticket,
+                join: {
+                    from: 'showtime.id',
+                    to: 'ticket.showtime_id'
                 }
             }
         }
