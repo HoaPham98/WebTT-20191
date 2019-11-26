@@ -45,5 +45,15 @@ exports.contact = function(req, res) {
 
 }
 
+exports.booking = function(req, res) {
+	res.render('booking.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Đặt vé"
+	});
+
+}
+
 
     
