@@ -1,90 +1,7 @@
-
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-	<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Nhà hát kịch</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
-	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
-	<meta name="author" content="FREEHTML5.CO" />
-
-  	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
-
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
-
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-	
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="public/css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="public/css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="public/css/bootstrap.css">
-	<!-- Superfish -->
-	<link rel="stylesheet" href="public/css/superfish.css">
-	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="public/css/magnific-popup.css">
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="public/css/bootstrap-datepicker.min.css">
-	<!-- CS Select -->
-	<link rel="stylesheet" href="public/css/cs-select.css">
-	<link rel="stylesheet" href="public/css/cs-skin-border.css">
-	
-	<link type="text/css" rel="stylesheet" href="public/css/style.css">
-
-
-	<!-- Modernizr JS -->
-	<script src="public/js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="public/js/respond.min.js"></script>
-	<![endif]-->
-
-	</head>
-	<body>
-		<div id="fh5co-wrapper">
-		<div id="fh5co-page">
-
-		<header id="fh5co-header-section" class="sticky-banner">
-			<div class="container">
-				<div class="nav-header">
-					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-film "></i>Nhà Hát Kịch</a></h1>
-					<nav id="fh5co-menu-wrap" role="navigation">
-						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li class="active"><a href="/">Trang chủ</a></li>
-							<li>
-								<a href="/schedule" class="fh5co-sub-ddown">Lịch diễn</a>
-							</li>
-							<li><a href="/performance">Vở diễn</a></li>
-							<li><a href="/news">Tin Tức</a></li>
-							<li><a href="/contact">Liên hệ</a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</header>
-
-		<!-- end:header-top -->
+ <% include public/partials/header %>
 	
 		<div class="fh5co-hero">
-			<div class="fh5co-overlay"></div>
-			<div class="fh5co-cover"  style="background-image: url(public/images/pexels-photo-109669.jpeg);">
+			<div class="fh5co-overlay" ></div>
 		</div>
 
 		<div id="fh5co-tours" class="fh5co-section-gray">
@@ -92,21 +9,24 @@
 				<!--				Lichchieunoibat-->
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-						<h3>Lịch chiếu</h3>
+						<h3>Lịch diễn</h3>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
-						<div href="#"><img src="public/images/place-1.jpg" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
-							<div class="desc">
-								<span></span>
-								<h3>New York</h3>
-								<span>Hài</span>
-								<span class="price">$1,000</span>
-								<a class="btn btn-primary btn-outline" href="#">Mua vé <i class="icon-arrow-right22"></i></a>
+					<%# dramatics.forEach(function(dramatic) { %>
+						<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
+							<div href="#"><img src="public/images/<%# dramatic.poster%>" alt="" class="img-responsive">
+								<div class="desc">
+									<span></span>
+									<h3><%# dramatic.name %></h3>
+									<span><%# dramatic.director %></span>
+									<span class="price"><%# dramatic.showtime.time %></span>
+									<a class="btn btn-primary btn-outline" href="/booking<%# dramatic.showtime.id %>">Mua vé <i class="icon-arrow-right22"></i></a>
+								</div>
 							</div>
 						</div>
-					</div>
+					<%# }); %>
+
 					<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
 						<div href="#"><img src="public/images/place-2.jpg" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
 							<div class="desc">
@@ -114,7 +34,7 @@
 								<h3>Philippines</h3>
 								<span>Bi kịch</span>
 								<span class="price">$1,000</span>
-								<a class="btn btn-primary btn-outline" href="#">Mua vé <i class="icon-arrow-right22"></i></a>
+								<a class="btn btn-primary btn-outline" href="/booking">Mua vé <i class="icon-arrow-right22"></i></a>
 							</div>
 						</div>
 					</div>
@@ -125,12 +45,12 @@
 								<h3>Hongkong</h3>
 								<span>Hài</span>
 								<span class="price">$1,000</span>
-								<a class="btn btn-primary btn-outline" href="#">Mua vé <i class="icon-arrow-right22"></i></a>
+								<a class="btn btn-primary btn-outline" href="/booking">Mua vé <i class="icon-arrow-right22"></i></a>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-12 text-center animate-box">
-						<p><a class="btn btn-primary btn-outline btn-lg" href="#">Xem tất cả <i class="icon-arrow-right22"></i></a></p>
+						<p><a class="btn btn-primary btn-outline btn-lg" href="/schedule">Xem tất cả <i class="icon-arrow-right22"></i></a></p>
 					</div>
 				</div>
 
@@ -153,7 +73,7 @@
 				</div>
 			</div>
 		</div>
-			<div id="fh5co-testimonial" style="background-image:url(public/images/img_bg_1.jpg);">
+			<!-- <div id="fh5co-testimonial" style="background-image:url(public/images/img_bg_1.jpg);">
 				<div class="container">
 					<div class="row animate-box">
 						<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
@@ -193,114 +113,6 @@
 
 						</div>
 					</div>
-				</div>
-		<footer>
-			<div id="footer">
-				<div class="container">
-					<div class="row row-bottom-padded-md">
-						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-							<h3>About Travel</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-							<h3>Top Flights Routes</h3>
-							<ul>
-								<li><a href="#">Manila flights</a></li>
-								<li><a href="#">Dubai flights</a></li>
-								<li><a href="#">Bangkok flights</a></li>
-								<li><a href="#">Tokyo Flight</a></li>
-								<li><a href="#">New York Flights</a></li>
-							</ul>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-							<h3>Top Hotels</h3>
-							<ul>
-								<li><a href="#">Boracay Hotel</a></li>
-								<li><a href="#">Dubai Hotel</a></li>
-								<li><a href="#">Singapore Hotel</a></li>
-								<li><a href="#">Manila Hotel</a></li>
-							</ul>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-							<h3>Interest</h3>
-							<ul>
-								<li><a href="#">Beaches</a></li>
-								<li><a href="#">Family Travel</a></li>
-								<li><a href="#">Budget Travel</a></li>
-								<li><a href="#">Food &amp; Drink</a></li>
-								<li><a href="#">Honeymoon and Romance</a></li>
-							</ul>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-							<h3>Best Places</h3>
-							<ul>
-								<li><a href="#">Boracay Beach</a></li>
-								<li><a href="#">Dubai</a></li>
-								<li><a href="#">Singapore</a></li>
-								<li><a href="#">Hongkong</a></li>
-							</ul>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-							<h3>Affordable</h3>
-							<ul>
-								<li><a href="#">Food &amp; Drink</a></li>
-								<li><a href="#">Fare Flights</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6 col-md-offset-3 text-center">
-							<p class="fh5co-social-icons">
-								<a href="#"><i class="icon-twitter2"></i></a>
-								<a href="#"><i class="icon-facebook2"></i></a>
-								<a href="#"><i class="icon-instagram"></i></a>
-								<a href="#"><i class="icon-dribbble2"></i></a>
-								<a href="#"><i class="icon-youtube"></i></a>
-							</p>
-							<p>Copyright 2016 Free Html5 <a href="#">Module</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>
-
-	
-
-	</div>
-	<!-- END fh5co-page -->
-
-	</div>
-	<!-- END fh5co-wrapper -->
-
-	<!-- jQuery -->
-
-
-	<script src="public/js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="public/js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="public/js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="public/js/jquery.waypoints.min.js"></script>
-	<script src="public/js/sticky.js"></script>
-
-	<!-- Stellar -->
-	<script src="public/js/jquery.stellar.min.js"></script>
-	<!-- Superfish -->
-	<script src="public/js/hoverIntent.js"></script>
-	<script src="public/js/superfish.js"></script>
-	<!-- Magnific Popup -->
-	<script src="public/js/jquery.magnific-popup.min.js"></script>
-	<script src="public/js/magnific-popup-options.js"></script>
-	<!-- Date Picker -->
-	<script src="public/js/bootstrap-datepicker.min.js"></script>
-	<!-- CS Select -->
-	<script src="public/js/classie.js"></script>
-	<script src="public/js/selectFx.js"></script>
-	
-	<!-- Main JS -->
-	<script src="public/js/main.js"></script>
-
-	</body>
-</html>
+				</div> -->
+<% include public/partials/footer %>
 

@@ -22,4 +22,6 @@ module.exports = function (app, passport) {
         failureRedirect : '/login',
         failureFlash : true
     }));
+    
+    app.get('/booking', home.booking);
 }

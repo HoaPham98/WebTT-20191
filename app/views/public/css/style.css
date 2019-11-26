@@ -262,7 +262,7 @@ figure {
 }
 
 .sf-menu a {
-  color: rgba(0, 0, 0, 0.5);
+  color: #fff;
   padding: 0.75em 1em !important;
   font-weight: normal;
   border-left: none;
@@ -357,7 +357,7 @@ figure {
   left: 0;
   width: 100%;
   z-index: 1022;
-  background: #fff;
+  background: #393e46;
 }
 
 .nav-header {
@@ -1720,6 +1720,17 @@ div.cs-select span {
   -o-transition: 0.5s;
   transition: 0.5s;
 }
+/*#fh5co-page::after {*/
+/*  content: "";*/
+/*  background-image: url(../images/banner2.jpg);*/
+/*  opacity: 0.8;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  bottom: 0;*/
+/*  right: 0;*/
+/*  position: absolute;*/
+/*  z-index: -1;*/
+/*}*/
 .fh5co-offcanvas #fh5co-page {
   -moz-transform: translateX(-240px);
   -webkit-transform: translateX(-240px);
@@ -1977,47 +1988,54 @@ div.cs-select span {
   background: url(../images/hourglass.svg) center no-repeat #222222;
 }
 
-.searchbar{
-  margin-bottom: auto;
-  margin-top: auto;
+@import url('https://fonts.googleapis.com/css?family=Lexend+Deca|Dosis&display=swap');
+
+button img {
+  transition: transform 0.25s;
+}
+button:hover > img {
+  transform: scale(1.2);
+}
+button:focus {
+  outline: none;
+}
+input {
+  font-family: 'Lexend Deca', sans-serif;
+}
+input::placeholder {
+  font-family: 'Lexend Deca', sans-serif;
+}
+input:focus {
+  outline: none;
+}
+.searchbox {
   height: 60px;
-  background-color: #353b48;
-  border-radius: 30px;
-  padding: 10px;
-}
-
-.search_input{
-  color: white;
-  border: 0;
-  outline: 0;
-  background: none;
-  width: 0;
-  caret-color:transparent;
-  line-height: 40px;
-  transition: width 0.4s linear;
-}
-
-.searchbar:hover > .search_input{
-  padding: 0 10px;
-  width: 400px;
-  caret-color:red;
-  transition: width 0.4s linear;
-}
-
-.searchbar:hover > .search_icon{
+  width: 450px;
+  max-width: 100%;
   background: white;
-  color: #e74c3c;
+  border-radius: 10px;
+  position: relative;
+  left: 35px;
+  right: 0;
+  margin: 0 auto;
+  top: 50px;
+  display: flex;
+}
+.searchbox > .btn-menu {
+  padding: 16px;
+  background: transparent;
+  border: none;
+}
+.searchbox > .search {
+  border: none;
+  width: 100%;
+}
+.searchbox > .btn-search {
+  padding: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
-.search_icon{
-  height: 40px;
-  width: 40px;
-  float: right;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  color:white;
-}
 
 /*# sourceMappingURL=style.css.map */
