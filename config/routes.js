@@ -10,6 +10,7 @@ module.exports = function (app) {
     app.get('/performance', home.performance);
     app.get('/news', home.news);
     app.get('/contact', home.contact);
-
+    app.get('/admin/login',home.login);
+    app.get('/admin/mainpage',home.adminMainPage);
 
 }

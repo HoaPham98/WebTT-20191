@@ -44,6 +44,23 @@ exports.contact = function(req, res) {
 	});
 
 }
+exports.login = function(req, res) {
+	res.render('admin/login.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Login"
+	});
 
+}
+exports.adminMainPage = function(req, res) {
+	res.render('admin/adminMainPage.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Admin Main Page"
+	});
+
+}
 
     
