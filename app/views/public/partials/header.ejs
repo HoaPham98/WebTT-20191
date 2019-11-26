@@ -53,10 +53,26 @@
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="public/js/respond.min.js"></script>
-	<![endif]-->
+	<script src="public/js/jquery-1.11.0.min.js"></script>
+	<script src="public/js/jquery.seat-charts.js"></script>
+
+		<![endif]-->
 
 	</head>
 	<body>
+	<script>
+		function show() {
+			var img = ["url(\"public/images/pexels-photo-109669.jpeg\")", "url(\"public/images/10989453_2108229152648726_2310802534517045768_o.jpg\")", "url(\"public/images/pexels-photo-713149.jpeg\")" ];
+			var i = 0;
+			setInterval(function() {
+				i++;
+				if( i > 2) i = 0;
+				document.querySelector(".fh5co-overlay").style.backgroundImage = img[i];
+
+			}, 3000) ;
+		}
+		show();
+	</script>
 		<div id="fh5co-wrapper">
 		<div id="fh5co-page">
 
