@@ -1,5 +1,6 @@
 var home = require('../app/controllers/home');
 var admin = require('../app/controllers/admin');
+var showtime = require('../app/controllers/showtime');
 
 //you can include all your controllers
 
@@ -14,6 +15,8 @@ module.exports = function (app, passport) {
 
     app.post('/admin/dramatics', admin.insertDramatic);
     app.get('/admin/dramatics', admin.getDramatic);
+
+    app.post('/admin/showtimes', showtime.insertShowTime);
     
     app.get('/login', admin.login);
     app.get('/ok', admin.ok);
