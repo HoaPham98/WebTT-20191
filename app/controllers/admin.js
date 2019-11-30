@@ -1,6 +1,25 @@
 const { Dramatic } = require('../models/dramatic');
 const { SeatType, Room, Seat } = require('../models/seats');
 
+exports.login = function(req, res) {
+    res.render('admin/login.ejs', {
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Login"
+    });
+
+}
+exports.adminMainPage = function(req, res) {
+    res.render('admin/adminMainPage.ejs', {
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Admin Main Page"
+    });
+
+}
+
 exports.insertDramatic = async function (req, res) {
     const newDramatic = req.body;
     const dramatic = await Dramatic.query()

@@ -12,19 +12,19 @@ module.exports = function (app, passport) {
     app.get('/performance', home.performance);
     app.get('/news', home.news);
     app.get('/contact', home.contact);
+    app.get('/booking', home.booking);
 
     app.post('/admin/dramatics', admin.insertDramatic);
     app.get('/admin/dramatics', admin.getDramatic);
-
-    app.post('/admin/showtimes', showtime.insertShowTime);
-    
-    app.get('/login', admin.login);
-    app.get('/ok', admin.ok);
-    app.post('/login', passport.authenticate("login", {
-        successRedirect : '/ok',
-        failureRedirect : '/login',
+    app.post('/admin/showtimes', showtime.insertShowTime);   
+    //app.get('/ok', admin.ok);
+    app.post('/admin/login', passport.authenticate("login", {
+        successRedirect : '/admin/mainpage',
+        failureRedirect : '/admin/login',
         failureFlash : true
     }));
     
-    app.get('/booking', home.booking);
+    app.get('/admin/login',admin.login);
+    app.get('/admin/mainpage',admin.adminMainPage);
+    
 }
