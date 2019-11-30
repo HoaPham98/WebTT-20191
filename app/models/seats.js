@@ -49,7 +49,7 @@ class Seat extends Model {
                 }
             },
             seat_type: {
-                relation: Model.HasOneRelation,
+                relation: Model.BelongsToOneRelation,
                 modelClass: SeatType,
                 join: {
                     from: 'seat.type_id',
