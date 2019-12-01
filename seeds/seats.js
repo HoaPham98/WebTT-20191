@@ -7,7 +7,8 @@ function generateSeat() {
         room_id: 1,
         type_id: 1,
         row: j,
-        col: i
+        col: i,
+        code: j + '_' + i
       }
       arr.push(seat)
     }
