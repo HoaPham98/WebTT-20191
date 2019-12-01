@@ -52,8 +52,5 @@ exports.booking = function(req, res) {
 		session:req.session,
 		title: "Đặt vé"
 	});
-
 }
 
-
-    
