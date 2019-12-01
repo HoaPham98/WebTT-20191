@@ -2,7 +2,7 @@ const Knex = require('knex')
 const connection = require('../../knexfile')
 const { Model } = require('objection')
 const { ShowTimeType, ShowTime } = require('./showtimes')
-const { SeatType, Room, Seat } = require('./tickets')
+const { SeatType, Room, Seat } = require('./seats')
 
 const knexConnection = Knex(connection)
 

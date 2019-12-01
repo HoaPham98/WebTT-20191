@@ -1,3 +1,9 @@
+const { ShowTime, ShowTimeType } = require('../models/showtimes')
+const { Ticket, TicketStatus, Price } = require('../models/tickets')
+const { Dramatic } = require('../models/dramatic')
+const { Seat, SeatType, Room } = require('../models/seats')
+const { Transaction} = require('../models/transactions')
+
 
 exports.home = function(req, res) {
 	res.render('index.ejs', {
@@ -45,12 +51,27 @@ exports.contact = function(req, res) {
 
 }
 
-exports.booking = function(req, res) {
+exports.booking = async function(req, res) {
+
+	var showtime = await ShowTime.query().findById(1)
+	var dramatic = await showtime.$relatedQuery('dramatics')
+	console.log(dramatic)
+
+	var prices = await Price.query().where('showtime_type_id', showtime.type_id)
+	console.log(prices)
+	
+	const transaction = await Transaction.query().insert({})
+
+	console.log(transaction.id)
+
 	res.render('booking.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
+		showtime: showtime,
+		dramatic: dramatic,
+		prices: prices,
+		transaction_id: transaction.id,
 		title: "Đặt vé"
 	});
 }
-

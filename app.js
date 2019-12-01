@@ -10,6 +10,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 
+var booking = require('./app/controllers/api/booking')
+
 var port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
@@ -51,8 +53,39 @@ require('./config/routes.js')(app, passport); // load our routes and pass in our
 
 
 //launch ======================================================================
-app.listen(port);
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+server.listen(port);
 console.log('The magic happens on port ' + port);
+
+io.on("connection", function(socket)
+	{
+		socket.on("disconnect", function()
+			{
+			});
+         //server lắng nghe dữ liệu từ client
+		socket.on("addTicket", async function(transaction_id, showtime_id, seat_code)
+			{
+                var id = await booking.addTicket(transaction_id, showtime_id, seat_code)
+                if (id == null) {
+
+                } else {
+                    socket.broadcast.emit('update_add', showtime_id, seat_code, 'unavailable')
+                }
+            });
+            
+        socket.on("removeTicket", async function(transaction_id, showtime_id, seat_code)
+        {
+            var id = await booking.removeTicket(transaction_id, showtime_id, seat_code)
+            
+            if (id == null) {
+
+            } else {
+                socket.broadcast.emit('update_remove', showtime_id, seat_code, 'available')
+            }
+        });
+	});
+
 
 //catch 404 and forward to error handler
 app.use(function (req, res, next) {

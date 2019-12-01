@@ -4,6 +4,8 @@ var dramatic = require('../app/controllers/dramatic');
 var room = require('../app/controllers/room');
 var showtime = require('../app/controllers/showtime');
 var check_input = require('../app/controllers/utils/check_input')
+
+var api_booking = require('../app/controllers/api/booking')
 //you can include all your controllers
 
 module.exports = function (app, passport) {
@@ -37,5 +39,7 @@ module.exports = function (app, passport) {
     
     app.get('/admin/login',admin.login);
     app.get('/admin/mainpage',admin.adminMainPage);
+
+    app.post('/api/booking/getBookingData', api_booking.getBookingData);
     
 }
