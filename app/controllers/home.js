@@ -70,5 +70,15 @@ exports.booking = function(req, res) {
 		session:req.session,
 		title: "Đặt vé"
 	});
+
+}
+exports.adminAddPerformance = function(req, res) {
+	res.render('admin/adminAddPerformance.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Thêm vở diễn"
+	});
+	
 }
 
