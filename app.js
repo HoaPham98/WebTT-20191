@@ -60,12 +60,25 @@ console.log('The magic happens on port ' + port);
 
 io.on("connection", function(socket)
 	{
-		socket.on("disconnect", function()
+		socket.on("disconnect", async function()
 			{
+                var transaction_id = socket.transaction_id
+                var showtime_id = socket.showtime_id
+
+                var codes = await booking.removeTransaction(transaction_id)
+                if (codes == null) {
+
+                } else {
+                    socket.broadcast.emit('update_remove', showtime_id, codes, 'available')
+                }
 			});
          //server lắng nghe dữ liệu từ client
 		socket.on("addTicket", async function(transaction_id, showtime_id, seat_code)
 			{
+                if (socket.transaction_id == null) {
+                    socket.transaction_id = transaction_id
+                    socket.showtime_id = showtime_id
+                }
                 var id = await booking.addTicket(transaction_id, showtime_id, seat_code)
                 if (id == null) {
 

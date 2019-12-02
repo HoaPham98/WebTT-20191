@@ -2,8 +2,10 @@ const {Ticket, TicketStatus} = require('../../models/tickets')
 const { ShowTime, ShowTimeType } = require('../../models/showtimes')
 const { Transaction } = require('../../models/transactions')
 const { Room, Seat } = require('../../models/seats')
+const uuidv4 = require('uuid/v4')
 
 exports.create_payment = async function(req, res) {
+    try {
     var ipAddr = req.headers['x-forwarded-for'] ||
         req.connection.remoteAddress ||
         req.socket.remoteAddress ||
@@ -22,7 +24,10 @@ exports.create_payment = async function(req, res) {
 
     var createDate = dateFormat(date, 'yyyymmddHHmmss');
     var orderId = req.body.transaction_id
-    var amount = 100000;
+
+    const transaction = await Transaction.query().findById(orderId)
+
+    var amount = transaction.total_price;
     var bankCode = '';
     
     var orderInfo = 'Thanh toan mua ve xem kich';
@@ -67,35 +72,56 @@ exports.create_payment = async function(req, res) {
     res.status(200).json({code: '00', data: vnpUrl})
     //Neu muon dung Redirect thi mo dong ben duoi va dong dong ben tren
     //res.redirect(vnpUrl)
+    } catch(err) {
+        console.log(err)
+        res.status(400).json({code: '400', data: 'failed'})
+    }
 }
 
-exports.return_payment = function (req, res) {
-    var vnp_Params = req.query;
+exports.return_payment = async function (req, res) {
+    try {
+        var vnp_Params = req.query;
 
-    var secureHash = vnp_Params['vnp_SecureHash'];
+        var secureHash = vnp_Params['vnp_SecureHash'];
 
-    delete vnp_Params['vnp_SecureHash'];
-    delete vnp_Params['vnp_SecureHashType'];
+        var transaction_id = vnp_Params['vnp_TxnRef']
 
-    vnp_Params = sortObject(vnp_Params);
+        const transaction = await Transaction.query().findById(transaction_id)
+        
+        await transaction.$relatedQuery('tickets').patch({
+            status_id: 3
+        })
+        await Transaction.query().findById(transaction_id).patch({
+            code: uuidv4()
+        })
 
-    var config = require('../../../config/default.json');
-    var tmnCode = config.vnp_TmnCode
-    var secretKey = config.vnp_HashSecret
 
-    var querystring = require('qs');
-    var signData = secretKey + querystring.stringify(vnp_Params, { encode: false });
+        delete vnp_Params['vnp_SecureHash'];
+        delete vnp_Params['vnp_SecureHashType'];
 
-    var sha256 = require('sha256');
+        vnp_Params = sortObject(vnp_Params);
 
-    var checkSum = sha256(signData);
+        var config = require('../../../config/default.json');
+        var tmnCode = config.vnp_TmnCode
+        var secretKey = config.vnp_HashSecret
 
-    if(secureHash === checkSum){
-        //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+        var querystring = require('qs');
+        var signData = secretKey + querystring.stringify(vnp_Params, { encode: false });
 
-        res.render('success', {code: vnp_Params['vnp_ResponseCode']})
-    } else{
-        res.render('success', {code: '97'})
+        var sha256 = require('sha256');
+
+        var checkSum = sha256(signData);
+
+        if (secureHash === checkSum) {
+            //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+
+            res.json({ status: 'success', data: { code: vnp_Params['vnp_ResponseCode'] } })
+        } else {
+            res.json({ status: 'failed', data: { code: '97' } })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ status: 'Failed' })
     }
 }
 
