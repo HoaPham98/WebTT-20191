@@ -13,16 +13,27 @@
 					</div>
 				</div>
 				<div class="row">
-					<%# dramatics.forEach(function(dramatic) { %>
-						<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
-							<div href="#"><img src="public/images/<%# dramatic.poster%>" alt="" class="img-responsive">
-								<div class="desc">
-									<span></span>
-									<h3><%# dramatic.name %></h3>
-									<span><%# dramatic.director %></span>
-									<span class="price"><%# dramatic.showtime.time %></span>
-									<a class="btn btn-primary btn-outline" href="/booking<%# dramatic.showtime.id %>">Mua vé <i class="icon-arrow-right22"></i></a>
+						<% dramatics.forEach(function(dramatic) { %>
+							<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
+									<div href="#"><img src="<%= dramatic.poster %>" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+										<div class="desc">
+											<span></span>
+											<h3><%= dramatic.name %></h3>
+											<span>Hài</span>
+											<span class="price">$1,000</span>
+											<a class="btn btn-primary btn-outline" href="#">Mua vé <i class="icon-arrow-right22"></i></a>
+										</div>
+									</div>
 								</div>
+						<% }); %>
+					<!-- <div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
+						<div href="#"><img src="public/images/place-1.jpg" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+							<div class="desc">
+								<span></span>
+								<h3>New York</h3>
+								<span>Hài</span>
+								<span class="price">$1,000</span>
+								<a class="btn btn-primary btn-outline" href="#">Mua vé <i class="icon-arrow-right22"></i></a>
 							</div>
 						</div>
 					<%# }); %>
@@ -48,7 +59,7 @@
 								<a class="btn btn-primary btn-outline" href="/booking">Mua vé <i class="icon-arrow-right22"></i></a>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-md-12 text-center animate-box">
 						<p><a class="btn btn-primary btn-outline btn-lg" href="/schedule">Xem tất cả <i class="icon-arrow-right22"></i></a></p>
 					</div>
