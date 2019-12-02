@@ -23,22 +23,14 @@ exports.getBookingData = async function(req, res) {
     var sold = []
     var soldTickets = tickets.filter((ticket) => {
         return ticket.status_id == 3
-    })
-    for (var ticket in soldTickets) {
-        var seat = await ticket.$relatedQuery('seat')
-
-        sold.push(seat.code)
-    }
+    }).map((item) => item.seat_id)
+    sold = await Seat.query().findByIds(soldTickets).map((item) => item.code)
 
     var unavailable = []
     var unavailableTickets = tickets.filter((ticket) => {
         return ticket.status_id == 2
-    })
-    for (var ticket in unavailableTickets) {
-        var seat = await ticket.$relatedQuery('seat')
-
-        unavailable.push(seat.code)
-    }
+    }).map((item) => item.seat_id)
+    unavailable = await Seat.query().findByIds(unavailableTickets).map((item) => item.code)
 
     res.json({
         status: 'success',

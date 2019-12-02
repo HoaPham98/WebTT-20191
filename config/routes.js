@@ -6,6 +6,7 @@ var showtime = require('../app/controllers/showtime');
 var check_input = require('../app/controllers/utils/check_input')
 
 var api_booking = require('../app/controllers/api/booking')
+var api_payment = require('../app/controllers/api/payment')
 //you can include all your controllers
 
 module.exports = function (app, passport) {
@@ -41,5 +42,8 @@ module.exports = function (app, passport) {
     app.get('/admin/mainpage',admin.adminMainPage);
 
     app.post('/api/booking/getBookingData', api_booking.getBookingData);
+
+    app.post('/api/create_payment', api_payment.create_payment)
+    app.get('/api/payment_return', api_payment.return_payment)
     
 }

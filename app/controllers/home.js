@@ -66,14 +66,16 @@ exports.contact = function(req, res) {
 
 exports.booking = async function(req, res) {
 
-	var showtime = await ShowTime.query().findById(1)
+	const showtime_id = req.body.showtime_id || 1
+
+	var showtime = await ShowTime.query().findById(showtime_id)
 	var dramatic = await showtime.$relatedQuery('dramatics')
 	console.log(dramatic)
 
 	var prices = await Price.query().where('showtime_type_id', showtime.type_id)
 	console.log(prices)
 	
-	const transaction = await Transaction.query().insert({})
+	const transaction = await Transaction.query().insert({showtime_id: showtime_id})
 
 	console.log(transaction.id)
 
