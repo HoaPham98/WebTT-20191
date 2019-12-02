@@ -244,48 +244,30 @@
       <!-- /.content-header -->
 <!-- Main content -->
 <section class="content">
-    <div class="col-xs-12">
-        <!-- /.box -->
-
-        <div class="box">
-          <!-- /.box-header -->
-          <div class="box-body">
-            <a href="/admin/add" class="btn btn-success">Thêm vở diễn</a>
-            <table id="table_recurrent_task" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>STT</th>
-                <th>Tên vở diễn</th>
-                <th>Tác giả</th>
-                <th>Đạo diễn </th>
-                <th>Poster</th>
-                <th>Giám đốc sản xuất</th>
-                <th>Hành động</th>
-              </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>1</td>
-                      <td>Ngôi nhà trên thuyền</td>
-                      <td>Cát An</td>
-                      <td>Vũ Xuân Trang</td>
-                      <td>
-                       <img src="public/img/photo1.png" width="50" height="50">
-                       </td>
-                       <td>Lê Tuấn Anh</td>
-                      <td>
-                          <button class="btn btn-info btn-edit">Sửa</button>
-                          <button class="btn btn-danger btn-delete">Xóa</button>
-                      </td>
-                  </tr>
-                 
-              </tbody>
-            </table>
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-      </div>
+        <div class="col-xs-12">
+                <form action="add"  method="POST" role="form" enctype="multipart-form data">
+                    <legend>Thêm lịch chiếu</legend>
+                    <div class="form-group">
+                        <label form="">Tên vở diễn</label>
+                        <input type="" class="form-control" id="tieude" name ="">
+                    </div>
+                    <div class="form-group">
+                            <label>Ngày chiếu:</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" class="form-control pull-right" id="start_show">
+                            </div>
+                            <!-- /.input group -->
+                          </div>
+                          <div class="form-group">
+                                <label form="">Suất chiếu</label>
+                                <input type="" class="form-control" id="suathieu" name ="">
+                            </div>
+                                    <button type="button" class="btn btn-block btn-success btn-create">Tạo lịch diễn</button>
+                </form>
+              </div>
 </section>
 
    </div>

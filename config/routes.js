@@ -14,5 +14,8 @@ module.exports = function (app) {
     app.get('/admin/mainpage',home.adminMainPage);
     app.get('/booking', home.booking);
     app.get('/admin/add', home.adminAddPerformance);
+    app.get('/admin/edit/:id',home.adminEditPerformance);
+    app.get('/admin/manage',home.adminPerformManagement);
+    app.get('/admin/addschedule',home.adminAddSchedule);
 
 }
