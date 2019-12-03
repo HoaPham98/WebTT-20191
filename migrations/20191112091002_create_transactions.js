@@ -7,9 +7,7 @@ exports.up = function(knex) {
           table.integer('showtime_id').references('showtime.id')
           table.timestamp('time')
           table.integer('total_price')
-          table.string('user_name')
-          table.string('email')
-          table.string('phone')
+          table.integer('user_id').references('user.id')
         }),
         knex.schema.createTable('transaction_detail', table => {
             table.increments('id').primary()

@@ -81,7 +81,9 @@ io.on("connection", function(socket)
                 }
                 var id = await booking.addTicket(transaction_id, showtime_id, seat_code)
                 if (id == null) {
-
+                    socket.emit('display_error', 'Có lỗi vừa xảy ra. Vui lòng thử lại!')
+                    socket.emit('update_remove', showtime_id, seat_code, 'available')
+                    socket.broadcast.emit('update_remove', showtime_id, seat_code, 'available')
                 } else {
                     socket.broadcast.emit('update_add', showtime_id, seat_code, 'unavailable')
                 }
@@ -92,7 +94,9 @@ io.on("connection", function(socket)
             var id = await booking.removeTicket(transaction_id, showtime_id, seat_code)
             
             if (id == null) {
-
+                socket.emit('display_error', 'Có lỗi vừa xảy ra. Vui lòng thử lại!')
+                socket.emit('update_add', showtime_id, seat_code, 'selected')
+                socket.broadcast.emit('update_add', showtime_id, seat_code, 'unavailable')
             } else {
                 socket.broadcast.emit('update_remove', showtime_id, seat_code, 'available')
             }

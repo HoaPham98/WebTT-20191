@@ -114,6 +114,11 @@
 					var socket = io("http://localhost:8080");
 					var transaction_id = <%= transaction_id%>
 					var showtime_id = <%= showtime.id%>
+					var $cart = $('#selected-seats'), //Sitting Area
+							$counter = $('#counter'), //Votes
+							$total = $('#total'); //Total money
+						var counter = 0,
+							total = 0;
 					var sc
 					// $(document).ready(function () {
 					// 	var $cart = $('#selected-seats'), //Sitting Area
@@ -217,11 +222,7 @@
 					// });
 
 					function renderMap(map, seats, legendItems, unavailable) {
-						var $cart = $('#selected-seats'), //Sitting Area
-							$counter = $('#counter'), //Votes
-							$total = $('#total'); //Total money
-						var counter = 0,
-							total = 0;
+						
 
 						sc = $('#seat-map').seatCharts({
 							map: map,
@@ -309,8 +310,24 @@
 					socket.on("update_remove", function (st_id, id, status) {
 						console.log("Cần phải update vì remove")
 						if (showtime_id == st_id) {
+							var seat = sc.get(id)
+							console.log(seat.status())
+							if (seat.status() == 'selected') {
+								var price = seat.data().price
+								counter--
+								total -= price
+
+								$('#cart-item-' + seat.settings.id).remove();
+
+								$counter.text(counter);
+								$total.text(total);
+							}
 							sc.get(id).status(status)
 						}
+					});
+
+					socket.on('display_error', function(error) {
+						alert(error)
 					});
 
 					$.ajax({
