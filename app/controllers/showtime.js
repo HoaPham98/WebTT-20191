@@ -46,21 +46,67 @@ exports.insertShowTime = async function (req, res) {
 }
 
 exports.updateShowTime = async function (req, res) {
+    const tempShowTime = req.body;
+    //console.log(typeof tempShowTime.dramatic_id);
     const showTime = await ShowTime.query()
-        .findById(req.body.id)
+        .where('id', req.params.id)
+        .where('date', tempShowTime.date)
+        .where('time', tempShowTime.time)
+        .where('dramatic_id', tempShowTime.dramatic_id)
+        .where('room_id', tempShowTime.room_id)
+        .where('type_id', tempShowTime.type_id);
+    if(showTime.length > 0){
+        res.send("equal")
+    };
+
+    const showTimeUpdate = await ShowTime.query()
+        .findById(req.params.id)
         .patch({
-            date: req.body.date,
-            time: req.body.time,
-            dramatic_id: req.body.dramatic_id,
-            room_id: req.body.room_id,
-            type_id: req.body.type_id
+            date: tempShowTime.date,
+            time: tempShowTime.time,
+            dramatic_id: tempShowTime.dramatic_id,
+            room_id: tempShowTime.room_id,
+            type_id: tempShowTime.type_id
         })
+
+    const seat = await Seat.query()
+        .where('room_id', tempShowTime.room_id);
+    var items = [];
+    for (var i = 0; i < seat.length; i++) {
+        var item = {
+            showtime_id: tempShowTime.id,
+            seat_id: seat[i].id,
+            status_id: 1,
+            price_id: await checkPrice(seat[i], tempShowTime)
+        }
+        items.push(item);
+    }
+
+    for (var i = 0; i < seat.length; i++) {
+         const showTimeResult = await ShowTime.relatedQuery('ticket')
+            .for(req.params.id)
+            .patch({ price_id: items[i].price_id  })
+            .where('seat_id', seat[i].id);
+    }
+   
+    res.send("ok");
 }
-async function checkPrice(seat, showTime) {
+async function checkPrice(seat, tempShowTime) {
     const price = await Price
         .query()
         .where('seat_type_id', seat.type_id)
-        .where('showtime_type_id', showTime.type_id)
-    console.log(price[0].id)
+        .where('showtime_type_id', tempShowTime.type_id)
     return price[0].id;
 }
+
+function checkEqual(tempShowTime, showTime) {
+    if((tempShowTime.date == showTime.date)){
+        console.log(tempShowTime.date == showTime.date)
+        return true;
+    }      
+}
+// &&
+//         (tempShowTime.time == showTime.time)&&
+//         (tempShowTime.dramatic_id == showTime.dramatic_id)&&
+//         (tempShowTime.room_id == showTime.room_id)&&
+//         (tempShowTime.type_id == showTime.type_id)

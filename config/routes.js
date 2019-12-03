@@ -3,6 +3,7 @@ var admin = require('../app/controllers/admin');
 var dramatic = require('../app/controllers/dramatic');
 var room = require('../app/controllers/room');
 var price = require('../app/controllers/price');
+var tickets = require('../app/controllers/tickets');
 var showtime = require('../app/controllers/showtime');
 var check_input = require('../app/controllers/utils/check_input')
 //you can include all your controllers
@@ -32,7 +33,10 @@ module.exports = function (app, passport) {
     app.get('/admin/prices/all', price.getPrices);
     app.post('/admin/prices', price.insertPrice);
 
-    app.post('/admin/showtimes', showtime.insertShowTime);   
+    app.delete('/admin/ticket-status/:id', tickets.delTicketStatus);
+
+    app.post('/admin/showtimes', showtime.insertShowTime);
+    app.put('/admin/showtimes/:id', showtime.updateShowTime);   
     app.post('/admin/login', passport.authenticate("login", {
         successRedirect : '/admin/mainpage',
         failureRedirect : '/admin/login',

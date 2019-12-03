@@ -36,32 +36,26 @@ exports.insertPrice = async function (req, res) {
     }    
 }
 
-exports.updateRoom = async function (req, res) {
-    const room = await Room.query()
-        .findById(req.body.id)
+exports.updatePrice = async function (req, res) {
+    const tempPrice = req.body;
+    const seatType = await SeatType.query().where('id', req.body.seat_type_id);
+    const showTimeType = await ShowTimeType.query().where('id', req.body.showtime_type_id);
+    if(seatType.length > 0 && showTimeType.length > 0){
+        const price = await Price.query()
+        .findById(req.params.id)
         .patch({
-            column_number: req.body.column_number,
-            name: req.body.name,
-            row_number: req.body.director
+            seat_type_id: req.body.seat_type_id,
+            showtime_type_id: req.body.showtime_type_id,
+            price: req.body.price
         })
-        .then(res.send("okUpdateRoom"))
+        .then(res.send("okUpdatePrice"))
+    }else{
+        res.send("invalid");
+    }    
 }
 
-exports.delRoom = async function (req, res) {
-    const room = await Room.query()
+exports.delPrice = async function (req, res) {
+    const price = await Price.query()
         .deleteById(req.params.id)
-    res.send("okDeleteRoom");
-}
-
-exports.insertSeat = async function (req, res) {
-    try{
-        const room = await Room.query().findById(req.body.room_id)
-        console.log(room);
-        await room.$relatedQuery('seats')
-            .insert({type_id: req.body.type_id, row: req.body.row, col: req.body.col})
-        res.send("ok")
-    }catch(err){
-        res.send(err);
-    }
-    
+    res.send("okDeletePrice");
 }
