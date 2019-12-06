@@ -18,7 +18,7 @@ module.exports = function (app, passport) {
     app.get('/contact', home.contact);
     app.get('/booking', home.booking);
 
-    app.post('/admin/dramatics', check_input.isValidInsertDramatic,
+    app.post('/admin/dramatics', //check_input.isValidInsertDramatic,
         dramatic.insertDramatic);
     app.put('/admin/dramatics', check_input.isValidUpdateDramatic,
         dramatic.updateDramatic);
@@ -35,10 +35,10 @@ module.exports = function (app, passport) {
 
     app.delete('/admin/ticket-status/:id', tickets.delTicketStatus);
 
-    app.get('/admin/add', home.adminAddPerformance);
-    app.get('/admin/edit/:id',home.adminEditPerformance);
-    app.get('/admin/manage',home.adminPerformManagement);
-    app.get('/admin/addschedule',home.adminAddSchedule); 
+    app.get('/admin/add', admin.adminAddPerformance);
+    app.get('/admin/edit/:id',admin.adminEditPerformance);
+    app.get('/admin/manage',admin.adminPerformManagement);
+    app.get('/admin/addschedule',admin.adminAddSchedule); 
 
     app.post('/admin/showtimes', showtime.insertShowTime);
     app.put('/admin/showtimes/:id', showtime.updateShowTime);   

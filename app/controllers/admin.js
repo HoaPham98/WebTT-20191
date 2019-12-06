@@ -1,5 +1,6 @@
 const { Dramatic } = require('../models/dramatic');
 const { SeatType, Room, Seat } = require('../models/seats');
+const dramatics = require('./dramatic');
 
 exports.login = function(req, res) {
     res.render('admin/login.ejs', {
@@ -12,12 +13,16 @@ exports.login = function(req, res) {
 
 }
 
-exports.adminMainPage = function(req, res) {
+exports.adminMainPage = async function(req, res) {
+    var data = await dramatics.getAllDramatic()
+    console.log(data);
     res.render('admin/adminMainPage.ejs', {
+        records: data,
         error : req.flash("error"),
         success: req.flash("success"),
         session:req.session,
-        title: "Admin Main Page"
+        title: "Admin Main Page",
+        
     });
 
 }

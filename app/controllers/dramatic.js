@@ -2,10 +2,17 @@ const { Dramatic } = require('../models/dramatic');
 
 exports.insertDramatic = async function (req, res) {
     const newDramatic = req.body;
+    console.log(newDramatic);
     const dramatic = await Dramatic.query()
-        .allowInsert('[name, author, director, music, poster, decorator, actor, sumary]')
+        .allowGraph('[name, author, director, music, poster, decorator, actor, sumary]')
         .insert(newDramatic)
-        .then(res.send("okInsertDrama"))
+        //.then(res.send("okInsertDrama"))
+    res.render('admin/adminMainPage.ejs', {
+        error : req.flash("error"),
+        message: req.flash("success"),
+        session:req.session,
+        title: "Admin Main Page"
+    });    
 }
 
 exports.updateDramatic = async function (req, res) {
@@ -35,4 +42,9 @@ exports.getDramatic = async function (req, res) {
     const dramatics = await Dramatic.query()
         .where('id', req.params.id);
     res.send(dramatics);
+}
+
+exports.getAllDramatic = async function (req, res) {
+    const dramatics = await Dramatic.query()
+    return dramatics;
 }
