@@ -35,6 +35,11 @@ module.exports = function (app, passport) {
 
     app.delete('/admin/ticket-status/:id', tickets.delTicketStatus);
 
+    app.get('/admin/add', home.adminAddPerformance);
+    app.get('/admin/edit/:id',home.adminEditPerformance);
+    app.get('/admin/manage',home.adminPerformManagement);
+    app.get('/admin/addschedule',home.adminAddSchedule); 
+
     app.post('/admin/showtimes', showtime.insertShowTime);
     app.put('/admin/showtimes/:id', showtime.updateShowTime);   
     app.post('/admin/login', passport.authenticate("login", {
