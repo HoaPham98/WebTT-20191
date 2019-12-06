@@ -55,5 +55,31 @@ exports.booking = function(req, res) {
 
 }
 
+exports.performance_detail = function(req, res) {
+	res.render('performance_detail.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Chi tiết vở diễn"
+	});
+}
+
+exports.login_register = function(req, res) {
+	res.render('login_register.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Đăng nhập & Đăng ký"
+	});
+}
+
+exports.news_detail = function(req, res) {
+	res.render('news_detail.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Tin tức nổi bật"
+	});
+}
 
     

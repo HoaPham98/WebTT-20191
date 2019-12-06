@@ -11,5 +11,8 @@ module.exports = function (app) {
     app.get('/news', home.news);
     app.get('/contact', home.contact);
     app.get('/booking', home.booking);
+    app.get('/performance_detail', home.performance_detail);
+    app.get('/login_register', home.login_register);
+    app.get('/news_detail', home.news_detail);
 
 }

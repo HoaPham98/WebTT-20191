@@ -52,31 +52,10 @@
 	<div class="content">
 		<h1>Đặt Vé</h1>
 		<div class="main">
-			<!--			<table class="table table-bordered table-responsive table-dark">-->
-			<!--				<thead class="thead-dark">-->
-			<!--				<tr>-->
-			<!--					<th scope="col">Ngày</th>-->
-			<!--					<th scope="col">Suất chiếu</th>-->
-			<!--					<th scope="col">Sân khấu</th>-->
-			<!--				</tr>-->
-			<!--				</thead>-->
-			<!--				<tbody>-->
-			<!--				<tr>-->
-			<!--					<td>Mark</td>-->
-			<!--					<td>Otto</td>-->
-			<!--					<td>@mdo</td>-->
-			<!--				</tr>-->
-			<!--				<tr>-->
-			<!--					<td>Jacob</td>-->
-			<!--					<td>Thornton</td>-->
-			<!--					<td>@fat</td>-->
-			<!--				</tr>-->
-			<!--				</tbody>-->
-			<!--			</table>-->
 			<div class="demo">
 				<h2>Sân khấu</h2>
 				<div id="seat-map">
-					<div class="front">SCREEN</div>
+					<div class="front">Màn hình</div>
 				</div>
 				<div class="booking-details">
 					<div id="legend"></div>
@@ -94,13 +73,17 @@
 						<li>: <b><span id="total">0</span><i>VNĐ</i></b></li>
 					</ul>
 					<div class="clear"></div>
-					<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
+					<div class="col-md-12">
+						<ul id="selected-seats"></ul>
+					</div>
+
 
 					<a href="/" class="button btn btn-warning" type="submit">Thanh toán</a>
 
 				</div>
 				<div style="clear:both"></div>
 			</div>
+
 
 			<script type="text/javascript">
 				var price_normal = 200000
@@ -136,9 +119,9 @@
 							node : $('#legend'),
 							items : [
 								// [ 'a', 'vip', 'VIP']
-								[ 'a', 'available',   'Available' ],
-								[ 'a', 'unavailable', 'Sold'],
-								[ 'a', 'selected', 'Selected']
+								[ 'a', 'available',   'Còn trống' ],
+								[ 'a', 'unavailable', 'Đã được đặt'],
+								[ 'a', 'selected', 'Đang chọn']
 							]
 						},
 						click: function () { //Click event
@@ -217,70 +200,43 @@
 	<div id="footer">
 		<div class="container">
 			<div class="row row-bottom-padded-md">
-				<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-					<h3>About Travel</h3>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-				</div>
-				<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-					<h3>Top Flights Routes</h3>
+				<div class="col-md-4 col-sm-4 col-xs-4 fh5co-footer-link">
+					<h3>Sân khấu kịch Hồng Vân</h3>
 					<ul>
-						<li><a href="#">Manila flights</a></li>
-						<li><a href="#">Dubai flights</a></li>
-						<li><a href="#">Bangkok flights</a></li>
-						<li><a href="#">Tokyo Flight</a></li>
-						<li><a href="#">New York Flights</a></li>
+						<li><a href="#">Địa chỉ: 70-72 Nguyễn Văn Trỗi, Q.Phú Nhuận, TP.HCM</a></li>
+						<li><a href="#">Hotline đặt vé: 0282 244 6454</a></li>
+						<li><a href="#">Liên hệ chương trình hợp tác, thuê rạp và hoạt động khác:</a></li>
+						<li><a href="#">sankhaukichhongvan@gmail.com</a></li>
 					</ul>
 				</div>
-				<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-					<h3>Top Hotels</h3>
-					<ul>
-						<li><a href="#">Boracay Hotel</a></li>
-						<li><a href="#">Dubai Hotel</a></li>
-						<li><a href="#">Singapore Hotel</a></li>
-						<li><a href="#">Manila Hotel</a></li>
-					</ul>
+				<div class="col-md-4 col-sm-4 col-xs-4 fh5co-footer-link">
+					<h3>Bản đồ</h3>
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2330.3732799892923!2d106.67517051293738!3d10.795599650638266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175292a00daa6e3%3A0xf593bc80bc97a65b!2zNzAtNzIgTmd1eeG7hW4gVsSDbiBUcuG7l2k!5e0!3m2!1sen!2s!4v1574655145731!5m2!1sen!2s" width="359" height="200" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 				</div>
-				<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-					<h3>Interest</h3>
+				<div class="col-md-4 col-sm-4 col-xs-4 fh5co-footer-link">
+					<h3>Chăm sóc khách hàng</h3>
 					<ul>
-						<li><a href="#">Beaches</a></li>
-						<li><a href="#">Family Travel</a></li>
-						<li><a href="#">Budget Travel</a></li>
-						<li><a href="#">Food &amp; Drink</a></li>
-						<li><a href="#">Honeymoon and Romance</a></li>
+						<li><a href="#">Hotline: 039 503 2904</a></li>
+						<li><a href="#">Giờ làm việc: 8:00 - 22:00 (Tất cả các ngày bao gồm cả Lễ Tết) </a></li>
+						<li><a href="#">Mail: hoidap@gmail.com.vn</a></li>
 					</ul>
+
+
 				</div>
-				<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-					<h3>Best Places</h3>
-					<ul>
-						<li><a href="#">Boracay Beach</a></li>
-						<li><a href="#">Dubai</a></li>
-						<li><a href="#">Singapore</a></li>
-						<li><a href="#">Hongkong</a></li>
-					</ul>
-				</div>
-				<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
-					<h3>Affordable</h3>
-					<ul>
-						<li><a href="#">Food &amp; Drink</a></li>
-						<li><a href="#">Fare Flights</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3 text-center">
-					<p class="fh5co-social-icons">
-						<a href="#"><i class="icon-twitter2"></i></a>
-						<a href="#"><i class="icon-facebook2"></i></a>
-						<a href="#"><i class="icon-instagram"></i></a>
-						<a href="#"><i class="icon-dribbble2"></i></a>
-						<a href="#"><i class="icon-youtube"></i></a>
-					</p>
-					<p>Copyright 2016 Free Html5 <a href="#">Module</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 text-center">
+						<p class="fh5co-social-icons">
+							<a href="#"><i class="icon-twitter2"></i></a>
+							<a href="#"><i class="icon-facebook2"></i></a>
+							<a href="#"><i class="icon-instagram"></i></a>
+							<a href="#"><i class="icon-dribbble2"></i></a>
+							<a href="#"><i class="icon-youtube"></i></a>
+						</p>
+						<p>Copyright 2016 Free Html5 <a href="#">Module</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </footer>
 <script src="public/js/jquery.nicescroll.js"></script>
 <script src="public/js/scripts.js"></script>
