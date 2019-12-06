@@ -44,6 +44,24 @@ exports.contact = function(req, res) {
 	});
 
 }
+exports.login = function(req, res) {
+	res.render('admin/login.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Login"
+	});
+
+}
+exports.adminMainPage = function(req, res) {
+	res.render('admin/adminMainPage.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Admin Main Page"
+	});
+
+}
 
 exports.booking = function(req, res) {
 	res.render('booking.ejs', {
@@ -52,9 +70,9 @@ exports.booking = function(req, res) {
 		session:req.session,
 		title: "Đặt vé"
 	});
-
 }
 
+<<<<<<< HEAD
 exports.performance_detail = function(req, res) {
 	res.render('performance_detail.ejs', {
 		error : req.flash("error"),
@@ -83,3 +101,5 @@ exports.news_detail = function(req, res) {
 }
 
     
+=======
+>>>>>>> 8f0990260d8c6fdc9cbb943d44bafebcc6aada5f
