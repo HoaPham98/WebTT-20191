@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="public/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -268,65 +271,78 @@
                     <%if (records.length >0){ %>
                     <% for(var i = 0; i < records.length; i++) { %>
                     <tr>
-                      <td><%= records[i].id %></td>
+                      <td class="id"><%= records[i].id %></td>
                       <td><%= records[i].name %></td>
                       <td><%= records[i].director %></td>
                       <td><%= records[i].music %></td>
                       <td>
                        <img src="<%= records[i].poster %>" width="50" height="50">
-                      </td>
-                      <td><%= records[i].decorator %></td>
-                      <td><%= records[i].actor %></td>
-                      <td><%= records[i].sumary %></td>
-                      <td>
-                          <button class="btn btn-info btn-edit">Sửa</button>
-                          <button class="btn btn-danger btn-delete">Xóa</button>
-                      </td>
-                    </tr>
-                    <% }}else{ %>
-                    <tr>
-                      <td colspan="6">No Record Found</td>
+                     </td>
+                     <td><%= records[i].decorator %></td>
+                     <td><%= records[i].actor %></td>
+                     <td><%= records[i].sumary %></td>
+                     <td>
+                      <button class="btn btn-info btn-edit">Sửa</button>
+                      <button onclick="window.location.href = 'https://w3docs.com';" class="btn btn-danger btn-delete">Xóa</button>
+                    </td>
+                  </tr>
+                  <% }}else{ %>
+                  <tr>
+                    <td colspan="6">No Record Found</td>
 
-                    </tr>
-                    <% } %>
+                  </tr>
+                  <% } %>
 
 
 
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.box-body -->
+                </tbody>
+              </table>
+              <script type="text/javascript">
+                $(document).ready(function () {
+                  console.log('aaaaaaa');
+                  $(".btn.btn-info.btn-edit").click(function() {
+                    console.log('bbbbbbbbbbbb');
+                  //find content of different elements inside a row.
+                  var id = $(this).closest('tr').find('.id').text();
+                  console.log(id);
+                  window.location.href = '/admin/edit?id=' + id;
+                });
+                });
+              </script>
             </div>
-            <!-- /.box -->
+            <!-- /.box-body -->
           </div>
-        </section>
+          <!-- /.box -->
+        </div>
+      </section>
 
-      </div>
+    </div>
 
 
-      <!-- REQUIRED SCRIPTS -->
-      <!-- jQuery -->
-      <script src="plugins/jquery/jquery.min.js"></script>
-      <!-- Bootstrap -->
-      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- overlayScrollbars -->
-      <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="public/js/adminlte.js"></script>
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery <script src="plugins/jquery/jquery.min.js"></script>-->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="public/js/adminlte.js"></script>
 
-      <!-- OPTIONAL SCRIPTS -->
-      <script src="public/js/demo.js"></script>
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="public/js/demo.js"></script>
 
-      <!-- PAGE PLUGINS -->
-      <!-- jQuery Mapael -->
-      <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-      <script src="plugins/raphael/raphael.min.js"></script>
-      <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-      <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-      <!-- ChartJS -->
-      <script src="plugins/chart.js/Chart.min.js"></script>
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="plugins/raphael/raphael.min.js"></script>
+    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
 
-      <!-- PAGE SCRIPTS -->
-      <script src="public/js/pages/dashboard2.js"></script>
-    </body>
-    </html>
+    <!-- PAGE SCRIPTS -->
+    <script src="public/js/pages/dashboard2.js"></script>
+  </body>
+  </html>

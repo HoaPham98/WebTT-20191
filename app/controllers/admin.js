@@ -38,28 +38,19 @@ exports.adminAddPerformance = function(req, res) {
 }
 
 
-exports.adminEditPerformance = function(req, res) {
-    var id = req.params.id;
-    pool.connect(function(err,client,done){
-        if(err){
-            return console.error('error',err);
-        }
-        client.query( '*SELECT *FROM voDien WHERE id=' +id,function(err,result){
-            done();
-            if (err){
-                res.end();
-                return console.error('error running query',err);
-            }
-
-        })
-        res.render('admin/adminEditPerformance.ejs', {
-            error : req.flash("error"),
-            success: req.flash("success"),
-            session:req.session,
-            title: "Sửa vở diễn"
-        })
+exports.adminEditPerformance = async function(req, res) {
+    var id = req.query.id;
+    const dramatics = await Dramatic.query()
+        .where('id', id);
+    res.render('admin/adminEditPerformance.ejs', {
+        data: dramatics,
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Sửa vở diễn"
     })
-    ;
+    //})
+    
     
 }
 exports.adminPerformManagement = function(req, res) {
