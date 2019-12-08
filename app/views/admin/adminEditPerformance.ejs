@@ -248,6 +248,10 @@
             <form action="/admin/dramatics"  method="POST">
               <input type="hidden" name="_method" value="put">
               <div class="form-group">
+                <label form="">ID</label>
+                <input type="text" class="form-control" id="tieude" name ="id" value="<%=data[0].id%>">
+              </div>
+              <div class="form-group">
                 <label form="">Tên vở diễn</label>
                 <input type="text" class="form-control" id="tieude" name ="name" value="<%=data[0].name%>">
               </div>

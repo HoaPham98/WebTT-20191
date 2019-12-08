@@ -283,7 +283,7 @@
                      <td><%= records[i].sumary %></td>
                      <td>
                       <button class="btn btn-info btn-edit">Sửa</button>
-                      <button onclick="window.location.href = 'https://w3docs.com';" class="btn btn-danger btn-delete">Xóa</button>
+                      <button class="btn btn-danger btn-delete">Xóa</button>
                     </td>
                   </tr>
                   <% }}else{ %>
@@ -299,13 +299,24 @@
               </table>
               <script type="text/javascript">
                 $(document).ready(function () {
-                  console.log('aaaaaaa');
                   $(".btn.btn-info.btn-edit").click(function() {
-                    console.log('bbbbbbbbbbbb');
                   //find content of different elements inside a row.
                   var id = $(this).closest('tr').find('.id').text();
                   console.log(id);
                   window.location.href = '/admin/edit?id=' + id;
+                });
+                  $(".btn.btn-danger.btn-delete").click(function() {
+                  var button = $(this);
+                  //find content of different elements inside a row.
+                  var id = $(this).closest('tr').find('.id').text();
+                  $.ajax({
+                    url: '/admin/dramatics/' + id,
+                    type: 'DELETE',
+                    success: function(result) {
+                      console.log('abc')
+                      button.closest('tr').remove()
+                    }
+                  });
                 });
                 });
               </script>

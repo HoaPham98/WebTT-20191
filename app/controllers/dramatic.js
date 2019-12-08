@@ -7,12 +7,7 @@ exports.insertDramatic = async function (req, res) {
         .allowGraph('[name, author, director, music, poster, decorator, actor, sumary]')
         .insert(newDramatic)
         //.then(res.send("okInsertDrama"))
-    res.render('admin/adminMainPage.ejs', {
-        error : req.flash("error"),
-        message: req.flash("success"),
-        session:req.session,
-        title: "Admin Main Page"
-    });    
+    res.redirect(301, '/admin/mainpage'); 
 }
 
 exports.updateDramatic = async function (req, res) {
@@ -28,13 +23,13 @@ exports.updateDramatic = async function (req, res) {
             actor: req.body.actor,
             sumary: req.body.sumary
         })
-        .then(res.send("okUpdateDrama"))
+    res.redirect(301, '/admin/mainpage'); 
 }
 
 exports.delDramatic = async function (req, res) {
     const dramatics = await Dramatic.query()
         .deleteById(req.params.id)
-    res.send("okDeleteDrama");
+    res.send("success");
 }
 
 exports.getDramatic = async function (req, res) {
