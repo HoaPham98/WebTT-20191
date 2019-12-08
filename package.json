@@ -10,10 +10,12 @@
   "author": "Nhom 04",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.4",
-    "ejs": "^2.7.4",
+    "ejs": "^2.7.1",
+    "dateformat": "^3.0.3",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "knex": "^0.20.3",
@@ -25,6 +27,10 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "sqlite3": "^4.1.0"
+    "qs": "^6.9.1",
+    "sha256": "^0.2.0",
+    "socket.io": "^2.3.0",
+    "sqlite3": "^4.1.0",
+    "uuid": "^3.3.3"
   }
 }

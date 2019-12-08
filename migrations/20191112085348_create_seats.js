@@ -17,6 +17,7 @@ exports.up = function(knex) {
               table.integer('type_id').references('seat_type.id'),
               table.integer('row')
               table.integer('col')
+              table.string('code')
           })
       ])
 };
