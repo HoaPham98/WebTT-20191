@@ -48,18 +48,18 @@ exports.updateShowTime = async function (req, res) {
     const tempShowTime = req.body;
     //console.log(typeof tempShowTime.dramatic_id);
     const showTime = await ShowTime.query()
-        .where('id', req.params.id)
+        .where('id', tempShowTime.id)
         .where('date', tempShowTime.date)
         .where('time', tempShowTime.time)
         .where('dramatic_id', tempShowTime.dramatic_id)
         .where('room_id', tempShowTime.room_id)
         .where('type_id', tempShowTime.type_id);
     if(showTime.length > 0){
-        res.send("equal")
+        res.redirect(301, '/admin/manage');
     };
 
     const showTimeUpdate = await ShowTime.query()
-        .findById(req.params.id)
+        .findById(tempShowTime.id)
         .patch({
             date: tempShowTime.date,
             time: tempShowTime.time,
@@ -83,7 +83,7 @@ exports.updateShowTime = async function (req, res) {
 
     for (var i = 0; i < seat.length; i++) {
          const showTimeResult = await ShowTime.relatedQuery('ticket')
-            .for(req.params.id)
+            .for(tempShowTime.id)
             .patch({ price_id: items[i].price_id  })
             .where('seat_id', seat[i].id);
     }

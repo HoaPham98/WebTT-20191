@@ -16,8 +16,8 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
+  <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -185,13 +185,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/manage" class="nav-link active">
+                <a href="/admin/manage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý lịch diễn</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/statistic" class="nav-link">
+                <a href="/admin/statistic" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thống kê</p>
                 </a>
@@ -239,7 +239,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý lịch diễn</h1>
+                <h1 class="m-0 text-dark" >Quản lý vở diễn</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -254,35 +254,41 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <!-- /.box -->
 
             <div class="box">
               <!-- /.box-header -->
               <div class="box-body">
-               <a href="/admin/addschedule" class="btn btn-success">Thêm lịch diễn</a> 
-               <br></br>
-               <table id="table_recurrent_task" class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Tên vở diễn</th>
-                    <th>Ngày tháng</th>
-                    <th>Xuất chiếu</th>
-                    <th>Phòng</th>
-                    <th>Loại xuất chiếu</th>                 
-                  </tr>
-                </thead>
-                <tbody>
-                  <%if (records.length >0){ %>
-                  <% for(var i = 0; i < records.length; i++) { %>
-                  <tr>
-                    <td class="id"><%= records[i].id %></td>
-                    <td><%= records[i].dramatics.name %></td>
-                    <td><%= records[i].date %></td>
-                    <td><%= records[i].time %></td>                   
-                    <td><%= records[i].room.name %></td>
-                    <td><%= records[i].showtime_type.name %></td>                 
-                    <td>
+                <a href="/admin/add" class="btn btn-success">Thêm vở diễn</a>
+                <br></br>
+                <table id="table_recurrent_task" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Tên vở diễn</th>
+                      <th>Tác giả</th>
+                      <th>Âm nhạc </th>
+                      <th>Poster</th>
+                      <th>Trang trí</th>
+                      <th>Diễn viên</th>
+                      <th>Tóm tắt</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%if (records.length >0){ %>
+                    <% for(var i = 0; i < records.length; i++) { %>
+                    <tr>
+                      <td class="id"><%= records[i].id %></td>
+                      <td><%= records[i].name %></td>
+                      <td><%= records[i].director %></td>
+                      <td><%= records[i].music %></td>
+                      <td>
+                       <img src="<%= records[i].poster %>" width="50" height="50">
+                     </td>
+                     <td><%= records[i].decorator %></td>
+                     <td><%= records[i].actor %></td>
+                     <td><%= records[i].sumary %></td>
+                     <td>
                       <button class="btn btn-info btn-edit">Sửa</button>
                       <button class="btn btn-danger btn-delete">Xóa</button>
                     </td>
@@ -293,6 +299,9 @@
 
                   </tr>
                   <% } %>
+
+
+
                 </tbody>
               </table>
               <script type="text/javascript">
@@ -301,56 +310,67 @@
                   //find content of different elements inside a row.
                   var id = $(this).closest('tr').find('.id').text();
                   console.log(id);
-                  window.location.href = '/admin/editschedule?id=' + id;
+                  window.location.href = '/admin/edit?id=' + id;
                 });
-                //   $(".btn.btn-danger.btn-delete").click(function() {
-                //   var button = $(this);
-                //   //find content of different elements inside a row.
-                //   var id = $(this).closest('tr').find('.id').text();
-                //   $.ajax({
-                //     url: '/admin/dramatics/' + id,
-                //     type: 'DELETE',
-                //     success: function(result) {
-                //       console.log('abc')
-                //       button.closest('tr').remove()
-                //     }
-                //   });
-                // });
-              });
-            </script>
+                  $(".btn.btn-danger.btn-delete").click(function() {
+                  var button = $(this);
+                  //find content of different elements inside a row.
+                  var id = $(this).closest('tr').find('.id').text();
+                  $.ajax({
+                    url: '/admin/dramatics/' + id,
+                    type: 'DELETE',
+                    success: function(result) {
+                      console.log('abc')
+                      button.closest('tr').remove()
+                    }
+                  });
+                });
+                });
+              </script>
+            </div>
+            <!-- /.box-body -->
           </div>
-          <!-- /.box-body -->
+          <!-- /.box -->
         </div>
-        <!-- /.box -->
-      </div>
-    </section>
+      </section>
 
-  </div>
+    </div>
+    <!-- <script>
+      $(document).ready(function(){ 
 
+      $('.nav-link').on("click", function(){
 
-  <!-- REQUIRED SCRIPTS -->
-  <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- overlayScrollbars -->
-  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="public/js/adminlte.js"></script>
+      $('.nav-link').removeClass('active');
 
-  <!-- OPTIONAL SCRIPTS -->
-  <script src="public/js/demo.js"></script>
+      $(this).addClass('active');
+      });
+      });
+    </script> -->
+    
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery <script src="plugins/jquery/jquery.min.js"></script>-->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="public/js/adminlte.js"></script>
 
-  <!-- PAGE PLUGINS -->
-  <!-- jQuery Mapael -->
-  <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-  <script src="plugins/raphael/raphael.min.js"></script>
-  <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-  <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-  <!-- ChartJS -->
-  <script src="plugins/chart.js/Chart.min.js"></script>
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="public/js/demo.js"></script>
 
-  <!-- PAGE SCRIPTS -->
-  <script src="public/js/pages/dashboard2.js"></script>
-</body>
-</html>
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="plugins/raphael/raphael.min.js"></script>
+    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
+
+    <!-- PAGE SCRIPTS -->
+    <script src="public/js/pages/dashboard2.js"></script>
+  </body>
+  </html>

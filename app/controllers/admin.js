@@ -28,6 +28,20 @@ exports.adminMainPage = async function(req, res) {
 
 }
 
+exports.adminStatistics = async function(req, res) {
+    var data = await dramatics.getAllDramatic()
+    console.log(data);
+    res.render('admin/adminStatistics.ejs', {
+        records: data,
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Admin Main Page",
+        
+    });
+
+}
+
 exports.adminAddPerformance = function(req, res) {
     res.render('admin/adminAddPerformance.ejs', {
         error : req.flash("error"),
@@ -56,13 +70,22 @@ exports.adminEditSchedule = async function(req, res) {
     var id = req.query.id;
     const showtime = await ShowTime.query()
         .where('id', id);
+    const dramatics = await Dramatic.query()
+        .select('id', 'name');
+    const rooms = await Room.query()
+        .select('id', 'name');
+    const type = await ShowTimeType.query()
+        .select('id', 'name');
     res.render('admin/adminEditSchedule.ejs', {
-        data: showtime,
+        showtime: showtime,
+        records: dramatics,
+        rooms: rooms,
+        type: type,
         error : req.flash("error"),
         success: req.flash("success"),
         session:req.session,
-        title: "Sửa vở diễn"
-    })
+        title: "Thêm lịch cho vở diễn"
+    });
 }
 
 exports.adminPerformManagement = async function(req, res) {

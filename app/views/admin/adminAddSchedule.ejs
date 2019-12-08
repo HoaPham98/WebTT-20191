@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
+  <title>Quản lý sân khấu kịch</title>
+
   <!--<<link type="text/css" href="public/css/bootstrap.min.css" />-->
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -186,6 +188,12 @@
                   <p>Quản lý lịch diễn</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/admin/statistic" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thống kê</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -245,8 +253,11 @@
         <section class="content">
           <div class="col-xs-12">
             <form action="/admin/showtimes"  method="POST">
-              <legend>Thêm lịch chiếu</legend>
-              <select class="form-control select2" name ="dramatic_id" style="width: 100%;">
+              <legend>Thêm lịch diễn</legend>
+             
+              <div class="form-group">
+                <label>Vở diễn:</label>
+                <select class="form-control select2" name ="dramatic_id" style="width: 100%;">
                 <%if (records.length >0){ %>
                 <% for(var i = 0; i < records.length; i++) { %>
                 <option value='<%= records[i].id %>' ><%= records[i].name %></option>
@@ -258,6 +269,9 @@
                 <% } %>
 
               </select>
+             
+              </div>
+              
               <div class="form-group">
                 <label>Ngày chiếu:</label>
                 <div class='input-group date' id='datepicker'>
@@ -305,7 +319,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label>Phòng:</label>
+                <label>Loại xuất chiếu:</label>
                 <select class="form-control select2" name ="type_id" style="width: 100%;">
                   <%if (type.length >0){ %>
                   <% for(var i = 0; i < type.length; i++) { %>
@@ -358,10 +372,17 @@
       <script>
    //Date picker
    $('#datepicker').datepicker({
-    autoclose: true
+    autoclose: true,
+    format: 'yyyy-mm-dd',
   })
    $('#timepicker1').timepicker({
-    autoclose: true
+    autoclose: true,
+    minuteStep: 1,
+    template: 'modal',
+    appendWidgetTo: 'body',
+    showSeconds: true,
+    showMeridian: false,
+    defaultTime: false
   })
 </script>
 </body>

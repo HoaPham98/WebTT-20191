@@ -40,9 +40,10 @@ module.exports = function (app, passport) {
     app.get('/admin/editschedule',admin.adminEditSchedule);
     app.get('/admin/manage',admin.adminPerformManagement);
     app.get('/admin/addschedule',admin.adminAddSchedule); 
+    app.get('/admin/statistic',admin.adminStatistics); 
 
     app.post('/admin/showtimes', showtime.insertShowTime);
-    app.put('/admin/showtimes/:id', showtime.updateShowTime);   
+    app.put('/admin/showtimes', showtime.updateShowTime);   
     app.post('/admin/login', passport.authenticate("login", {
         successRedirect : '/admin/mainpage',
         failureRedirect : '/admin/login',
