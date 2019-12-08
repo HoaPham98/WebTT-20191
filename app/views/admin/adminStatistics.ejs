@@ -268,7 +268,8 @@
                       <th>Ngày</th>
                       <th>Xuất chiếu</th>
                       <th>Phòng</th>
-                      <th>Vé</th>
+                      <th>Vé loại 3</th>
+                      <th>Vé loại 1</th>
                       <th>Tổng thu</th>
                     </tr>
                   </thead>
@@ -281,11 +282,9 @@
                     <td><%= records[i].date %></td>
                     <td><%= records[i].time %></td>                   
                     <td><%= records[i].room.name %></td>
-                    <td><%= records[i].showtime_type.name %></td>                 
-                    <td>
-                      <button class="btn btn-info btn-edit">Sửa</button>
-                      <button class="btn btn-danger btn-delete">Xóa</button>
-                    </td>
+                    <td><%= records[i].loai3 %></td> 
+                    <td><%= records[i].loai1 %></td>   
+                    <td><%= records[i].tongthu %></td>                                   
                   </tr>
                   <% }}else{ %>
                   <tr>
