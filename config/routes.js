@@ -37,6 +37,7 @@ module.exports = function (app, passport) {
 
     app.get('/admin/add', admin.adminAddPerformance);
     app.get('/admin/edit',admin.adminEditPerformance);
+    app.get('/admin/editschedule',admin.adminEditSchedule);
     app.get('/admin/manage',admin.adminPerformManagement);
     app.get('/admin/addschedule',admin.adminAddSchedule); 
 

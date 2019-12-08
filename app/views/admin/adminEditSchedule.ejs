@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>AdminLTE 3 | Dashboard 2</title>
-
+  <!--<<link type="text/css" href="public/css/bootstrap.min.css" />-->
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
@@ -15,9 +14,6 @@
   <link rel="stylesheet" href="public/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
-  <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -179,13 +175,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/mainpage" class="nav-link active">
+                <a href="/admin/mainpage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý vở diễn</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/manage" class="nav-link">
+                <a href="/admin/manage" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý lịch diễn</p>
                 </a>
@@ -248,123 +244,112 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
+            <form action="/admin/showtimes"  method="POST">
+              <legend>Thêm lịch chiếu</legend>
+              <select class="form-control select2" name ="dramatic_id" style="width: 100%;">
+                <%if (records.length >0){ %>
+                <% for(var i = 0; i < records.length; i++) { %>
+                <option value='<%= records[i].id %>' ><%= records[i].name %></option>
+                <% }}else{ %>
+                <tr>
+                  <option>NOT FOUND</option>
 
-            <div class="box">
-              <!-- /.box-header -->
-              <div class="box-body">
-                <a href="/admin/add" class="btn btn-success">Thêm vở diễn</a>
-                <br></br>
-                <table id="table_recurrent_task" class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Tên vở diễn</th>
-                      <th>Tác giả</th>
-                      <th>Âm nhạc </th>
-                      <th>Poster</th>
-                      <th>Trang trí</th>
-                      <th>Diễn viên</th>
-                      <th>Tóm tắt</th>
-                      <th>Hành động</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <%if (records.length >0){ %>
-                    <% for(var i = 0; i < records.length; i++) { %>
-                    <tr>
-                      <td class="id"><%= records[i].id %></td>
-                      <td><%= records[i].name %></td>
-                      <td><%= records[i].director %></td>
-                      <td><%= records[i].music %></td>
-                      <td>
-                       <img src="<%= records[i].poster %>" width="50" height="50">
-                     </td>
-                     <td><%= records[i].decorator %></td>
-                     <td><%= records[i].actor %></td>
-                     <td><%= records[i].sumary %></td>
-                     <td>
-                      <button class="btn btn-info btn-edit">Sửa</button>
-                      <button class="btn btn-danger btn-delete">Xóa</button>
-                    </td>
-                  </tr>
-                  <% }}else{ %>
+                </tr>
+                <% } %>
+
+              </select>
+              <div class="form-group">
+                <label>Ngày chiếu:</label>
+                <div class='input-group date' id='datepicker'>
+                  <input type='text' name ="date" class="form-control" />
+                  <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                  </span>
+                </div>
+             
+              </div>
+              <div class="form-group">
+                <label>Suất chiếu:</label>
+                <div class="input-group bootstrap-timepicker timepicker">
+                  <input id="timepicker1" type="text" name ="time" class="form-control input-small">
+                  <span class="input-group-addon"><i class="far fa-clock"></i></span>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>Phòng:</label>
+                <select class="form-control select2" name ="room_id" style="width: 100%;">
+                  <%if (rooms.length >0){ %>
+                  <% for(var i = 0; i < rooms.length; i++) { %>
+                  <option value='<%= rooms[i].id %>' ><%= rooms[i].name %></option>
+                 <% }}else{ %>
                   <tr>
-                    <td colspan="6">No Record Found</td>
+                    <option>NOT FOUND</option>
 
                   </tr>
                   <% } %>
 
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Phòng:</label>
+                <select class="form-control select2" name ="type_id" style="width: 100%;">
+                  <%if (type.length >0){ %>
+                  <% for(var i = 0; i < type.length; i++) { %>
+                  <option value='<%= type[i].id %>' ><%= type[i].name %></option>
+                 <% }}else{ %>
+                  <tr>
+                    <option>NOT FOUND</option>
 
+                  </tr>
+                  <% } %>
 
-                </tbody>
-              </table>
-              <script type="text/javascript">
-                $(document).ready(function () {
-                  $(".btn.btn-info.btn-edit").click(function() {
-                  //find content of different elements inside a row.
-                  var id = $(this).closest('tr').find('.id').text();
-                  console.log(id);
-                  window.location.href = '/admin/edit?id=' + id;
-                });
-                  $(".btn.btn-danger.btn-delete").click(function() {
-                  var button = $(this);
-                  //find content of different elements inside a row.
-                  var id = $(this).closest('tr').find('.id').text();
-                  $.ajax({
-                    url: '/admin/dramatics/' + id,
-                    type: 'DELETE',
-                    success: function(result) {
-                      console.log('abc')
-                      button.closest('tr').remove()
-                    }
-                  });
-                });
-                });
-              </script>
-            </div>
-            <!-- /.box-body -->
+                </select>
+              </div>
+              <button type="submit" class="btn btn-block btn-success btn-create">Tạo lịch diễn</button>
+            </form>
           </div>
-          <!-- /.box -->
-        </div>
-      </section>
+        </section>
 
-    </div>
-    <!-- <script>
-      $(document).ready(function(){ 
+      </div>
 
-      $('.nav-link').on("click", function(){
 
-      $('.nav-link').removeClass('active');
+      <!-- REQUIRED SCRIPTS -->
+      <!-- jQuery -->
+      <script src="plugins/jquery/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- overlayScrollbars -->
+      <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="public/js/adminlte.js"></script>
 
-      $(this).addClass('active');
-      });
-      });
-    </script> -->
-    
-    <!-- REQUIRED SCRIPTS -->
-    <!-- jQuery <script src="plugins/jquery/jquery.min.js"></script>-->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    
-    <!-- Bootstrap -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="public/js/adminlte.js"></script>
+      <!-- OPTIONAL SCRIPTS -->
+      <script src="public/js/demo.js"></script>
 
-    <!-- OPTIONAL SCRIPTS -->
-    <script src="public/js/demo.js"></script>
+      <!-- PAGE PLUGINS -->
+      <!-- jQuery Mapael -->
+      <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+      <script src="plugins/raphael/raphael.min.js"></script>
+      <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+      <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+      <!-- ChartJS -->
+      <script src="plugins/chart.js/Chart.min.js"></script>
 
-    <!-- PAGE PLUGINS -->
-    <!-- jQuery Mapael -->
-    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="plugins/raphael/raphael.min.js"></script>
-    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-    <!-- ChartJS -->
-    <script src="plugins/chart.js/Chart.min.js"></script>
-
-    <!-- PAGE SCRIPTS -->
-    <script src="public/js/pages/dashboard2.js"></script>
-  </body>
-  </html>
+      <!-- PAGE SCRIPTS -->
+      <script src="public/js/pages/dashboard2.js"></script>
+      <!-- bootstrap datepicker -->
+      <script src="public/js/pages/bootstrap-datepicker.min.js"></script>
+      <!-- timepicker-->
+      <script src="public/js/pages/bootstrap-timepicker.min.js"></script>
+      <script>
+   //Date picker
+   $('#datepicker').datepicker({
+    autoclose: true
+  })
+   $('#timepicker1').timepicker({
+    autoclose: true
+  })
+</script>
+</body>
+</html>

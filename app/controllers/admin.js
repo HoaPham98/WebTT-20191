@@ -4,13 +4,13 @@ const { ShowTimeType, ShowTime } = require('../models/showtimes');
 const dramatics = require('./dramatic');
 
 exports.login = function(req, res) {
-    res.render('admin/login.ejs', {
-        error : req.flash("error"),
-        success: req.flash("success"),
-        session:req.session,
-        title: "Login"
-    });
-    //res.render('admin/login.ejs', { message: req.flash('loginMessage') });
+    // res.render('admin/login.ejs', {
+    //     error : req.flash("error"),
+    //     success: req.flash("success"),
+    //     session:req.session,
+    //     title: "Login"
+    // });
+    res.render('login.ejs', { message: req.flash('loginMessage') });
 
 }
 
@@ -50,12 +50,27 @@ exports.adminEditPerformance = async function(req, res) {
         session:req.session,
         title: "Sửa vở diễn"
     })
-    //})
-    
-    
 }
-exports.adminPerformManagement = function(req, res) {
+
+exports.adminEditSchedule = async function(req, res) {
+    var id = req.query.id;
+    const showtime = await ShowTime.query()
+        .where('id', id);
+    res.render('admin/adminEditSchedule.ejs', {
+        data: showtime,
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Sửa vở diễn"
+    })
+}
+
+exports.adminPerformManagement = async function(req, res) {
+    const showtime = await ShowTime.query()//.eager('showtime_type')
+        .withGraphFetched('[room, showtime_type, dramatics]');
+    console.log(showtime)    
     res.render('admin/adminPerformManagement.ejs', {
+        records: showtime,
         error : req.flash("error"),
         success: req.flash("success"),
         session:req.session,
