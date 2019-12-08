@@ -30,8 +30,35 @@ exports.adminMainPage = async function(req, res) {
 
 exports.adminStatistics = async function(req, res) {
     const showtime = await ShowTime.query()//.eager('showtime_type')
-        .withGraphFetched('[room, showtime_type, dramatics, ticket]');
-    
+        .withGraphFetched('[room, showtime_type, dramatics, ticket]')
+        //.where(ticket.status_id, 1);
+    var data = showtime.map(temp => {
+        var result = {};
+        var sum3=0, buy3=0;
+        var sum1=0, buy1=0;
+        result.id = temp.id,
+        result.date = temp.date,
+        result.time = temp.time,
+        result.room = temp.room,
+        result.dramatics = temp.dramatics,
+        temp.ticket.map(tempTicket => {
+            if(tempTicket.price_id == 3){
+                sum3++;
+                if(tempTicket.status_id == 2){
+                    buy3++;
+                }
+            }else{
+                sum1++;
+                if(tempTicket.status_id == 2){
+                    buy1++;
+                }
+            }
+        })
+        result.loai3 = buy3 + '/' + sum3;
+        result.loai1 = buy1 + '/' + sum1;
+        result.tongthu = buy3 * 200000 + buy1 * 100000;
+        return result;
+    })
     res.render('admin/adminStatistics.ejs', {
         records: data,
         error : req.flash("error"),
