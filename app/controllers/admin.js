@@ -29,8 +29,9 @@ exports.adminMainPage = async function(req, res) {
 }
 
 exports.adminStatistics = async function(req, res) {
-    var data = await dramatics.getAllDramatic()
-    console.log(data);
+    const showtime = await ShowTime.query()//.eager('showtime_type')
+        .withGraphFetched('[room, showtime_type, dramatics, ticket]');
+    
     res.render('admin/adminStatistics.ejs', {
         records: data,
         error : req.flash("error"),

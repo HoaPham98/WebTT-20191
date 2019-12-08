@@ -265,30 +265,24 @@
                     <tr>
                       <th>ID</th>
                       <th>Tên vở diễn</th>
-                      <th>Tác giả</th>
-                      <th>Âm nhạc </th>
-                      <th>Poster</th>
-                      <th>Trang trí</th>
-                      <th>Diễn viên</th>
-                      <th>Tóm tắt</th>
-                      <th>Hành động</th>
+                      <th>Ngày</th>
+                      <th>Xuất chiếu</th>
+                      <th>Phòng</th>
+                      <th>Vé</th>
+                      <th>Tổng thu</th>
                     </tr>
                   </thead>
                   <tbody>
                     <%if (records.length >0){ %>
-                    <% for(var i = 0; i < records.length; i++) { %>
-                    <tr>
-                      <td class="id"><%= records[i].id %></td>
-                      <td><%= records[i].name %></td>
-                      <td><%= records[i].director %></td>
-                      <td><%= records[i].music %></td>
-                      <td>
-                       <img src="<%= records[i].poster %>" width="50" height="50">
-                     </td>
-                     <td><%= records[i].decorator %></td>
-                     <td><%= records[i].actor %></td>
-                     <td><%= records[i].sumary %></td>
-                     <td>
+                  <% for(var i = 0; i < records.length; i++) { %>
+                  <tr>
+                    <td class="id"><%= records[i].id %></td>
+                    <td><%= records[i].dramatics.name %></td>
+                    <td><%= records[i].date %></td>
+                    <td><%= records[i].time %></td>                   
+                    <td><%= records[i].room.name %></td>
+                    <td><%= records[i].showtime_type.name %></td>                 
+                    <td>
                       <button class="btn btn-info btn-edit">Sửa</button>
                       <button class="btn btn-danger btn-delete">Xóa</button>
                     </td>
@@ -299,8 +293,6 @@
 
                   </tr>
                   <% } %>
-
-
 
                 </tbody>
               </table>
@@ -313,7 +305,7 @@
                   window.location.href = '/admin/edit?id=' + id;
                 });
                   $(".btn.btn-danger.btn-delete").click(function() {
-                  var button = $(this);
+                    var button = $(this);
                   //find content of different elements inside a row.
                   var id = $(this).closest('tr').find('.id').text();
                   $.ajax({
