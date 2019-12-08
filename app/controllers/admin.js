@@ -1,5 +1,6 @@
 const { Dramatic } = require('../models/dramatic');
 const { SeatType, Room, Seat } = require('../models/seats');
+const { ShowTimeType, ShowTime } = require('../models/showtimes');
 const dramatics = require('./dramatic');
 
 exports.login = function(req, res) {
@@ -62,8 +63,17 @@ exports.adminPerformManagement = function(req, res) {
     });
     
 }
-exports.adminAddSchedule = function(req, res) {
+exports.adminAddSchedule = async function(req, res) {
+    const dramatics = await Dramatic.query()
+        .select('id', 'name');
+    const rooms = await Room.query()
+        .select('id', 'name');
+    const type = await ShowTimeType.query()
+        .select('id', 'name');
     res.render('admin/adminAddSchedule.ejs', {
+        records: dramatics,
+        rooms: rooms,
+        type: type,
         error : req.flash("error"),
         success: req.flash("success"),
         session:req.session,

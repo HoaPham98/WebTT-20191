@@ -23,7 +23,7 @@ exports.insertShowTime = async function (req, res) {
     const newShowTime = req.body;
     console.log(newShowTime);
     const showTime = await ShowTime.query()
-        .allowInsert('[date, time, dramatic_id, room_id, type_id]')
+        .allowGraph('[date, time, dramatic_id, room_id, type_id]')
         .insert(newShowTime)
 
     const seat = await Seat.query()
@@ -42,8 +42,7 @@ exports.insertShowTime = async function (req, res) {
     const ticket = await Ticket.query()
         //.allowInsert('[showtime_id, seat_id, status_id, price_id]')
         .insertGraph(items)
-    res.send('OK insert showtime');
-}
+    res.redirect(301, '/admin/manage');}
 
 exports.updateShowTime = async function (req, res) {
     const tempShowTime = req.body;
@@ -89,7 +88,7 @@ exports.updateShowTime = async function (req, res) {
             .where('seat_id', seat[i].id);
     }
    
-    res.send("ok");
+    res.redirect(301, '/admin/manage');
 }
 async function checkPrice(seat, tempShowTime) {
     const price = await Price
