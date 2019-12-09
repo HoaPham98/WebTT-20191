@@ -5,7 +5,8 @@ var room = require('../app/controllers/room');
 var price = require('../app/controllers/price');
 var tickets = require('../app/controllers/tickets');
 var showtime = require('../app/controllers/showtime');
-var check_input = require('../app/controllers/utils/check_input')
+var check_input = require('../app/controllers/utils/check_input');
+var auth = require('./authenticate');
 
 var api_booking = require('../app/controllers/api/booking')
 var api_payment = require('../app/controllers/api/payment')
@@ -24,35 +25,33 @@ module.exports = function (app, passport) {
     app.get('/login_register', home.login_register);
     app.get('/news_detail', home.news_detail);
 
-    app.post('/admin/dramatics', //check_input.isValidInsertDramatic,
+    app.post('/admin/dramatics', auth.authenticate,//check_input.isValidInsertDramatic,
         dramatic.insertDramatic);
-    app.put('/admin/dramatics', check_input.isValidUpdateDramatic,
+    app.put('/admin/dramatics', auth.authenticate, check_input.isValidUpdateDramatic,
         dramatic.updateDramatic);
-    app.delete('/admin/dramatics/:id', check_input.isValidParam,
+    app.delete('/admin/dramatics/:id', auth.authenticate, check_input.isValidParam,
         dramatic.delDramatic);
     app.get('/admin/dramatics/:id', check_input.isValidParam,
         dramatic.getDramatic);
-
     app.post('/admin/seats', room.insertSeat);
     app.put('/admin/seats', room.updateSeat);
-
     app.get('/admin/prices/all', price.getPrices);
     app.post('/admin/prices', price.insertPrice);
-
     app.delete('/admin/ticket-status/:id', tickets.delTicketStatus);
 
-    app.get('/admin/add', admin.adminAddPerformance);
-    app.get('/admin/edit',admin.adminEditPerformance);
-    app.get('/admin/editschedule',admin.adminEditSchedule);
-    app.get('/admin/manage',admin.adminPerformManagement);
-    app.get('/admin/addschedule',admin.adminAddSchedule); 
-    app.get('/admin/statistic',admin.adminStatistics); 
+    app.get('/admin/add', auth.authenticate, admin.adminAddPerformance);
+    app.get('/admin/edit', auth.authenticate, admin.adminEditPerformance);
+    app.get('/admin/editschedule', auth.authenticate, admin.adminEditSchedule);
+    app.get('/admin/manage', auth.authenticate, admin.adminPerformManagement);
+    app.get('/admin/addschedule', auth.authenticate, admin.adminAddSchedule); 
+    app.get('/admin/statistic', auth.authenticate, admin.adminStatistics); 
 
-    app.get('/admin/users',admin.getAdminUser); 
-    app.put('/admin/users',admin.updateAdminUser); 
+    app.get('/admin/users', auth.authenticate, admin.getAdminUser); 
+    app.put('/admin/users', auth.authenticate, admin.updateAdminUser); 
+    app.get('/admin/allusers', auth.authenticate, admin.getAllAdminUser); 
 
-    app.post('/admin/showtimes', showtime.insertShowTime);
-    app.put('/admin/showtimes', showtime.updateShowTime);   
+    app.post('/admin/showtimes', auth.authenticate, showtime.insertShowTime);
+    app.put('/admin/showtimes', auth.authenticate, showtime.updateShowTime);   
     app.post('/admin/login', passport.authenticate("login", {
         successRedirect : '/admin/mainpage',
         failureRedirect : '/admin/login',
@@ -61,10 +60,12 @@ module.exports = function (app, passport) {
     app.get('/admin/logout', function(req, res){
         req.logout();
         res.redirect('/admin/login');
-    });
-    
-    app.get('/admin/login',admin.login);
-    app.get('/admin/mainpage',admin.adminMainPage);
+    });    
+    app.get('/admin/login', admin.login);
+    app.get('/admin/mainpage', auth.authenticate, admin.adminMainPage);
+
+    app.get('/admin/email', auth.authenticate, admin.getTemplateEmail);
+    app.post('/admin/email', auth.authenticate, admin.sendEmail);   
 
     app.post('/api/booking/getBookingData', api_booking.getBookingData);
 

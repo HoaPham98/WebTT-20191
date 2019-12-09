@@ -7,7 +7,6 @@
 
   <title>Quản lý sân khấu kịch</title>
 
-  <!--<<link type="text/css" href="public/css/bootstrap.min.css" />-->
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
@@ -16,6 +15,9 @@
   <link rel="stylesheet" href="public/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -167,8 +169,8 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
-           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+           <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Quản lý
@@ -183,7 +185,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/manage" class="nav-link active">
+                <a href="/admin/manage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý lịch diễn</p>
                 </a>
@@ -202,8 +204,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Tài khoản
@@ -212,7 +214,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/allusers" class="nav-link">
+                <a href="/admin/allusers" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tài khoản admin</p>
                 </a>
@@ -220,7 +222,7 @@
               <li class="nav-item">
                 <a href="/admin/users" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Thay đổi thông tin</p>
+                  <p>Thay đổi thông tin</p>/admin/allusers
                 </a>
               </li>
               <li class="nav-item">
@@ -249,7 +251,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý vở diễn</h1>
+                <h1 class="m-0 text-dark" >Admin</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -264,142 +266,87 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/showtimes"  method="POST">
-              <input type="hidden" name="_method" value="put">
-              <div class="form-group">
-                <label form="">ID</label>
-                <input type="text" class="form-control" id="tieude" name ="id" value="<%=showtime[0].id%>">
-              </div>
-              <div class="form-group">
-                <label>Vở diễn:</label>
-                <select class="form-control select2" name ="dramatic_id" style="width: 100%;">
-                <%if (records.length >0){ %>
-                <% for(var i = 0; i < records.length; i++) { %>
-                  <%if (showtime[0].dramatic_id == records[i].id){ %>
-                    <option value='<%= records[i].id %>' selected><%= records[i].name %></option>
-                  <% }else{ %>
-                    <option value='<%= records[i].id %>' ><%= records[i].name %></option>
-                  <% } %>
-                <% }}else{ %>
-                <tr>
-                  <option>NOT FOUND</option>
 
-                </tr>
-                <% } %>
-
-              </select>
-             
-              </div>
-              
-              <div class="form-group">
-                <label>Ngày chiếu:</label>
-                <div class='input-group date' id='datepicker'>
-                  <input type='text' name ="date" class="form-control" value="<%=showtime[0].date%>">
-                  <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                  </span>
-                </div>
-             
-              </div>
-              <div class="form-group">
-                <label>Suất chiếu:</label>
-                <div class="input-group bootstrap-timepicker timepicker">
-                  <input id="timepicker1" type="text" name ="time" class="form-control input-small" value="<%=showtime[0].time%>">
-                  <span class="input-group-addon"><i class="far fa-clock"></i></span>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label>Phòng:</label>
-                <select class="form-control select2" name ="room_id" style="width: 100%;">
-                  <%if (rooms.length >0){ %>
-                  <% for(var i = 0; i < rooms.length; i++) { %>
-                  
-                  <%if (showtime[0].room_id == rooms[i].id){ %>
-                    <option value='<%= rooms[i].id %>' selected ><%= rooms[i].name %></option>
-                  <% }else{ %>
-                    <option value='<%= rooms[i].id %>' ><%= rooms[i].name %></option>
-                  <% } %>
-                 <% }}else{ %>
+            <div class="box">
+              <!-- /.box-header -->
+              <div class="box-body">
+                
+                <table id="table_recurrent_task" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Tên admin</th>
+                      <th>Email</th>
+                      <th>Số điện thoại</th>    
+                      <th>Hành động</th>           
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%if (users.length >0){ %>
+                    <% for(var i = 0; i < users.length; i++) { %>
+                    <tr>
+                      <td class="id"><%= users[i].id %></td>
+                      <td><%= users[i].name %></td>
+                      <td><%= users[i].email %></td>
+                      <td><%= users[i].phone %></td>
+                    <td>
+                      <button class="btn btn-info btn-edit">Sửa</button>
+                      <button class="btn btn-danger btn-delete">Xóa</button>
+                    </td>
+                  </tr>
+                  <% }}else{ %>
                   <tr>
-                    <option>NOT FOUND</option>
+                    <td colspan="6">No Record Found</td>
 
                   </tr>
                   <% } %>
 
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Loại xuất chiếu:</label>
-                <select class="form-control select2" name ="type_id" style="width: 100%;">
-                  <%if (type.length >0){ %>
-                  <% for(var i = 0; i < type.length; i++) { %>
-                  <%if (showtime[0].type_id == type[i].id){ %>
-                    <option value='<%= type[i].id %>' selected ><%= type[i].name %></option>
-                  <% }else{ %>
-                    <option value='<%= type[i].id %>' ><%= type[i].name %></option>
-                  <% } %>
-                  
-                 <% }}else{ %>
-                  <tr>
-                    <option>NOT FOUND</option>
-
-                  </tr>
-                  <% } %>
-
-                </select>
-              </div>
-              <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật lịch diễn</button>
-            </form>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
           </div>
-        </section>
+          <!-- /.box -->
+        </div>
+      </section>
 
-      </div>
+    </div>
+    <!-- <script>
+      $(document).ready(function(){ 
 
+      $('.nav-link').on("click", function(){
 
-      <!-- REQUIRED SCRIPTS -->
-      <!-- jQuery -->
-      <script src="plugins/jquery/jquery.min.js"></script>
-      <!-- Bootstrap -->
-      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- overlayScrollbars -->
-      <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="public/js/adminlte.js"></script>
+      $('.nav-link').removeClass('active');
 
-      <!-- OPTIONAL SCRIPTS -->
-      <script src="public/js/demo.js"></script>
+      $(this).addClass('active');
+      });
+      });
+    </script> -->
+    
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery <script src="plugins/jquery/jquery.min.js"></script>-->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="public/js/adminlte.js"></script>
 
-      <!-- PAGE PLUGINS -->
-      <!-- jQuery Mapael -->
-      <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-      <script src="plugins/raphael/raphael.min.js"></script>
-      <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-      <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-      <!-- ChartJS -->
-      <script src="plugins/chart.js/Chart.min.js"></script>
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="public/js/demo.js"></script>
 
-      <!-- PAGE SCRIPTS -->
-      <script src="public/js/pages/dashboard2.js"></script>
-      <!-- bootstrap datepicker -->
-      <script src="public/js/pages/bootstrap-datepicker.min.js"></script>
-      <!-- timepicker-->
-      <script src="public/js/pages/bootstrap-timepicker.min.js"></script>
-      <script>
-   //Date picker
-   $('#datepicker').datepicker({
-    autoclose: true,
-    format: 'yyyy-mm-dd',
-  })
-   $('#timepicker1').timepicker({
-    autoclose: true,
-    minuteStep: 1,
-    template: 'modal',
-    appendWidgetTo: 'body',
-    showSeconds: true,
-    showMeridian: false,
-    defaultTime: false
-  })
-</script>
-</body>
-</html>
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="plugins/raphael/raphael.min.js"></script>
+    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
+
+    <!-- PAGE SCRIPTS -->
+    <script src="public/js/pages/dashboard2.js"></script>
+  </body>
+  </html>

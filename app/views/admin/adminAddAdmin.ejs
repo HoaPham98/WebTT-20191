@@ -7,7 +7,6 @@
 
   <title>Quản lý sân khấu kịch</title>
 
-  <!--<<link type="text/css" href="public/css/bootstrap.min.css" />-->
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
@@ -183,7 +182,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/manage" class="nav-link active">
+                <a href="/admin/manage" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý lịch diễn</p>
                 </a>
@@ -218,7 +217,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/users" class="nav-link">
+                <a href="/admin/users" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thay đổi thông tin</p>
                 </a>
@@ -264,92 +263,30 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/showtimes"  method="POST">
+            <form action="/admin/users"  method="POST">
               <input type="hidden" name="_method" value="put">
               <div class="form-group">
                 <label form="">ID</label>
-                <input type="text" class="form-control" id="tieude" name ="id" value="<%=showtime[0].id%>">
+                <input type="text" class="form-control" id="tieude" name ="id" value="<%=user[0].id%>">
               </div>
               <div class="form-group">
-                <label>Vở diễn:</label>
-                <select class="form-control select2" name ="dramatic_id" style="width: 100%;">
-                <%if (records.length >0){ %>
-                <% for(var i = 0; i < records.length; i++) { %>
-                  <%if (showtime[0].dramatic_id == records[i].id){ %>
-                    <option value='<%= records[i].id %>' selected><%= records[i].name %></option>
-                  <% }else{ %>
-                    <option value='<%= records[i].id %>' ><%= records[i].name %></option>
-                  <% } %>
-                <% }}else{ %>
-                <tr>
-                  <option>NOT FOUND</option>
-
-                </tr>
-                <% } %>
-
-              </select>
-             
-              </div>
-              
-              <div class="form-group">
-                <label>Ngày chiếu:</label>
-                <div class='input-group date' id='datepicker'>
-                  <input type='text' name ="date" class="form-control" value="<%=showtime[0].date%>">
-                  <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                  </span>
-                </div>
-             
+                <label form="">Tên admin</label>
+                <input type="text" class="form-control" id="tieude" name ="name" value="<%=user[0].name%>">
               </div>
               <div class="form-group">
-                <label>Suất chiếu:</label>
-                <div class="input-group bootstrap-timepicker timepicker">
-                  <input id="timepicker1" type="text" name ="time" class="form-control input-small" value="<%=showtime[0].time%>">
-                  <span class="input-group-addon"><i class="far fa-clock"></i></span>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label>Phòng:</label>
-                <select class="form-control select2" name ="room_id" style="width: 100%;">
-                  <%if (rooms.length >0){ %>
-                  <% for(var i = 0; i < rooms.length; i++) { %>
-                  
-                  <%if (showtime[0].room_id == rooms[i].id){ %>
-                    <option value='<%= rooms[i].id %>' selected ><%= rooms[i].name %></option>
-                  <% }else{ %>
-                    <option value='<%= rooms[i].id %>' ><%= rooms[i].name %></option>
-                  <% } %>
-                 <% }}else{ %>
-                  <tr>
-                    <option>NOT FOUND</option>
-
-                  </tr>
-                  <% } %>
-
-                </select>
+                <label form="">Email</label>
+                <input type="text" class="form-control" id="tacgia" name ="email" value="<%=user[0].email%>">
               </div>
               <div class="form-group">
-                <label>Loại xuất chiếu:</label>
-                <select class="form-control select2" name ="type_id" style="width: 100%;">
-                  <%if (type.length >0){ %>
-                  <% for(var i = 0; i < type.length; i++) { %>
-                  <%if (showtime[0].type_id == type[i].id){ %>
-                    <option value='<%= type[i].id %>' selected ><%= type[i].name %></option>
-                  <% }else{ %>
-                    <option value='<%= type[i].id %>' ><%= type[i].name %></option>
-                  <% } %>
-                  
-                 <% }}else{ %>
-                  <tr>
-                    <option>NOT FOUND</option>
-
-                  </tr>
-                  <% } %>
-
-                </select>
+                <label form="">Mật khẩu</label>
+                <input type="text" class="form-control" id="tacgia" name ="password">
               </div>
-              <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật lịch diễn</button>
+              <div class="form-group">
+                <label form="">Số điên thoại</label>
+                <input type="text" class="form-control" id="tieude" name ="phone" value="<%=user[0].phone%>">
+              </div>
+
+              <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật</button>
             </form>
           </div>
         </section>
@@ -381,25 +318,5 @@
 
       <!-- PAGE SCRIPTS -->
       <script src="public/js/pages/dashboard2.js"></script>
-      <!-- bootstrap datepicker -->
-      <script src="public/js/pages/bootstrap-datepicker.min.js"></script>
-      <!-- timepicker-->
-      <script src="public/js/pages/bootstrap-timepicker.min.js"></script>
-      <script>
-   //Date picker
-   $('#datepicker').datepicker({
-    autoclose: true,
-    format: 'yyyy-mm-dd',
-  })
-   $('#timepicker1').timepicker({
-    autoclose: true,
-    minuteStep: 1,
-    template: 'modal',
-    appendWidgetTo: 'body',
-    showSeconds: true,
-    showMeridian: false,
-    defaultTime: false
-  })
-</script>
-</body>
-</html>
+    </body>
+    </html>

@@ -3,7 +3,9 @@ const { SeatType, Room, Seat } = require('../models/seats');
 const { ShowTimeType, ShowTime } = require('../models/showtimes');
 const { User } = require('../models/users');
 const dramatics = require('./dramatic');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const sendEmail = require('./nodemailer');
+
 
 exports.login = function(req, res) {
     // res.render('admin/login.ejs', {
@@ -16,9 +18,39 @@ exports.login = function(req, res) {
 
 }
 
+exports.getTemplateEmail = async function(req, res) {
+    res.render('admin/adminMailer.ejs', {
+        user: req.user,
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Admin Main Page",
+        
+    });
+
+}
+
+exports.sendEmail = async function(req, res) {
+    sendEmail('thisdavej@gmail.com', 'Test subject', 'Test message');
+}
+
 exports.getAdminUser = async function(req, res) {
     res.render('admin/adminEditAdmin.ejs', {
         user: req.user,
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Admin Main Page",
+        
+    });
+
+}
+
+exports.getAllAdminUser = async function(req, res) {
+    var data = await User.query().where('isAdmin', true);
+    res.render('admin/adminUser.ejs', {
+        user: req.user,
+        users: data,
         error : req.flash("error"),
         success: req.flash("success"),
         session:req.session,
