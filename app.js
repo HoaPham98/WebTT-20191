@@ -7,13 +7,24 @@ var flash = require('connect-flash')
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override')
 var session = require('express-session');
 var passport = require('passport');
+
+var booking = require('./app/controllers/api/booking')
 
 var port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
 
 // Connect database
 
@@ -51,8 +62,56 @@ require('./config/routes.js')(app, passport); // load our routes and pass in our
 
 
 //launch ======================================================================
-app.listen(port);
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+server.listen(port);
 console.log('The magic happens on port ' + port);
+
+io.on("connection", function(socket)
+	{
+		socket.on("disconnect", async function()
+			{
+                var transaction_id = socket.transaction_id
+                var showtime_id = socket.showtime_id
+
+                var codes = await booking.removeTransaction(transaction_id)
+                if (codes == null) {
+
+                } else {
+                    socket.broadcast.emit('update_remove', showtime_id, codes, 'available')
+                }
+			});
+         //server lắng nghe dữ liệu từ client
+		socket.on("addTicket", async function(transaction_id, showtime_id, seat_code)
+			{
+                if (socket.transaction_id == null) {
+                    socket.transaction_id = transaction_id
+                    socket.showtime_id = showtime_id
+                }
+                var id = await booking.addTicket(transaction_id, showtime_id, seat_code)
+                if (id == null) {
+                    socket.emit('display_error', 'Có lỗi vừa xảy ra. Vui lòng thử lại!')
+                    socket.emit('update_remove', showtime_id, seat_code, 'available')
+                    socket.broadcast.emit('update_remove', showtime_id, seat_code, 'available')
+                } else {
+                    socket.broadcast.emit('update_add', showtime_id, seat_code, 'unavailable')
+                }
+            });
+            
+        socket.on("removeTicket", async function(transaction_id, showtime_id, seat_code)
+        {
+            var id = await booking.removeTicket(transaction_id, showtime_id, seat_code)
+            
+            if (id == null) {
+                socket.emit('display_error', 'Có lỗi vừa xảy ra. Vui lòng thử lại!')
+                socket.emit('update_add', showtime_id, seat_code, 'selected')
+                socket.broadcast.emit('update_add', showtime_id, seat_code, 'unavailable')
+            } else {
+                socket.broadcast.emit('update_remove', showtime_id, seat_code, 'available')
+            }
+        });
+	});
+
 
 //catch 404 and forward to error handler
 app.use(function (req, res, next) {

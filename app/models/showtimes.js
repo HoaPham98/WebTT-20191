@@ -3,17 +3,12 @@ const connection = require('../../knexfile')
 const { Model } = require('objection')
 const { Dramatic } = require('./dramatic')
 const { Ticket } = require('./tickets')
+const { ShowTimeType } = require('./showtime_types')
 const { SeatType, Room, Seat } = require('./seats')
 
 const knexConnection = Knex(connection)
 
 Model.knex(knexConnection)
-
-class ShowTimeType extends Model {
-    static get tableName() {
-        return 'showtime_type'
-    }
-}
 
 class ShowTime extends Model {
     static get tableName() {
