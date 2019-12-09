@@ -33,6 +33,8 @@ module.exports = function (app, passport) {
         dramatic.delDramatic);
     app.get('/admin/dramatics/:id', check_input.isValidParam,
         dramatic.getDramatic);
+
+    app.get('/admin/seats', room.getAllSeat);
     app.post('/admin/seats', room.insertSeat);
     app.put('/admin/seats', room.updateSeat);
     app.get('/admin/prices/all', price.getPrices);
