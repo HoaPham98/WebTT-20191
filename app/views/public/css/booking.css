@@ -169,7 +169,7 @@ div.seatCharts-seat.unavailable {
 	
 div.seatCharts-container {
     border-right: 1px solid #adadad;
-    width: 60%;
+    width: 547px;
     padding: 0 20px 0 0;
     float: left;
 }
@@ -213,7 +213,7 @@ span.seatCharts-legendDescription {
     -ms-transition: 0.5s all;
 }
 #selected-seats {
-	max-height: 84px;
+	/*max-height: 84px;*/
 	overflow-y: auto;
 	overflow-x: none;
 	width: 200px;
@@ -230,9 +230,9 @@ span.seatCharts-legendDescription {
     padding: 6px 11px;
     width: 50%;
 	}
-.scrollbar {
-    overflow-y: scroll;
-}
+/*.scrollbar {*/
+/*    overflow-y: scroll;*/
+/*}*/
 .booking-details p i {
     color: #000;
     font-size: 18px;
@@ -259,6 +259,9 @@ ul.book-right li {
     color: #000;
     line-height: 1.9em;
 }
+.front {
+	width: 485px;
+}
 /*-- agileits --*/
 /*-- //movie ticket --*/
 
@@ -269,13 +272,22 @@ ul.book-right li {
 		font-size: 33px;
 	}	
 }
+@media (max-width: 1200px){
+	.booking-details {
+		width: 100%;
+		margin-top: 35px;
+	}
+	div.seatCharts-container {
+		width: 100%;
+	}
+}
 @media (max-width: 991px){
 	.main {
 		width: 90%;
 	}
-	div.seatCharts-container {
-		width: 60%;
-	}
+	/*div.seatCharts-container {*/
+	/*	width: 60%;*/
+	/*}*/
 	.content h1 {
 		font-size: 31px;
 	}	
@@ -285,15 +297,15 @@ ul.book-right li {
 		width: 90%;
 	}
 	/*-- w3layouts --*/
-	.booking-details {
-		width: 33%;
-	}
-	div.seatCharts-container {
-		width: 62%;
-	}
-	.front {
-		margin: 5px 9px 45px 38px;
-	}
+	/*.booking-details {*/
+	/*	width: 33%;*/
+	/*}*/
+	/*div.seatCharts-container {*/
+	/*	width: 62%;*/
+	/*}*/
+	/*.front {*/
+	/*	margin: 5px 9px 45px 38px;*/
+	/*}*/
 	ul.book-right {
 		width: 57%;
 	}
@@ -302,9 +314,9 @@ ul.book-right li {
 	}	
 }
 @media (max-width: 768px){
-	div.seatCharts-container {
-		width: 60%;
-	}
+	/*div.seatCharts-container {*/
+	/*	width: 60%;*/
+	/*}*/
 	.main {
 		width: 85%;
 	}
@@ -313,8 +325,11 @@ ul.book-right li {
 	}	
 }
 @media (max-width: 736px){
-	div.seatCharts-container {
-		width: 62%;
+	/*div.seatCharts-container {*/
+	/*	width: 62%;*/
+	/*}*/
+	.main {
+		width: 100%;
 	}
 	.content h1 {
 		font-size: 27px;
@@ -337,9 +352,9 @@ ul.book-right li {
 		margin-top: 35px;
 	}
 	/*-- agileits --*/
-	.main {
-		width: 59%;
-	}
+	/*.main {*/
+	/*	width: 59%;*/
+	/*}*/
 	.content h1 {
 		font-size: 24px;
 	}
@@ -348,9 +363,9 @@ ul.book-right li {
 	.content {
 		padding: 59px 0;
 	}
-	.main {
-		width: 61%;
-	}
+	/*.main {*/
+	/*	width: 61%;*/
+	/*}*/
 	.front {
 		margin: 5px 6px 45px 6px;
 	}	
@@ -359,23 +374,23 @@ ul.book-right li {
 	.main h2 {
 		font-size: 21px;
 	}
-	.main {
-		width: 65%;
-	}
+	/*.main {*/
+	/*	width: 65%;*/
+	/*}*/
 	.front {
 		margin: 5px 6px 36px 6px;
 	}	
 }
 @media (max-width: 568px){
-	.main {
-		width: 68%;
-	}	
+	/*.main {*/
+	/*	width: 68%;*/
+	/*}	*/
 }
 @media (max-width: 480px){
-	.main {
-		padding: 18px 18px;
-		width: 81%;
-	}
+	/*.main {*/
+	/*	padding: 18px 18px;*/
+	/*	width: 81%;*/
+	/*}*/
 	p.copy_rights {
 		font-size: 13px;
 		line-height: 1.8em;
@@ -384,9 +399,9 @@ ul.book-right li {
 	}	
 }
 @media (max-width: 414px){
-	.main {
-		width: 85%;
-	}
+	/*.main {*/
+	/*	width: 85%;*/
+	/*}*/
 	div.seatCharts-cell {
 		height: 25px;
 		width: 25px;
@@ -418,9 +433,9 @@ ul.book-right li {
 	div.seatCharts-cell {
 		margin: 2px 3px 2px 2px;
 	}
-	.main {
-		margin: 28px auto;
-	}
+	/*.main {*/
+	/*	margin: 28px auto;*/
+	/*}*/
 	ul.book-right li ,ul.book-left li {
 		font-size: 14px;
 	}
