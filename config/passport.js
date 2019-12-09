@@ -26,7 +26,7 @@ module.exports = function (passport) {
                 var user = await User.query().where('name', username);
                 // console.log(user)
                 if (user.length == 0) {
-                    console.log(user.length)
+                    //console.log(user.length)
                     console.log('User Not Found with username ' + username);
                     return done(null, false,
                         req.flash('loginMessage', 'User Not found.'));

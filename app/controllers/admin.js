@@ -53,6 +53,7 @@ exports.sendEmail = async function(req, res) {
         .catch(e => console.log(`Error in sending email for the batch ${i} - ${e}`)) 
     // Catch the error.
     }
+    req.flash('flash', 'Gửi thành công');
     res.redirect(301, '/admin/mainpage');
 }
 
@@ -100,6 +101,7 @@ exports.adminMainPage = async function(req, res) {
     var data = await dramatics.getAllDramatic()
     // console.log(req.user);
     res.render('admin/adminMainPage.ejs', {
+        message: req.flash('flash'),
         user: req.user,
         records: data,
         error : req.flash("error"),
@@ -208,6 +210,7 @@ exports.adminPerformManagement = async function(req, res) {
         .withGraphFetched('[room, showtime_type, dramatics]');
     console.log(showtime)    
     res.render('admin/adminPerformManagement.ejs', {
+        message: req.flash('flash'),
         user: req.user,
         records: showtime,
         error : req.flash("error"),

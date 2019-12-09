@@ -7,6 +7,7 @@ exports.insertDramatic = async function (req, res) {
         .allowGraph('[name, author, director, music, poster, decorator, actor, sumary]')
         .insert(newDramatic)
         //.then(res.send("okInsertDrama"))
+    req.flash('flash', 'Thêm thành công');
     res.redirect(301, '/admin/mainpage'); 
 }
 
@@ -23,6 +24,7 @@ exports.updateDramatic = async function (req, res) {
             actor: req.body.actor,
             sumary: req.body.sumary
         })
+    req.flash('flash', 'Cập nhật thành công');
     res.redirect(301, '/admin/mainpage'); 
 }
 
