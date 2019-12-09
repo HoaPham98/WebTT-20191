@@ -1,8 +1,8 @@
 const Knex = require('knex')
 const connection = require('../../knexfile')
 const { Model } = require('objection')
-const { ShowTimeType, ShowTime } = require('./showtimes')
-const { TicketStatus, Price, Ticket } = require('./tickets')
+const { Ticket } = require('./tickets')
+const { User } = require('./user')
 
 const knexConnection = Knex(connection)
 
@@ -25,6 +25,14 @@ class Transaction extends Model {
                         to: 'transaction_detail.ticket_id'
                     },
                     to: 'ticket.id'
+                }
+            },
+            user: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: User,
+                join: {
+                    from: 'transaction.user_id',
+                    to: 'user.id'
                 }
             }
         }
