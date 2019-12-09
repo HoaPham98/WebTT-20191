@@ -48,6 +48,9 @@ module.exports = function (app, passport) {
     app.get('/admin/addschedule',admin.adminAddSchedule); 
     app.get('/admin/statistic',admin.adminStatistics); 
 
+    app.get('/admin/users',admin.getAdminUser); 
+    app.put('/admin/users',admin.updateAdminUser); 
+
     app.post('/admin/showtimes', showtime.insertShowTime);
     app.put('/admin/showtimes', showtime.updateShowTime);   
     app.post('/admin/login', passport.authenticate("login", {
@@ -55,6 +58,10 @@ module.exports = function (app, passport) {
         failureRedirect : '/admin/login',
         failureFlash : true
     }));
+    app.get('/admin/logout', function(req, res){
+        req.logout();
+        res.redirect('/admin/login');
+    });
     
     app.get('/admin/login',admin.login);
     app.get('/admin/mainpage',admin.adminMainPage);

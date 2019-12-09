@@ -1,7 +1,9 @@
 const { Dramatic } = require('../models/dramatic');
 const { SeatType, Room, Seat } = require('../models/seats');
 const { ShowTimeType, ShowTime } = require('../models/showtimes');
+const { User } = require('../models/users');
 const dramatics = require('./dramatic');
+const bcrypt = require('bcrypt')
 
 exports.login = function(req, res) {
     // res.render('admin/login.ejs', {
@@ -14,10 +16,37 @@ exports.login = function(req, res) {
 
 }
 
+exports.getAdminUser = async function(req, res) {
+    res.render('admin/adminEditAdmin.ejs', {
+        user: req.user,
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Admin Main Page",
+        
+    });
+
+}
+
+exports.updateAdminUser = async function(req, res) {
+    const user = await User.query()
+        .findById(req.body.id)
+        .patch({
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 8),
+            phone: req.body.phone
+        })
+    res.redirect(301, '/admin/mainpage'); 
+}
+
+
+
 exports.adminMainPage = async function(req, res) {
     var data = await dramatics.getAllDramatic()
-    console.log(data);
+    console.log(req.user);
     res.render('admin/adminMainPage.ejs', {
+        user: req.user,
         records: data,
         error : req.flash("error"),
         success: req.flash("success"),
@@ -60,6 +89,7 @@ exports.adminStatistics = async function(req, res) {
         return result;
     })
     res.render('admin/adminStatistics.ejs', {
+        user: req.user,
         records: data,
         error : req.flash("error"),
         success: req.flash("success"),
@@ -72,6 +102,7 @@ exports.adminStatistics = async function(req, res) {
 
 exports.adminAddPerformance = function(req, res) {
     res.render('admin/adminAddPerformance.ejs', {
+        user: req.user,
         error : req.flash("error"),
         success: req.flash("success"),
         session:req.session,
@@ -86,6 +117,7 @@ exports.adminEditPerformance = async function(req, res) {
     const dramatics = await Dramatic.query()
         .where('id', id);
     res.render('admin/adminEditPerformance.ejs', {
+        user: req.user,
         data: dramatics,
         error : req.flash("error"),
         success: req.flash("success"),
@@ -105,6 +137,7 @@ exports.adminEditSchedule = async function(req, res) {
     const type = await ShowTimeType.query()
         .select('id', 'name');
     res.render('admin/adminEditSchedule.ejs', {
+        user: req.user,
         showtime: showtime,
         records: dramatics,
         rooms: rooms,
@@ -121,6 +154,7 @@ exports.adminPerformManagement = async function(req, res) {
         .withGraphFetched('[room, showtime_type, dramatics]');
     console.log(showtime)    
     res.render('admin/adminPerformManagement.ejs', {
+        user: req.user,
         records: showtime,
         error : req.flash("error"),
         success: req.flash("success"),
@@ -137,6 +171,7 @@ exports.adminAddSchedule = async function(req, res) {
     const type = await ShowTimeType.query()
         .select('id', 'name');
     res.render('admin/adminAddSchedule.ejs', {
+        user: req.user,
         records: dramatics,
         rooms: rooms,
         type: type,
