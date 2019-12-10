@@ -5,7 +5,7 @@ var room = require('../app/controllers/room');
 var price = require('../app/controllers/price');
 var tickets = require('../app/controllers/tickets');
 var showtime = require('../app/controllers/showtime');
-var check_input = require('../app/controllers/utils/check_input')
+var check_input = require('../app/controllers/utils/check_input');
 
 var api_booking = require('../app/controllers/api/booking')
 var api_payment = require('../app/controllers/api/payment')

@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="public/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <script src="plugins/jquery/jquery.min.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -176,19 +179,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/mainpage" class="nav-link active">
+                <a href="/admin/mainpage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý vở diễn</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/manage" class="nav-link ">
+                <a href="/admin/manage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý lịch diễn</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/seats" class="nav-link">
+                <a href="/admin/seats" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý ghế ngồi</p>
                 </a>
@@ -254,7 +257,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý vở diễn</h1>
+                <h1 class="m-0 text-dark" >Quản lý ghế ngồi</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -269,77 +272,108 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/dramatics"  method="POST">
-              <input type="hidden" name="_method" value="put">
-              <div class="form-group">
-                <label form="">ID</label>
-                <input type="text" class="form-control" id="tieude" name ="id" value="<%=data[0].id%>">
-              </div>
-              <div class="form-group">
-                <label form="">Tên vở diễn</label>
-                <input type="text" class="form-control" id="tieude" name ="name" value="<%=data[0].name%>">
-              </div>
-              <div class="form-group">
-                <label form="">Tác giả</label>
-                <input type="text" class="form-control" id="tacgia" name ="author" value="<%=data[0].author%>">
-              </div>
-              <div class="form-group">
-                <label form="">Đạo diễn</label>
-                <input type="text" class="form-control" id="tieude" name ="director" value="<%=data[0].director%>">
+            <!-- /.box -->
+            <% if (message.length > 0) { %>
+              <h6 class="alert alert-danger"><%= message %></h6>
+            <% } %>
+            <script type="text/javascript">
+              $(".alert.alert-danger").delay(3200).fadeOut(300);
+            </script>
 
-              </div>
-              <div class="form-group">
-                <label form="">Poster</label>
-                <label for="exampleInputFile">Tải ảnh lên</label>
-                <input type="file" id="exampleInputFile" name ="poster">
-              </div>
-              <div class="form-group">
-                <label form="">Giám đốc sản xuất</label>
-                <input type="text" class="form-control" id="tieude" name ="">
-              </div>
-              <div class="form-group">
-                <label form="">Trang trí</label>
-                <input type="text" class="form-control" id="tieude" name ="decorator" value="<%=data[0].decorator%>">
-              </div>
-              <div class="form-group">
-                <label form="">Diễn viên</label>
-                <input type="text" class="form-control" id="tieude" name ="actor" value="<%=data[0].actor%>">
-              </div>
-              <div class="form-group">
-                <label form="">Tóm tắt</label>
-                <input type="text" class="form-control" id="tieude" name ="sumary" value="<%=data[0].sumary%>">
-              </div>
-              <button type="submit" class="btn btn-block btn-success btn-create">Tạo vở diễn</button>
-            </form>
+            <div class="box">
+              <!-- /.box-header -->
+              <div class="box-body">
+               <a href="/admin/addschedule" class="btn btn-success">Thêm ghế ngồi</a> 
+               <br></br>
+               <table id="table_recurrent_task" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>ID:</th>
+                    <th>Phòng:</th>
+                    <th>Loại ghế ngồi:</th>
+                    <th>Hàng:</th>
+                    <th>Cột:</th>
+                    <th>Hành động:</th>                 
+                  </tr>
+                </thead>
+                <tbody>
+                  <%if (records.length >0){ %>
+                  <% for(var i = 0; i < records.length; i++) { %>
+                  <tr>
+                    <td class="id"><%= records[i].id %></td>
+                    <td><%= records[i].room_name %></td>
+                    <td><%= records[i].seat_type.name %></td>
+                    <td><%= records[i].row %></td>                   
+                    <td><%= records[i].col %></td>                                   
+                    <td>
+                      <button class="btn btn-info btn-edit">Sửa</button>
+                      <button class="btn btn-danger btn-delete">Xóa</button>
+                    </td>
+                  </tr>
+                  <% }}else{ %>
+                  <tr>
+                    <td colspan="6">No Record Found</td>
+
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+              <script type="text/javascript">
+                $(document).ready(function () {
+                  $(".btn.btn-info.btn-edit").click(function() {
+                  //find content of different elements inside a row.
+                  var id = $(this).closest('tr').find('.id').text();
+                  console.log(id);
+                  window.location.href = '/admin/editschedule?id=' + id;
+                });
+                //   $(".btn.btn-danger.btn-delete").click(function() {
+                //   var button = $(this);
+                //   //find content of different elements inside a row.
+                //   var id = $(this).closest('tr').find('.id').text();
+                //   $.ajax({
+                //     url: '/admin/dramatics/' + id,
+                //     type: 'DELETE',
+                //     success: function(result) {
+                //       console.log('abc')
+                //       button.closest('tr').remove()
+                //     }
+                //   });
+                // });
+              });
+            </script>
           </div>
-        </section>
-
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
       </div>
+    </section>
+
+  </div>
 
 
-      <!-- REQUIRED SCRIPTS -->
-      <!-- jQuery -->
-      <script src="plugins/jquery/jquery.min.js"></script>
-      <!-- Bootstrap -->
-      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- overlayScrollbars -->
-      <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="public/js/adminlte.js"></script>
+  <!-- REQUIRED SCRIPTS -->
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="public/js/adminlte.js"></script>
 
-      <!-- OPTIONAL SCRIPTS -->
-      <script src="public/js/demo.js"></script>
+  <!-- OPTIONAL SCRIPTS -->
+  <script src="public/js/demo.js"></script>
 
-      <!-- PAGE PLUGINS -->
-      <!-- jQuery Mapael -->
-      <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-      <script src="plugins/raphael/raphael.min.js"></script>
-      <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-      <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-      <!-- ChartJS -->
-      <script src="plugins/chart.js/Chart.min.js"></script>
+  <!-- PAGE PLUGINS -->
+  <!-- jQuery Mapael -->
+  <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+  <script src="plugins/raphael/raphael.min.js"></script>
+  <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+  <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+  <!-- ChartJS -->
+  <script src="plugins/chart.js/Chart.min.js"></script>
 
-      <!-- PAGE SCRIPTS -->
-      <script src="public/js/pages/dashboard2.js"></script>
-    </body>
-    </html>
+  <!-- PAGE SCRIPTS -->
+  <script src="public/js/pages/dashboard2.js"></script>
+</body>
+</html>

@@ -160,7 +160,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block">Mãi Đẹp Chai</a>
+              <a href="#" class="d-block"><%=user[0].name%></a>
             </div>
           </div>
 
@@ -191,6 +191,18 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/admin/seats" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý ghế ngồi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/email" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Gửi Email</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/admin/statistic" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thống kê</p>
@@ -208,13 +220,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
+                <a href="/admin/allusers" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tài khoản admin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/users" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thay đổi thông tin</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/tables/data.html" class="nav-link">
+                <a href="/admin/logout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -255,6 +273,12 @@
         <section class="content">
           <div class="col-xs-12">
             <!-- /.box -->
+            <% if (message.length > 0) { %>
+              <h6 class="alert alert-danger"><%= message %></h6>
+            <% } %>
+            <script type="text/javascript">
+              $(".alert.alert-danger").delay(3200).fadeOut(300);
+            </script>
 
             <div class="box">
               <!-- /.box-header -->

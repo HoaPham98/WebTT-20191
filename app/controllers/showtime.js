@@ -42,6 +42,7 @@ exports.insertShowTime = async function (req, res) {
     const ticket = await Ticket.query()
         //.allowInsert('[showtime_id, seat_id, status_id, price_id]')
         .insertGraph(items)
+    req.flash('flash', 'Thêm thành công');
     res.redirect(301, '/admin/manage');}
 
 exports.updateShowTime = async function (req, res) {
@@ -87,7 +88,7 @@ exports.updateShowTime = async function (req, res) {
             .patch({ price_id: items[i].price_id  })
             .where('seat_id', seat[i].id);
     }
-   
+    req.flash('flash', 'Cập nhật thành công');
     res.redirect(301, '/admin/manage');
 }
 async function checkPrice(seat, tempShowTime) {

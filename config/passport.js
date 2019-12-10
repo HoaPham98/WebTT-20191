@@ -7,10 +7,12 @@ var find = require('lodash.find');
 
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        //console.log('abc' + user[0].id)
+        done(null, user[0].id);
     });
     
     passport.deserializeUser(async function (id, done) {
+        //console.log('abcxyz' + id)
         try {
             const user = await User.query().findById(id)
             done(null, user)
