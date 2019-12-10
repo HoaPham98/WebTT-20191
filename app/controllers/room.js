@@ -32,6 +32,44 @@ exports.delRoom = async function (req, res) {
     res.send("okDeleteRoom");
 }
 
+exports.getAllSeat = async function (req, res) {
+    try{
+        const seat = await Seat.query().withGraphFetched('[seat_type]')
+        const room = await Room.query()
+        var final = seat.map(flag => {
+            var object = {}
+            object.id = flag.id
+            for(let j=0; j<room.length; j++){
+                if(flag.room_id == room[j].id){
+                    //console.log(flag.room_id == room[j].id)
+                    object.room_name = room[j].name
+                    break;
+                }
+            }
+            object.room_id = flag.room_id
+            object.type_id = flag.type_id
+            object.row = flag.row
+            object.col = flag.col
+            object.seat_type = flag.seat_type
+            return object;
+        })
+        console.log(final)    
+        res.render('admin/adminManageSeat.ejs', {
+            message: req.flash('flash'),
+            user: req.user,
+            records: final,
+            error : req.flash("error"),
+            success: req.flash("success"),
+            session:req.session,
+            title: "Admin Main Page",
+            
+        });
+    }catch(err){
+        console.log(err);
+    }
+    
+}
+
 exports.insertSeat = async function (req, res) {
     try{
         const room = await Room.query().findById(req.body.room_id)

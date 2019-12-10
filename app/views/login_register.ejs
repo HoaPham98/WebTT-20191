@@ -1,9 +1,11 @@
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,11 +16,11 @@
 	<meta name="author" content="FREEHTML5.CO" />
 
 	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
+	<meta property="og:title" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:site_name" content="" />
+	<meta property="og:description" content="" />
 	<meta name="twitter:title" content="" />
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
@@ -59,111 +61,128 @@
 	<![endif]-->
 
 </head>
+
 <body>
-<div id="fh5co-wrapper">
-	<div id="fh5co-page">
+	<div id="fh5co-wrapper">
+		<div id="fh5co-page">
 
-		<header id="fh5co-header-section" class="sticky-banner">
-			<div class="container">
-				<div class="nav-header">
-					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-					<h1 id="fh5co-logo"><a href="/"><i class="icon-film "></i>Nhà Hát Kịch</a></h1>
-					<% include public/partials/sidebar %>
+			<header id="fh5co-header-section" class="sticky-banner">
+				<div class="container">
+					<div class="nav-header">
+						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+						<h1 id="fh5co-logo"><a href="/"><i class="icon-film "></i>Nhà Hát Kịch</a></h1>
+						<% include public/partials/sidebar %>
+					</div>
 				</div>
-			</div>
-		</header>
-		<div class="fh5co-hero">
-			<div class="fh5co-overlay"   ></div>
-			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(public/images/cover_bg_1.jpg);">
-				<div class="desc">
-					<div class="container">
-						<div class="row center-block">
-							<div class="col-sm-5 col-md-5">
-								<div class="tabulation animate-box">
+			</header>
+			<div class="fh5co-hero">
+				<div class="fh5co-overlay"></div>
+				<div class="fh5co-cover" data-stellar-background-ratio="0.5"
+					style="background-image: url(public/images/cover_bg_1.jpg);">
+					<div class="desc">
+						<div class="container">
+							<div class="row center-block">
+								<div class="col-sm-5 col-md-5">
+									<div class="tabulation animate-box">
 
-									<!-- Nav tabs -->
-									<ul class="nav nav-tabs" role="tablist">
-										<li role="presentation" class="active">
-											<a href="#login" aria-controls="flights" role="tab" data-toggle="tab">Đăng nhập</a>
-										</li>
-										<li role="presentation">
-											<a href="#register" aria-controls="packages" role="tab" data-toggle="tab">Đăng ký</a>
-										</li>
-									</ul>
+										<!-- Nav tabs -->
+										<ul class="nav nav-tabs" role="tablist">
+											<li role="presentation" class="active">
+												<a href="#login" aria-controls="flights" role="tab"
+													data-toggle="tab">Đăng nhập</a>
+											</li>
+											<li role="presentation">
+												<a href="#register" aria-controls="packages" role="tab"
+													data-toggle="tab">Đăng ký</a>
+											</li>
+										</ul>
 
-									<!-- Tab panes -->
-									<div class="tab-content">
-										<div role="tabpanel" class="tab-pane active" id="login">
-											<div class="row">
-												<form>
-													<div class="col-sm-12 mt">
-														<div class="input-field">
-															<label>Email</label>
-															<input type="email" class="form-control" name="email" placeholder="Nhập email" required/>
+										<!-- Tab panes -->
+										<div class="tab-content">
+											<!-- hiển thị mọi tin nhắn được trả lại từ việc đăng nhập -->
+											<div role="tabpanel" class="tab-pane active" id="login">
+												<div class="row">
+														<% if (loginMessage.length > 0) { %>
+															<div class="alert alert-danger"><%= loginMessage %></div>
+															<% } %>
+													<form action="/login" method="post">
+														<div class="col-sm-12 mt">
+															<div class="input-field">
+																<label>Email</label>
+																<input type="email" class="form-control" name="email"
+																	placeholder="Nhập email" required />
+															</div>
 														</div>
-													</div>
-													<div class="col-sm-12 mt">
-														<div class="input-field">
-															<label>Mật khẩu</label>
-															<input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu" required/>
+														<div class="col-sm-12 mt">
+															<div class="input-field">
+																<label>Mật khẩu</label>
+																<input type="password" class="form-control"
+																	name="password" placeholder="Nhập mật khẩu"
+																	required />
+															</div>
 														</div>
-													</div>
-													<div class="col-xs-6">
-														<button type="submit" class="btn btn-primary" name="login">Đăng nhập</button>
-													</div>
-												</form>
+														<div class="col-xs-6">
+															<button type="submit" class="btn btn-primary">Đăng nhập</button>
+														</div>
+													</form>
+												</div>
 											</div>
-										</div>
 
-										<div role="tabpanel" class="tab-pane" id="register">
-											<div class="row">
-												<form>
-													<div class="col-sm-12 mt">
-														<div class="input-field">
-															<label>Tên đăng nhập</label>
-															<input type="text" class="form-control" name="username" placeholder="Tên đăng nhập" required/>
+											<div role="tabpanel" class="tab-pane" id="register">
+												<div class="row">
+													<form>
+														<div class="col-sm-12 mt">
+															<div class="input-field">
+																<label>Tên đăng nhập</label>
+																<input type="text" class="form-control" name="username"
+																	placeholder="Tên đăng nhập" required />
+															</div>
 														</div>
-													</div>
-													<div class="col-sm-12 mt">
-														<div class="input-field">
-															<label>Email</label>
-															<input type="email" class="form-control" name="email" placeholder="Nhập email" required/>
+														<div class="col-sm-12 mt">
+															<div class="input-field">
+																<label>Email</label>
+																<input type="email" class="form-control" name="email"
+																	placeholder="Nhập email" required />
+															</div>
 														</div>
-													</div>
-													<div class="col-sm-12 mt">
-														<div class="input-field">
-															<label>Mật khẩu</label>
-															<input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu" required/>
+														<div class="col-sm-12 mt">
+															<div class="input-field">
+																<label>Mật khẩu</label>
+																<input type="password" class="form-control"
+																	name="password" placeholder="Nhập mật khẩu"
+																	required />
+															</div>
 														</div>
-													</div>
-													<div class="col-sm-12 mt">
-														<div class="input-field">
-															<label>Xác nhận mật khẩu</label>
-															<input type="password" class="form-control"  name="re_password" placeholder="Nhập lại mật khẩu" required/>
+														<div class="col-sm-12 mt">
+															<div class="input-field">
+																<label>Xác nhận mật khẩu</label>
+																<input type="password" class="form-control"
+																	name="re_password" placeholder="Nhập lại mật khẩu"
+																	required />
+															</div>
 														</div>
-													</div>
-													<div class="col-xs-6">
-														<button type="submit" class="btn btn-primary" name="register">Đăng ký</button>
-													</div>
-												</form>
+														<div class="col-xs-6">
+															<button type="submit" class="btn btn-primary"
+																name="register">Đăng ký</button>
+														</div>
+													</form>
+												</div>
 											</div>
-										</div>
 
+										</div>
 									</div>
 								</div>
-							</div>
 
-							<div class="desc2 animate-box">
-								<div class="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
-									<h2>Chào mừng đến với Nhà Hát Kịch</h2>
-									<h3>Đăng nhập hoặc Đăng ký trở thành thành viên</h3>
+								<div class="desc2 animate-box">
+									<div class="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
+										<h2>Chào mừng đến với Nhà Hát Kịch</h2>
+										<h3>Đăng nhập hoặc Đăng ký trở thành thành viên</h3>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-		</div>
-		</div>
+			</div>
 
-<% include public/partials/footer %>
-
+			<% include public/partials/footer %>

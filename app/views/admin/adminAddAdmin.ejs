@@ -176,7 +176,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/mainpage" class="nav-link active">
+                <a href="/admin/mainpage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý vở diễn</p>
                 </a>
@@ -188,13 +188,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/seats" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Quản lý ghế ngồi</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/email" class="nav-link">
+                <a href="/admin/email" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gửi Email</p>
                 </a>
@@ -223,7 +217,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/users" class="nav-link">
+                <a href="/admin/users" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thay đổi thông tin</p>
                 </a>
@@ -269,47 +263,30 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/dramatics"  method="POST">
+            <form action="/admin/users"  method="POST">
               <input type="hidden" name="_method" value="put">
               <div class="form-group">
                 <label form="">ID</label>
-                <input type="text" class="form-control" id="tieude" name ="id" value="<%=data[0].id%>">
+                <input type="text" class="form-control" id="tieude" name ="id" value="<%=user[0].id%>">
               </div>
               <div class="form-group">
-                <label form="">Tên vở diễn</label>
-                <input type="text" class="form-control" id="tieude" name ="name" value="<%=data[0].name%>">
+                <label form="">Tên admin</label>
+                <input type="text" class="form-control" id="tieude" name ="name" value="<%=user[0].name%>">
               </div>
               <div class="form-group">
-                <label form="">Tác giả</label>
-                <input type="text" class="form-control" id="tacgia" name ="author" value="<%=data[0].author%>">
+                <label form="">Email</label>
+                <input type="text" class="form-control" id="tacgia" name ="email" value="<%=user[0].email%>">
               </div>
               <div class="form-group">
-                <label form="">Đạo diễn</label>
-                <input type="text" class="form-control" id="tieude" name ="director" value="<%=data[0].director%>">
+                <label form="">Mật khẩu</label>
+                <input type="text" class="form-control" id="tacgia" name ="password">
+              </div>
+              <div class="form-group">
+                <label form="">Số điên thoại</label>
+                <input type="text" class="form-control" id="tieude" name ="phone" value="<%=user[0].phone%>">
+              </div>
 
-              </div>
-              <div class="form-group">
-                <label form="">Poster</label>
-                <label for="exampleInputFile">Tải ảnh lên</label>
-                <input type="file" id="exampleInputFile" name ="poster">
-              </div>
-              <div class="form-group">
-                <label form="">Giám đốc sản xuất</label>
-                <input type="text" class="form-control" id="tieude" name ="">
-              </div>
-              <div class="form-group">
-                <label form="">Trang trí</label>
-                <input type="text" class="form-control" id="tieude" name ="decorator" value="<%=data[0].decorator%>">
-              </div>
-              <div class="form-group">
-                <label form="">Diễn viên</label>
-                <input type="text" class="form-control" id="tieude" name ="actor" value="<%=data[0].actor%>">
-              </div>
-              <div class="form-group">
-                <label form="">Tóm tắt</label>
-                <input type="text" class="form-control" id="tieude" name ="sumary" value="<%=data[0].sumary%>">
-              </div>
-              <button type="submit" class="btn btn-block btn-success btn-create">Tạo vở diễn</button>
+              <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật</button>
             </form>
           </div>
         </section>

@@ -11,11 +11,6 @@ const SeatRepository = require('../repositories/seats')
 exports.home = async function(req, res) {
 
 	const dramatics = await DramaticRepository.getDramatics()
-	const rooms = await SeatRepository.getRooms()
-
-	const room = rooms[0]
-
-	const seats = await room.$relatedQuery('seats')
 
 	res.render('index.ejs', {
 		error: req.flash("error"),
@@ -26,10 +21,12 @@ exports.home = async function(req, res) {
 	});
 }
 
-exports.schedule = function(req, res) {
+exports.schedule = async function(req, res) {
+	const showtimes = await ShowTime.query().distinct('dramatic_id').select('showtime.*').where('date', '>', new Date()).withGraphFetched('[dramatics]')
 	res.render('schedule.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
+		showtimes: showtimes,
 		session:req.session,
 		title: "Lịch diễn"
 	});
@@ -37,6 +34,7 @@ exports.schedule = function(req, res) {
 }
 
 exports.performance = function(req, res) {
+	const id = req.params.id
 	res.render('performance.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
@@ -66,7 +64,7 @@ exports.contact = function(req, res) {
 
 exports.booking = async function(req, res) {
 
-	const showtime_id = req.body.showtime_id || 1
+	const showtime_id = req.params.id || 1
 
 	var showtime = await ShowTime.query().findById(showtime_id)
 	var dramatic = await showtime.$relatedQuery('dramatics')
@@ -98,10 +96,14 @@ exports.performance_detail = function(req, res) {
 }
 
 exports.login_register = function(req, res) {
+	if (req.isAuthenticated()) {
+		res.redirect('/');
+	}
 	res.render('login_register.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
+		loginMessage: req.flash('loginMessage'),
 		title: "Đăng nhập & Đăng ký"
 	});
 }
