@@ -81,6 +81,8 @@ module.exports = function (app, passport) {
         }
     })
 
+    app.get('/user/history', auth, home.order_history)
+
     app.get('/booking/:id', auth, home.booking);
 
     app.get('/login', home.login_register);

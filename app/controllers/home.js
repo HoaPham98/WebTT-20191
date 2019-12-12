@@ -144,3 +144,18 @@ exports.news_detail = async function(req, res) {
 		title: "Tin tức nổi bật"
 	});
 }
+
+exports.order_history = async function(req, res) {
+	const user = req.user
+
+	try {
+		const transactions = await Transaction.query().where('user_id', user.id).whereNotNull('code')
+		await asyncForEach(transactions, async (transaction) => {
+			const tickets = await transaction.$relatedQuery('tickets')
+			transaction.tickets = tickets
+		})
+		res.json(transactions)
+	} catch (err) {
+		res.status(400).json({error: err.message})
+	}
+}
