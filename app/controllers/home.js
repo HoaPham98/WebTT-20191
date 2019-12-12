@@ -177,3 +177,4 @@ exports.payment_error = function(req, res) {
 		session:req.session,
 		title: "Thanh toán thất bại"
 	});
+}
