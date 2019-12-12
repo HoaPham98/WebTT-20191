@@ -39,6 +39,8 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(express.static(path.join(__dirname, 'app/views')));
 app.use('/booking', express.static(path.join(__dirname, 'app/views')));
 app.use('/performance', express.static(path.join(__dirname, 'app/views')));
+app.use('/news', express.static(path.join(__dirname, 'app/views')));
+app.use('/api', express.static(path.join(__dirname, 'app/views')));
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'ejs');
 //app.set('view engine', 'ejs'); // set up ejs for templating
@@ -56,6 +58,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+app.use(function(req, res, next) {
+    res.locals.user = req.user;
+    next();
+  });
 
 // config passport
 require('./config/passport.js')(passport); 
