@@ -55,7 +55,7 @@ exports.performance = async function(req, res) {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
-		dramatic: dramatics,
+		dramatics: dramatics,
 		title: "Vở diễn"
 	});
 
@@ -110,11 +110,14 @@ exports.performance_detail = async function(req, res) {
 	const id = req.params.id || 1
 
 	const dramatic = await Dramatic.query().findById(id)
+
+	const showtimes = await ShowTime.query().where('dramatic_id', dramatic.id).where('date','>', Date.now() - 60*60*1000*24)
 	res.render('performance_detail.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
 		dramatic: dramatic,
+		showtimes: showtimes,
 		title: "Chi tiết vở diễn"
 	});
 }
@@ -161,13 +164,27 @@ exports.order_history = async function(req, res) {
 	}
 }
 
-exports.payment_success = function(req, res) {
-	res.render('payment_success.ejs', {
-		error : req.flash("error"),
-		success: req.flash("success"),
-		session:req.session,
-		title: "Thanh toán thành công"
-	});
+exports.payment_success = async function(req, res) {
+	if (req.session.transaction_id_success != null) {
+		const transaction_id = req.session.transaction_id_success
+		delete req.session.transaction_id_success
+
+		const transaction = await Transaction.query().findById(transaction_id).withGraphFetched('[tickets, tickets.[seat, showtime, showtime.dramatics]]')
+		const showtime = transaction.tickets[0].showtime
+
+		const code = transaction.tickets.map( item => item.seat.code).join(', ')
+
+		res.render('payment_success.ejs', {
+			error : req.flash("error"),
+			success: req.flash("success"),
+			session:req.session,
+			transaction: transaction,
+			showtime: showtime,
+			code: code,
+			title: "Thanh toán thành công"
+		});
+	}
+	
 }
 
 exports.payment_error = function(req, res) {

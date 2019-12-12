@@ -20,17 +20,17 @@
 			<div class="row">
 				<% dramatics.forEach(dramatic => { %>
 				<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
-					<div href="#"><img src="public/images/place-1.jpg" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+					<div href="#"><img src="<%=dramatic.poster%>" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
 						<div class="desc">
 							<span></span>
 							<h3><%=dramatic.name%></h3>
 							<span><%=dramatics.author%></span>
 							<!-- <span class="price">$1,000</span> -->
-							<a class="btn btn-primary btn-outline" href="#">Chi tiết <i class="icon-arrow-right22"></i></a>
+							<a class="btn btn-primary btn-outline" href="/performance/<%=dramatic.id%>">Chi tiết <i class="icon-arrow-right22"></i></a>
 						</div>
 					</div>
 				</div>
-				<% } %>
+				<% }) %>
 			</div>
 		</div>
 	</div>

@@ -10,7 +10,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
-				<div href="#"><img src="<%dramatic.poster%>" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+				<div href="#"><img src="<%=dramatic.poster%>" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
 				</div>
 			</div>
 			<div class="col-md-8 animate-box">
@@ -39,15 +39,18 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td>23/22/2222</td>
-							<td>10h 30 SA</td>
-							<td><a class="btn btn-primary btn-outline" href="/booking">Mua vé ngay <i class="icon-arrow-right22"></i></a></td></tr>
-						<tr>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td><a class="btn btn-primary btn-outline" href="/booking">Mua vé ngay <i class="icon-arrow-right22"></i></a></td>
-						</tr>
+						<% showtimes.forEach(showtime => { %>
+							<tr>
+								<td><%=new Date(showtime.date).toLocaleDateString()%></td>
+								<td><%=showtime.time%></td>
+								<td>
+									<a class="btn btn-primary btn-outline" href="/booking/<%=showtime.id%>">
+										Mua vé ngay 
+										<i class="icon-arrow-right22"></i>
+									</a>
+								</td>
+							</tr>
+							<% }) %>
 
 						</tbody>
 					</table>

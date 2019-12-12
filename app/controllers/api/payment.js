@@ -31,7 +31,7 @@ exports.create_payment = async function(req, res) {
     var bankCode = '';
     
     var orderInfo = 'Thanh toan mua ve xem kich';
-    var orderType = 190000;
+    var orderType = 190001;
     var locale = req.body.language || 'vn';
     if(locale === null || locale === ''){
         locale = 'vn';
@@ -115,11 +115,16 @@ exports.return_payment = async function (req, res) {
                 code: uuidv4(),
                 time: Date.now()
             })
-            transaction = await Transaction.query().findById(transaction_id)
-
-            res.json({ status: 'success', transaction: transaction})
+            req.session.transaction_id_success = transaction_id
+            res.redirect(301, '/payment_success')
         } else {
-            res.json({ status: 'failed', data: { code: '97' } })
+            res.render('payment_error.ejs', {
+                error : req.flash("error"),
+                success: req.flash("success"),
+                session:req.session,
+                code: code,
+                title: "Thanh toán thất bại"
+            });
         }
     } catch (err) {
         console.log(err)

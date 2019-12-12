@@ -1,7 +1,7 @@
 const Knex = require('knex')
 const connection = require('../../knexfile')
 const { Model } = require('objection')
-//const { ShowTime } = require('./showtimes')
+// const { ShowTime } = require('./showtimes')
 
 const knexConnection = Knex(connection)
 
@@ -14,7 +14,7 @@ class Dramatic extends Model {
 
     // static get relationMappings() {
     //     return {
-    //         showtime: {
+    //         showtimes: {
     //             relation: Model.HasManyRelation,
     //             modelClass: ShowTime,
     //             join: {

@@ -98,8 +98,8 @@
 											</li>
 											<div class="col-sm-12 mt" style="padding-top: 20px;">
 													<div class="input-field">
-														<h4 style="text-align: center; color: black;">Vở: Kẻ khốn cùng</h4>
-														<h4 style="text-align: center; color: black; margin-bottom: 0;"> Ghế: F-9, F-10 - 19h30 - 13/06/2019</h4>
+														<h4 style="text-align: center; color: black;">Vở: <%= showtime.dramatics.name%></h4>
+														<h4 style="text-align: center; color: black; margin-bottom: 0;"> Ghế: <%=transaction.tickets.map( item => item.seat.code).join(', ')%> - <%=new Date(showtime.date).toLocaleDateString()%> - <%=showtime.time%></h4>
 			
 													</div>
 												</div>
