@@ -86,16 +86,6 @@ exports.return_payment = async function (req, res) {
 
         var transaction_id = vnp_Params['vnp_TxnRef']
 
-        const transaction = await Transaction.query().findById(transaction_id)
-        
-        await transaction.$relatedQuery('tickets').patch({
-            status_id: 3
-        })
-        await Transaction.query().findById(transaction_id).patch({
-            code: uuidv4()
-        })
-
-
         delete vnp_Params['vnp_SecureHash'];
         delete vnp_Params['vnp_SecureHashType'];
 
@@ -112,10 +102,22 @@ exports.return_payment = async function (req, res) {
 
         var checkSum = sha256(signData);
 
-        if (secureHash === checkSum) {
+        const code = vnp_Params['vnp_ResponseCode']
+        if (secureHash === checkSum && code === '00') {
+            
             //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+            var transaction = await Transaction.query().findById(transaction_id)
+        
+            await transaction.$relatedQuery('tickets').patch({
+                status_id: 3
+            })
+            await Transaction.query().findById(transaction_id).patch({
+                code: uuidv4(),
+                time: Date.now()
+            })
+            transaction = await Transaction.query().findById(transaction_id)
 
-            res.json({ status: 'success', data: { code: vnp_Params['vnp_ResponseCode'] } })
+            res.json({ status: 'success', transaction: transaction})
         } else {
             res.json({ status: 'failed', data: { code: '97' } })
         }

@@ -42,6 +42,14 @@ p, ul, ol {
   font-family: "Open Sans", Arial, sans-serif;
 }
 
+p.limit {
+  overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 10; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #5a5a5a;
   font-family: "Open Sans", Arial, sans-serif;
