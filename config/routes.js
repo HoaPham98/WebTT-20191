@@ -23,6 +23,9 @@ module.exports = function (app, passport) {
     app.get('/performance/:id', home.performance_detail);
     app.get('/login_register', home.login_register);
     app.get('/news_detail', home.news_detail);
+    app.get('/payment_success', home.payment_success);
+    app.get('/payment_error', home.payment_error);
+
 
     // Admin roles
     app.post('/admin/dramatics', authAdmin,

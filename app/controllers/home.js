@@ -145,6 +145,7 @@ exports.news_detail = async function(req, res) {
 	});
 }
 
+
 exports.order_history = async function(req, res) {
 	const user = req.user
 
@@ -159,3 +160,20 @@ exports.order_history = async function(req, res) {
 		res.status(400).json({error: err.message})
 	}
 }
+
+exports.payment_success = function(req, res) {
+	res.render('payment_success.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Thanh toán thành công"
+	});
+}
+
+exports.payment_error = function(req, res) {
+	res.render('payment_error.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Thanh toán thất bại"
+	});
