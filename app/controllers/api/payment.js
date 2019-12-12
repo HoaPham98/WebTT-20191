@@ -92,7 +92,8 @@ exports.return_payment = async function (req, res) {
             status_id: 3
         })
         await Transaction.query().findById(transaction_id).patch({
-            code: uuidv4()
+            code: uuidv4(),
+            time: new Date.now()
         })
 
 
@@ -115,7 +116,9 @@ exports.return_payment = async function (req, res) {
         if (secureHash === checkSum) {
             //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
 
-            res.json({ status: 'success', data: { code: vnp_Params['vnp_ResponseCode'] } })
+            const transaction = await Transaction.query().findById(transaction_id)
+
+            res.json({ status: 'success', transaction: transaction})
         } else {
             res.json({ status: 'failed', data: { code: '97' } })
         }

@@ -7,6 +7,7 @@ Date.prototype.addDays = function(days) {
 
 exports.seed = function(knex) {
   var today = new Date()
+  today.setHours(0,0,0,0)
   // Deletes ALL existing entries
   return knex('showtime').del()
     .then(function () {

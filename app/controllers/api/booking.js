@@ -90,7 +90,8 @@ exports.getBookingData = async function(req, res) {
         return ticket.status_id != 1
     }).map((item) => item.seat_id)
     if (unavailableTickets.length > 0) {
-        unavailable = await Seat.query().findByIds(unavailableTickets).map((item) => item.code)
+        const _unavailable = await Seat.query().findByIds(unavailableTickets)
+        unavailable = _unavailable.map((item) => item.code)
     }
     
     res.json({

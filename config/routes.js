@@ -20,7 +20,7 @@ module.exports = function (app, passport) {
     app.get('/performance', home.performance);
     app.get('/news', home.news);
     app.get('/contact', home.contact);
-    app.get('/performance_detail/:id', home.performance_detail);
+    app.get('/performance/:id', home.performance_detail);
     app.get('/login_register', home.login_register);
     app.get('/news_detail', home.news_detail);
 
@@ -63,7 +63,10 @@ module.exports = function (app, passport) {
                 if (user.isAdmin) {
                     return res.redirect('/admin/mainpage')
                 }
-                return res.redirect('/');
+                var redirectTo = req.session.redirectTo || '/';
+                delete req.session.redirectTo;
+                // is authenticated ?
+                return res.redirect(redirectTo);
             });
         })(req, res, next);
     });

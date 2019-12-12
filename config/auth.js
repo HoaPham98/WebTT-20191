@@ -2,6 +2,7 @@ const auth = async function (req, res, next) {
     try {
         const user = req.user
         if (!user) {
+            req.session.redirectTo = req.path
             res.redirect('/login')
         }
         next();

@@ -5,12 +5,12 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-				<h6 class="heading-title">Travel Booking guide to book a perfect hotel</h6>
+				<h6 class="heading-title"><%=dramatic.name%></h6>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
-				<div href="#"><img src="public/images/place-2.jpg" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+				<div href="#"><img src="<%dramatic.poster%>" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
 				</div>
 			</div>
 			<div class="col-md-8 animate-box">
@@ -19,18 +19,15 @@
 					<li>Tác giả: </li>
 					<li>Diễn viên: </li>
 					<li>Âm nhạc:  </li>
-					<li>Trợ lý: </li>
 				</ul>
 				<ul class="book-right">
-					<li> Gingerclown</li>
-					<li> Gingerclown</li>
-					<li> Gingerclown</li>
-					<li> Gingerclown</li>
-					<li> Gingerclown</li>
+					<li> <%=dramatic.director%></li>
+					<li> <%=dramatic.author%></li>
+					<li> <%=dramatic.actor%></li>
+					<li> <%=dramatic.music%></li>
 				</ul>
 				<div class="col-md-12">
-				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Pellentesque habitant morbi tristique senectus et netus ett mauada fames ac turpis egestas. Etiam euismod tempor leo, in suscipit urna condimentum sed. Vivamus augue enim, consectetur ac interdum a, pulvinar ac massa. Nullam malesuada congue </p>
-				<p>Pellentesque habitant morbi tristique senectus et netus ett mauada fames ac turpis egestas. Etiam euismod tempor leo, in suscipit urna condimentum sed. Vivamus augue enim, consectetur ac interdum a, pulvinar ac massa. Nullam malesuada congue </p>
+				<p><%=dramatic.sumary%></p>
 				</div>
 					<div class="col-md-8">
 					<table class="table table-bordered table-responsive table-dark col-md-6">

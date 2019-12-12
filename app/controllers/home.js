@@ -7,10 +7,11 @@ const { Transaction} = require('../models/transactions')
 
 const DramaticRepository = require('../repositories/dramatics')
 const SeatRepository = require('../repositories/seats')
+const { News } = require('../models/news')
 
 exports.home = async function(req, res) {
 
-	const dramatics = await DramaticRepository.getDramatics()
+	const dramatics = await Dramatic.query().limit(3)
 
 	res.render('index.ejs', {
 		error: req.flash("error"),
@@ -21,8 +22,23 @@ exports.home = async function(req, res) {
 	});
 }
 
+async function asyncForEach(array, callback) {
+	for (let index = 0; index < array.length; index++) {
+	  await callback(array[index], index, array);
+	}
+  }
+
 exports.schedule = async function(req, res) {
-	const showtimes = await ShowTime.query().distinct('dramatic_id').select('showtime.*').where('date', '>', new Date()).withGraphFetched('[dramatics]')
+
+	const showtimes = await ShowTime.query().whereIn('date', function() {
+		this.min('date').from('showtime').groupBy('dramatic_id').where('date', '>=' , new Date() - 60*60*1000*24)
+	})
+	var finalShowtimes = []
+	await asyncForEach(showtimes, async (showtime) => {
+		const dramatic = await showtime.$relatedQuery('dramatics')
+		showtime.dramatics = dramatic
+	})
+
 	res.render('schedule.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
@@ -33,21 +49,25 @@ exports.schedule = async function(req, res) {
 	 
 }
 
-exports.performance = function(req, res) {
-	const id = req.params.id
+exports.performance = async function(req, res) {
+	const dramatics = await Dramatic.query()
 	res.render('performance.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
+		dramatic: dramatics,
 		title: "Vở diễn"
 	});
 
 }
-exports.news = function(req, res) {
+
+exports.news = async function(req, res) {
+	const newses = await News.query()
 	res.render('news.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
+		news: newses,
 		title: "Tin tức"
 	});
 
@@ -70,7 +90,7 @@ exports.booking = async function(req, res) {
 	var dramatic = await showtime.$relatedQuery('dramatics')
 	console.log(dramatic)
 	
-	const transaction = await Transaction.query().insert({showtime_id: showtime_id})
+	const transaction = await Transaction.query().insert({showtime_id: showtime_id, user_id: req.user.id})
 
 	console.log(transaction.id)
 
@@ -86,11 +106,15 @@ exports.booking = async function(req, res) {
 
 }
 
-exports.performance_detail = function(req, res) {
+exports.performance_detail = async function(req, res) {
+	const id = req.params.id || 1
+
+	const dramatic = await Dramatic.query().findById(id)
 	res.render('performance_detail.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
+		dramatic: dramatic,
 		title: "Chi tiết vở diễn"
 	});
 }
@@ -108,11 +132,15 @@ exports.login_register = function(req, res) {
 	});
 }
 
-exports.news_detail = function(req, res) {
+exports.news_detail = async function(req, res) {
+	const id = req.params.id || 1
+
+	const news = await News.query().findById(id)
 	res.render('news_detail.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
+		news: news,
 		title: "Tin tức nổi bật"
 	});
 }

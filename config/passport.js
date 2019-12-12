@@ -8,7 +8,7 @@ var find = require('lodash.find');
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
         //console.log('abc' + user[0].id)
-        done(null, user[0].id);
+        done(null, user.id);
     });
     
     passport.deserializeUser(async function (id, done) {
