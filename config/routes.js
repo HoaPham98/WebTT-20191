@@ -16,6 +16,9 @@ module.exports = function (app) {
     app.get('/performance_detail', home.performance_detail);
     app.get('/login_register', home.login_register);
     app.get('/news_detail', home.news_detail);
+    app.get('/payment_success', home.payment_success);
+    app.get('/payment_error', home.payment_error);
+
 
 
 }

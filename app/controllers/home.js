@@ -72,7 +72,6 @@ exports.booking = function(req, res) {
 	});
 }
 
-<<<<<<< HEAD
 exports.performance_detail = function(req, res) {
 	res.render('performance_detail.ejs', {
 		error : req.flash("error"),
@@ -100,6 +99,20 @@ exports.news_detail = function(req, res) {
 	});
 }
 
-    
-=======
->>>>>>> 8f0990260d8c6fdc9cbb943d44bafebcc6aada5f
+exports.payment_success = function(req, res) {
+	res.render('payment_success.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Thanh toán thành công"
+	});
+}
+
+exports.payment_error = function(req, res) {
+	res.render('payment_error.ejs', {
+		error : req.flash("error"),
+		success: req.flash("success"),
+		session:req.session,
+		title: "Thanh toán thất bại"
+	});
+}
