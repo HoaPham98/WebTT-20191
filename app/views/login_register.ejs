@@ -100,7 +100,7 @@
 										<!-- Tab panes -->
 										<div class="tab-content">
 											<!-- hiển thị mọi tin nhắn được trả lại từ việc đăng nhập -->
-											<div role="tabpanel" class="tab-pane active" id="login">
+											<div role="tabpanel" class="tab-pane <%=isRegister ? "" : "active" %>" id="login">
 												<div class="row">
 														<% if (loginMessage.length > 0) { %>
 															<div class="alert alert-danger"><%= loginMessage %></div>
@@ -128,14 +128,17 @@
 												</div>
 											</div>
 
-											<div role="tabpanel" class="tab-pane" id="register">
+											<div role="tabpanel" class="tab-pane <%=isRegister ? "active" : "" %>" id="register">
 												<div class="row">
-													<form>
+														<% if (registerMessage.length > 0) { %>
+															<div class="alert alert-danger"><%= registerMessage %></div>
+															<% } %>
+													<form action="/register" method="post">
 														<div class="col-sm-12 mt">
 															<div class="input-field">
-																<label>Tên đăng nhập</label>
-																<input type="text" class="form-control" name="username"
-																	placeholder="Tên đăng nhập" required />
+																<label>Họ và tên</label>
+																<input type="text" class="form-control" name="name"
+																	placeholder="Họ tên" required />
 															</div>
 														</div>
 														<div class="col-sm-12 mt">
@@ -145,6 +148,13 @@
 																	placeholder="Nhập email" required />
 															</div>
 														</div>
+														<div class="col-sm-12 mt">
+																<div class="input-field">
+																	<label>Điện thoại</label>
+																	<input type="phone" class="form-control" name="phone"
+																		placeholder="Nhập SĐT" required />
+																</div>
+															</div>
 														<div class="col-sm-12 mt">
 															<div class="input-field">
 																<label>Mật khẩu</label>
