@@ -58,7 +58,7 @@ module.exports = function (app, passport) {
     app.get('/admin/mainpage', authAdmin, admin.adminMainPage);
 
     app.post('/login', function (req, res, next) {
-        passport.authenticate('local', function (err, user, info) {
+        passport.authenticate('local.login', function (err, user, info) {
             if (err) { return next(err); }
             if (!user) { return res.redirect('/login'); }
             req.logIn(user, function (err) {
@@ -73,6 +73,8 @@ module.exports = function (app, passport) {
             });
         })(req, res, next);
     });
+
+    app.post('/register', home.register)
 
     // User role
     app.get('/signout', function (req, res, next) {

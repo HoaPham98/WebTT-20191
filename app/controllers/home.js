@@ -3,6 +3,9 @@ const { Ticket, TicketStatus, Price } = require('../models/tickets')
 const { Dramatic } = require('../models/dramatic')
 const { Seat, SeatType, Room } = require('../models/seats')
 const { Transaction} = require('../models/transactions')
+const { User } = require('../models/user')
+
+const bcrypt = require('bcrypt')
 
 
 const DramaticRepository = require('../repositories/dramatics')
@@ -12,12 +15,19 @@ const { News } = require('../models/news')
 exports.home = async function(req, res) {
 
 	const dramatics = await Dramatic.query().limit(3)
+	var news
+	try {
+		news = await News.query().findOne()
+	} catch (err) {
+		console.log(err)
+	}
 
 	res.render('index.ejs', {
 		error: req.flash("error"),
 		success: req.flash("success"),
 		session: req.session,
 		dramatics: dramatics,
+		news: news,
 		title: "Nhóm 04"
 	});
 }
@@ -126,11 +136,14 @@ exports.login_register = function(req, res) {
 	if (req.isAuthenticated()) {
 		res.redirect('/');
 	}
+	const isRegister = req.flash('isRegister').length > 0
 	res.render('login_register.ejs', {
 		error : req.flash("error"),
 		success: req.flash("success"),
 		session:req.session,
 		loginMessage: req.flash('loginMessage'),
+		registerMessage: req.flash('registerMessage'),
+		isRegister: isRegister,
 		title: "Đăng nhập & Đăng ký"
 	});
 }
@@ -183,6 +196,8 @@ exports.payment_success = async function(req, res) {
 			code: code,
 			title: "Thanh toán thành công"
 		});
+	} else {
+		res.redirect(302, '/404')
 	}
 	
 }
@@ -194,4 +209,35 @@ exports.payment_error = function(req, res) {
 		session:req.session,
 		title: "Thanh toán thất bại"
 	});
+}
+
+exports.register = async function(req, res) {
+	try {
+		const user = await User.query().findOne({
+			'email': req.body.email
+		})
+
+		if (user) {
+			console.log('email đã tồn tại')
+			throw new Error('Email đã được sử dụng, vui lòng chọn email khác')
+		}
+
+		const password = bcrypt.hashSync(req.body.password, 8)
+		const newUser = await User.query().insertAndFetch({
+			name: req.body.name,
+			email: req.body.email,
+			password: password,
+			phone: req.body.phone,
+			isAdmin: false
+		})
+
+		req.flash('loginMessage', 'Đăng kí thành công')
+
+		res.redirect('/login')
+
+	} catch (err) {
+		req.flash('isRegister', true)
+		req.flash('registerMessage', err.message)
+		res.redirect('/login')
+	}
 }
