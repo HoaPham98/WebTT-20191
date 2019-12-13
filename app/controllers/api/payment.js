@@ -18,7 +18,7 @@ exports.create_payment = async function(req, res) {
     var tmnCode = config.vnp_TmnCode
     var secretKey = config.vnp_HashSecret
     var vnpUrl = config.vnp_Url
-    var returnUrl = config.vnp_ReturnUrl
+    var returnUrl = req.protocol + '://' + req.get('host') + config.vnp_ReturnUrl
 
     var date = new Date();
 
