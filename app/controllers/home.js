@@ -7,10 +7,9 @@ const { User } = require('../models/user')
 
 const bcrypt = require('bcrypt')
 
-
-const DramaticRepository = require('../repositories/dramatics')
-const SeatRepository = require('../repositories/seats')
 const { News } = require('../models/news')
+
+var port = process.env.PORT || 8080;
 
 exports.home = async function(req, res) {
 
@@ -110,6 +109,7 @@ exports.booking = async function(req, res) {
 		session:req.session,
 		showtime: showtime,
 		dramatic: dramatic,
+		port: port,
 		transaction_id: transaction.id,
 		title: "Đặt vé"
 	});

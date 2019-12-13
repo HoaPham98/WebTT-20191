@@ -111,7 +111,7 @@
 				</div>
 
 				<script type="text/javascript">
-					var socket = io("http://localhost:8080");
+					var socket = io("http://localhost:<%=port%>");
 					var transaction_id = <%= transaction_id%>
 					var showtime_id = <%= showtime.id%>
 					var $cart = $('#selected-seats'), //Sitting Area
