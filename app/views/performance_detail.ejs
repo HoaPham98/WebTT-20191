@@ -1,0 +1,67 @@
+<% include public/partials/header %>
+
+
+<div id="fh5co-tours" class="fh5co-section-gray">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+				<h6 class="heading-title"><%=dramatic.name%></h6>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
+				<div href="#"><img src="<%=dramatic.poster%>" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+				</div>
+			</div>
+			<div class="col-md-8 animate-box">
+				<ul class="book-left">
+					<li>Đạo diễn: </li>
+					<li>Tác giả: </li>
+					<li>Diễn viên: </li>
+					<li>Âm nhạc:  </li>
+				</ul>
+				<ul class="book-right">
+					<li> <%=dramatic.director%></li>
+					<li> <%=dramatic.author%></li>
+					<li> <%=dramatic.actor%></li>
+					<li> <%=dramatic.music%></li>
+				</ul>
+				<div class="col-md-12">
+				<p><%=dramatic.sumary%></p>
+				</div>
+					<div class="col-md-8">
+					<table class="table table-bordered table-responsive table-dark col-md-6">
+						<thead class="thead-dark">
+						<tr>
+							<th scope="col">Ngày</th>
+							<th scope="col">Suất chiếu</th>
+							<th scope="col"></th>
+						</tr>
+						</thead>
+						<tbody>
+						<% showtimes.forEach(showtime => { %>
+							<tr>
+								<td><%=new Date(showtime.date).toLocaleDateString()%></td>
+								<td><%=showtime.time%></td>
+								<td>
+									<a class="btn btn-primary btn-outline" href="/booking/<%=showtime.id%>">
+										Mua vé ngay 
+										<i class="icon-arrow-right22"></i>
+									</a>
+								</td>
+							</tr>
+							<% }) %>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+</div>
+<% include public/partials/footer %>
+
+
