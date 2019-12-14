@@ -4,6 +4,7 @@ const dateFormat = require('dateformat');
 exports.insertNews = async function (req, res) {
     var now = new Date();
     var created_at = dateFormat(now, "yyyy-mm-dd HH:MM:ss");
+    var updated_at = created_at;
     var newsTemp = {};
     newsTemp.title = req.body.title;
     newsTemp.content = req.body.content;

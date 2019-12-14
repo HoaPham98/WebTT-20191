@@ -275,20 +275,24 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/update_news"  method="POST">
+            <form  onsubmit="return validate()"  action="/admin/update_news" method="POST">
               <legend>Cập nhật tin tức</legend>
               <input type="hidden" name="_method" value="put">
-               <div class="form-group">
+              <div class="form-group">
                 <label form="">ID:</label>
                 <input type="text" class="form-control" id="id" name ="id" value="<%=data[0].id%>">
+               
               </div>
               <div class="form-group">
                 <label form="">Tiêu đề:</label>
                 <input type="text" class="form-control" id="tieude" name ="title" value="<%=data[0].title%>">
+                <span id="titleAlert"></span>
               </div>
               <div class="form-group">
                 <label form="">Nội dung:</label>
-                <input type="text" class="form-control input-lg" id="noidung" name ="content" value="<%=data[0].content%>">
+                <textarea class="form-control" rows="10" id="noidung" name ="content"> <%=data[0].content%>
+                </textarea>  
+                <span id="contentAlert"></span>
               </div>
 
               <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật</button>
@@ -297,31 +301,55 @@
         </section>
 
       </div>
+      <script>
+        function validate() {
+          var title = document.getElementById('tieude').value;
+          var content = document.getElementById('noidung').value;
+          var status = false;
+          //var span = document.createElement('span');
+          if (title.length < 1) {
+            //span.innerHTML ='Nhập lại tiêu đề';
+            // document.getElementsById('tieude').parentElement.appendChild(span);
+            document.getElementById("titleAlert").innerHTML = 
+                "Nhập lại tiêu đề";
+            status = false;
+          } else {
+              
+              status = true;
+          }
+          if (content.length < 1) {
+            //span.innerHTML ='Nhập lại nội dung';
+            document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";           
+            status = false;
+          }
+          return status;
+          //return false;
+        } 
+      </script>
 
+     <!-- REQUIRED SCRIPTS -->
+     <!-- jQuery -->
+     <script src="plugins/jquery/jquery.min.js"></script>
+     <!-- Bootstrap -->
+     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+     <!-- overlayScrollbars -->
+     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+     <!-- AdminLTE App -->
+     <script src="public/js/adminlte.js"></script>
 
-      <!-- REQUIRED SCRIPTS -->
-      <!-- jQuery -->
-      <script src="plugins/jquery/jquery.min.js"></script>
-      <!-- Bootstrap -->
-      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- overlayScrollbars -->
-      <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="public/js/adminlte.js"></script>
+     <!-- OPTIONAL SCRIPTS -->
+     <script src="public/js/demo.js"></script>
 
-      <!-- OPTIONAL SCRIPTS -->
-      <script src="public/js/demo.js"></script>
+     <!-- PAGE PLUGINS -->
+     <!-- jQuery Mapael -->
+     <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+     <script src="plugins/raphael/raphael.min.js"></script>
+     <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+     <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+     <!-- ChartJS -->
+     <script src="plugins/chart.js/Chart.min.js"></script>
 
-      <!-- PAGE PLUGINS -->
-      <!-- jQuery Mapael -->
-      <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-      <script src="plugins/raphael/raphael.min.js"></script>
-      <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-      <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-      <!-- ChartJS -->
-      <script src="plugins/chart.js/Chart.min.js"></script>
-
-      <!-- PAGE SCRIPTS -->
-      <script src="public/js/pages/dashboard2.js"></script>
-    </body>
-    </html>
+     <!-- PAGE SCRIPTS -->
+     <script src="public/js/pages/dashboard2.js"></script>
+  </body>
+</html>

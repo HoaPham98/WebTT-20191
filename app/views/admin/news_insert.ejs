@@ -275,16 +275,19 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/insert_news"  method="POST">
+            <form onsubmit="return validate()" action="/admin/insert_news"  method="POST">
               <!--role="form"enctype="multipart-form data" -->
               <legend>Thêm tin tức</legend>
               <div class="form-group">
                 <label form="">Tiêu đề:</label>
                 <input type="text" class="form-control" id="tieude" name ="title">
+                <span id="titleAlert"></span>
               </div>
               <div class="form-group">
                 <label form="">Nội dung:</label>
-                <input type="text" class="form-control" id="noidung" name ="content">
+                <textarea class="form-control" rows="10" id="noidung" name ="content">
+                </textarea>  
+                <span id="contentAlert"></span>
               </div>
 
               <button type="submit" class="btn btn-block btn-success btn-create">Thêm</button>
@@ -293,7 +296,31 @@
         </section>
 
       </div>
-
+      <script>
+        function validate() {
+          var title = document.getElementById('tieude').value;
+          var content = document.getElementById('noidung').value;
+          var status = false;
+          //var span = document.createElement('span');
+          if (title.length < 1) {
+            //span.innerHTML ='Nhập lại tiêu đề';
+            // document.getElementsById('tieude').parentElement.appendChild(span);
+            document.getElementById("titleAlert").innerHTML = 
+                "Nhập lại tiêu đề";
+            status = false;
+          } else {
+              
+              status = true;
+          }
+          if (content.length < 1) {
+            //span.innerHTML ='Nhập lại nội dung';
+            document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";           
+            status = false;
+          }
+          return status;
+          //return false;
+        } 
+      </script>
 
       <!-- REQUIRED SCRIPTS -->
       <!-- jQuery -->
