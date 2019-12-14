@@ -1,6 +1,7 @@
 var home = require('../app/controllers/home');
 var admin = require('../app/controllers/admin');
 var dramatic = require('../app/controllers/dramatic');
+var news = require('../app/controllers/news');
 var room = require('../app/controllers/room');
 var price = require('../app/controllers/price');
 var tickets = require('../app/controllers/tickets');
@@ -36,6 +37,13 @@ module.exports = function (app, passport) {
         dramatic.delDramatic);
     app.get('/admin/dramatics/:id', authAdmin, check_input.isValidParam,
         dramatic.getDramatic);
+
+    app.post('/admin/insert_news', authAdmin, news.insertNews);
+    app.put('/admin/update_news', authAdmin, news.updateNews);
+    app.delete('/admin/news/:id', authAdmin, news.delNews);
+    app.get('/admin/news', authAdmin, news.getNewsUI);
+    app.get('/admin/insert_news', authAdmin, news.getInsertNewsUI);
+    app.get('/admin/update_news', authAdmin, news.getUpdateNewsUI);
 
     app.post('/admin/seats', authAdmin, room.insertSeat);
     app.put('/admin/seats', authAdmin, room.updateSeat);
