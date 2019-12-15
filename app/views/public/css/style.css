@@ -2039,19 +2039,5 @@ ul.book-right li {
   line-height: 1.9em;
 }
 
-#dropdown-content {
-  display: none;
-}
-#dropdown:hover #dropdown-content {
- display: block;
-}
-
-.btn-header {
-  letter-spacing: 1px;
-  -webkit-transition: 0.3s;
-  -o-transition: 0.3s;
-  transition: 0.3s;
-}
-
 
 /*# sourceMappingURL=style.css.map */
