@@ -5,6 +5,7 @@ const { User } = require('../models/users');
 const { Transaction } = require('../models/transactions');
 const dramatics = require('./dramatic');
 const bcrypt = require('bcrypt');
+const isEmpty = require('lodash.isempty');
 const email = require('./nodemailer');
 
 
@@ -95,11 +96,17 @@ exports.updateAdminUser = async function(req, res) {
     res.redirect(301, '/admin/mainpage'); 
 }
 
-
-
-exports.adminMainPage = async function(req, res) {
-    var data = await dramatics.getAllDramatic()
-    // console.log(req.user);
+async function getDramaticsUIByTime(req, res) {
+    var regexTitle = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+    var search = req.query.search;
+    
+    if((!regexTitle.test(search))){
+        var data = await Dramatic.query()
+            .where('name', 'like', '%'+search+'%')    
+    }else {              
+        var data = []
+    }
+    
     res.render('admin/adminMainPage.ejs', {
         message: req.flash('flash'),
         user: req.user,
@@ -108,8 +115,29 @@ exports.adminMainPage = async function(req, res) {
         success: req.flash("success"),
         session:req.session,
         title: "Admin Main Page",
-        
+            
     });
+
+}
+
+exports.adminMainPage = async function(req, res) {
+    if(isEmpty(req.query)){
+        var data = await dramatics.getAllDramatic()
+        // console.log(req.user);
+        res.render('admin/adminMainPage.ejs', {
+            message: req.flash('flash'),
+            user: req.user,
+            records: data,
+            error : req.flash("error"),
+            success: req.flash("success"),
+            session:req.session,
+            title: "Admin Main Page",
+            
+        });
+    }else{
+        getDramaticsUIByTime(req, res);
+    }
+    
 
 }
 

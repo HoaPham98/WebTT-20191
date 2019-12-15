@@ -306,18 +306,25 @@
           //var span = document.createElement('span');
           if(x){
             if (title.length < 1 || regex.test(title)) {
-            //span.innerHTML ='Nhập lại tiêu đề';
-            // document.getElementsById('tieude').parentElement.appendChild(span);
-            document.getElementById("titleAlert").innerHTML = 
+              $("#titleAlert")               
+             .fadeIn(); 
+              document.getElementById("titleAlert").innerHTML = 
                 "Nhập lại tiêu đề";
-            status = false;
+              $("#titleAlert")
+             .delay(3200)
+             .fadeOut(300);
+              status = false;
             } else {
                 
               status = true;
             }
             if (content.length < 1 || regex.test(content)) {
-              //span.innerHTML ='Nhập lại nội dung';
-              document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";           
+              $("#contentAlert")               
+             .fadeIn(); 
+              document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";        
+              $("#contentAlert")
+             .delay(3200)
+             .fadeOut(300);   
               status = false;
             }
           }else{
