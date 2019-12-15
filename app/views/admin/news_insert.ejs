@@ -298,26 +298,32 @@
       </div>
       <script>
         function validate() {
-          var regex = /\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\?|\/|\""|\;|\:/
+           var x = confirm("Bạn chắc chắn muốn thêm?");
+          var regex = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
           var title = document.getElementById('tieude').value;
           var content = document.getElementById('noidung').value;
           var status = false;
           //var span = document.createElement('span');
-          if (title.length < 1 || regex.test(title)) {
+          if(x){
+            if (title.length < 1 || regex.test(title)) {
             //span.innerHTML ='Nhập lại tiêu đề';
             // document.getElementsById('tieude').parentElement.appendChild(span);
             document.getElementById("titleAlert").innerHTML = 
                 "Nhập lại tiêu đề";
             status = false;
-          } else {
-              
-            status = true;
+            } else {
+                
+              status = true;
+            }
+            if (content.length < 1 || regex.test(content)) {
+              //span.innerHTML ='Nhập lại nội dung';
+              document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";           
+              status = false;
+            }
+          }else{
+            return status;
           }
-          if (content.length < 1 || regex.test(content)) {
-            //span.innerHTML ='Nhập lại nội dung';
-            document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";           
-            status = false;
-          }
+          
           return status;
           //return false;
         } 

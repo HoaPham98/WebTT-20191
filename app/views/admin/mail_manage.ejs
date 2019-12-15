@@ -293,7 +293,7 @@
                 </textarea>  
                 <span id="messageAlert"></span>
               </div>
-              <button type="submit" onclick="return confirmAction();" class="btn btn-block btn-success btn-create">Gửi</button>
+              <button type="submit" onclick="return validate();" class="btn btn-block btn-success btn-create">Gửi</button>
             </form>
           </div>
         </section>
@@ -301,33 +301,33 @@
       </div>
       <script>
         function validate() {
+          var x = confirm("Bạn chắc chắn muốn gửi?");
+          var regex = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
           var subject = document.getElementById('chude').value;
           var message = document.getElementById('tinnhan').value;
           var status = false;
-          //var span = document.createElement('span');
-          if (subject.length < 1) {           
+          if (x){
+            if (subject.length < 1 || regex.test(subject)) {           
             document.getElementById("subjectAlert").innerHTML = 
                 "Nhập lại subject";
             status = false;
-          } else {
+  
+            } else {
               
               status = true;
-          }
-          if (message.length < 1) {
-            document.getElementById("messageAlert").innerHTML = "Nhập lại nội dung";           
-            status = false;
-          }
-          return status;
-        } 
-        function confirmAction(){
-          var x = confirm("Bạn chắc chắn muốn gửi?");
-          if (x){
-            return true;
+            }
+            if (message.length < 1 || regex.test(message)) {
+              document.getElementById("messageAlert").innerHTML = "Nhập lại nội dung";           
+              status = false;
+      
+            }
           }
           else{            
-            return false;
+             return status;
           }      
-        }
+          return status;
+         
+        } 
       </script>
 
       <!-- REQUIRED SCRIPTS -->

@@ -40,9 +40,36 @@ exports.delNews = async function (req, res) {
     res.send("success");
 }
 
-exports.getNewsUI = async function(req, res) {
+exports.getNewsUIByTime = async function(req, res) {
+    var start = req.query.start;
+    var end = req.query.end;
     const news = await News.query()
+        .where('updated_at', '>', start)
+        .where('updated_at', '<', end)
     // console.log(req.user);
+    res.render('admin/news_manage.ejs', {
+        message: req.flash('flash'),
+        user: req.user,
+        records: news,
+        error : req.flash("error"),
+        success: req.flash("success"),
+        session:req.session,
+        title: "Admin Main Page",
+        
+    });
+
+}
+
+exports.getNewsUI = async function(req, res) {
+    
+    var now = new Date();
+    var nowTemp = dateFormat(now, "yyyy-mm-dd ");
+    var start = nowTemp + "00:00:00";
+    var end = nowTemp + "23:59:59";
+    const news = await News.query()
+        .where('updated_at', '>', start)
+        .where('updated_at', '<', end)
+
     res.render('admin/news_manage.ejs', {
         message: req.flash('flash'),
         user: req.user,
