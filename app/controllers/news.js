@@ -1,5 +1,6 @@
 const { News } = require('../models/news');
 const dateFormat = require('dateformat');
+const isEmpty = require('lodash.isempty');
 
 exports.insertNews = async function (req, res) {
     var now = new Date();
@@ -40,13 +41,33 @@ exports.delNews = async function (req, res) {
     res.send("success");
 }
 
-exports.getNewsUIByTime = async function(req, res) {
-    var start = req.query.start;
-    var end = req.query.end;
-    const news = await News.query()
+async function getNewsUIByTime(req, res) {
+    var regex = /^((?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:(?:0[13578]|1[02])(-)31)|((0[1,3-9]|1[0-2])(-)(29|30))))$|^(?:(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(-)02(-)29)$|^(?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:0[1-9])|(?:1[0-2]))(-)(?:0[1-9]|1\d|2[0-8])$/
+    var regexTitle = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+    var title = req.query.title;
+    var time = req.query.time;
+    var start = time + " 00:00:00";
+    var end = time + " 23:59:59";
+
+    if(regex.test(time) && (!regexTitle.test(title)) && title.length > 0){
+        var news = await News.query()
+        .where('title', 'like', '%'+title+'%')
         .where('updated_at', '>', start)
         .where('updated_at', '<', end)
-    // console.log(req.user);
+    }
+    else if(!regexTitle.test(title) && time.length==0 && title.length > 0){
+        var news = await News.query()
+        .where('title', 'like', '%'+title+'%')
+
+    }else if(!regexTitle.test(title) && regex.test(time) && title.length == 0){
+        var news = await News.query()
+        .where('updated_at', '>', start)
+        .where('updated_at', '<', end)
+
+    } else {              
+        var news = []
+    }
+    
     res.render('admin/news_manage.ejs', {
         message: req.flash('flash'),
         user: req.user,
@@ -61,25 +82,29 @@ exports.getNewsUIByTime = async function(req, res) {
 }
 
 exports.getNewsUI = async function(req, res) {
-    
-    var now = new Date();
-    var nowTemp = dateFormat(now, "yyyy-mm-dd ");
-    var start = nowTemp + "00:00:00";
-    var end = nowTemp + "23:59:59";
-    const news = await News.query()
-        .where('updated_at', '>', start)
-        .where('updated_at', '<', end)
+    if(isEmpty(req.query)){
+        var now = new Date();
+        var nowTemp = dateFormat(now, "yyyy-mm-dd ");
+        var start = nowTemp + "00:00:00";
+        var end = nowTemp + "23:59:59";
+        const news = await News.query()
+            .where('updated_at', '>', start)
+            .where('updated_at', '<', end)
 
-    res.render('admin/news_manage.ejs', {
-        message: req.flash('flash'),
-        user: req.user,
-        records: news,
-        error : req.flash("error"),
-        success: req.flash("success"),
-        session:req.session,
-        title: "Admin Main Page",
-        
-    });
+        res.render('admin/news_manage.ejs', {
+            message: req.flash('flash'),
+            user: req.user,
+            records: news,
+            error : req.flash("error"),
+            success: req.flash("success"),
+            session:req.session,
+            title: "Admin Main Page",
+            
+        });    
+    }else{
+        getNewsUIByTime(req, res);
+    }
+    
 
 }
 
