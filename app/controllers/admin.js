@@ -5,6 +5,7 @@ const { User } = require('../models/users');
 const { Transaction } = require('../models/transactions');
 const dramatics = require('./dramatic');
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 const isEmpty = require('lodash.isempty');
 const email = require('./nodemailer');
 
@@ -233,10 +234,25 @@ exports.adminEditSchedule = async function(req, res) {
     });
 }
 
-exports.adminPerformManagement = async function(req, res) {
-    const showtime = await ShowTime.query()//.eager('showtime_type')
-        .withGraphFetched('[room, showtime_type, dramatics]');
-    console.log(showtime)    
+async function adminPerformManagementByTime(req, res){
+    var regexTitle = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+    var search = req.query.search;
+    var showtime;
+    
+    if((!regexTitle.test(search))){
+        const dramatic = await Dramatic.query()
+            .select('id')
+            .where('name', 'like', '%'+search+'%')
+        var listID = await dramatic.map(x =>{
+            return x.id;
+        })
+        showtime = await ShowTime.query()
+            .where('dramatic_id', 'IN', listID)
+            .withGraphFetched('[room, showtime_type, dramatics]')  
+    }else {              
+        showtime = [];
+    }
+    console.log(showtime) 
     res.render('admin/adminPerformManagement.ejs', {
         message: req.flash('flash'),
         user: req.user,
@@ -246,6 +262,31 @@ exports.adminPerformManagement = async function(req, res) {
         session:req.session,
         title: "Quản lý vở diễn"
     });
+}
+
+exports.adminPerformManagement = async function(req, res) {
+    
+    if(isEmpty(req.query)){
+        var startTemp = moment().subtract(7, 'days');
+        startTemp = startTemp.format('YYYY-MM-DD');
+        //var nowTemp = moment().format('YYYY-MM-DD');
+
+        const showtime = await ShowTime.query()
+            .where('date', '>', startTemp)
+            .withGraphFetched('[room, showtime_type, dramatics]')
+        console.log(showtime)    
+        res.render('admin/adminPerformManagement.ejs', {
+            message: req.flash('flash'),
+            user: req.user,
+            records: showtime,
+            error : req.flash("error"),
+            success: req.flash("success"),
+            session:req.session,
+            title: "Quản lý vở diễn"
+        });
+    }else{
+        adminPerformManagementByTime(req, res);
+    }
     
 }
 exports.adminAddSchedule = async function(req, res) {

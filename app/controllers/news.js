@@ -23,8 +23,8 @@ exports.insertNews = async function (req, res) {
 
 exports.updateNews = async function (req, res) {
     var now = new Date();
-    var backOneWeek = new Date(now);
-    backOneWeek.setDate(backOneWeek.getDate() - 7);
+    // var backOneWeek = new Date(now);
+    // backOneWeek.setDate(backOneWeek.getDate() - 7);
     var updated_at = dateFormat(now, "yyyy-mm-dd HH:MM:ss");
     const news = await News.query()
         .findById(req.body.id)

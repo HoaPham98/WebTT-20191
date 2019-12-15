@@ -63,6 +63,10 @@ module.exports = function (app, passport) {
     app.get('/admin/addschedule', authAdmin, admin.adminAddSchedule);
     app.get('/admin/statistic', authAdmin, admin.adminStatistics);
 
+    app.get('/admin/users', authAdmin, admin.getAdminUser); 
+    app.put('/admin/users', authAdmin, admin.updateAdminUser); 
+    app.get('/admin/allusers', authAdmin, admin.getAllAdminUser); 
+
     app.post('/admin/showtimes', authAdmin, showtime.insertShowTime);
     app.put('/admin/showtimes', authAdmin, showtime.updateShowTime);
 
