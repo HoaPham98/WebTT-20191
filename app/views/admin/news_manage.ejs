@@ -280,10 +280,10 @@
         <section class="content">
           <div class="col-xs-12">
             <% if (message.length > 0) { %>
-              <h6 class="alert alert-danger"><%= message %></h6>
+              <h6 class="alert alert-success"><%= message %></h6>
             <% } %>
             <script type="text/javascript">
-              $(".alert.alert-danger").delay(3200).fadeOut(300);
+              $(".alert.alert-success").delay(3200).fadeOut(300);
             </script>
             <div class="box">
               <!-- /.box-header -->
@@ -334,19 +334,30 @@
                   //console.log(id);
                   window.location.href = '/admin/update_news?id=' + id;
                 });
+
                   $(".btn.btn-danger.btn-delete").click(function() {
-                  var button = $(this);
-                  //find content of different elements inside a row.
-                  var id = $(this).closest('tr').find('.id').text();
-                  $.ajax({
+                  var x = confirm("Bạn chắc chắn muốn xóa?");
+                  if (x){
+                    var button = $(this);
+                    //find content of different elements inside a row.
+                    var id = $(this).closest('tr').find('.id').text();
+                    $.ajax({
                     url: '/admin/news/' + id,
                     type: 'DELETE',
                     success: function(result) {
-                      //console.log('abc')
+                      // $(".alert.alert-success").empty()
+                      // $(".alert.alert-success").append("Xóa thành công");
+                      // $(".alert.alert-success").fadeIn(300);
                       button.closest('tr').remove()
                     }
-                  });
+                  });  
+                  }
+                  else{
+                    console.log('abc')
+                    return false;
+                  }        
                 });
+
                 });
               </script>
             </div>
@@ -368,7 +379,18 @@
       });
       });
     </script> -->
-    
+    <!-- <script>
+      function ConfirmDelete(){
+        var x = confirm("Bạn chắc chắn muốn xóa?");
+        if (x)
+          return true;
+        else{
+          console.log('abc')
+          return false;
+        }
+          
+      }
+    </script> -->
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery <script src="plugins/jquery/jquery.min.js"></script>-->
     <script src="plugins/jquery/jquery.min.js"></script>

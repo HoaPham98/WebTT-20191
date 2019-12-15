@@ -157,7 +157,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -260,7 +260,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý vở diễn</h1>
+                <h1 class="m-0 text-dark" >Gửi email</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -284,19 +284,51 @@
               </div>
               <div class="form-group">
                 <label form="">Subject:</label>
-                <input type="text" class="form-control" id="tieude" name ="subject">
+                <input type="text" class="form-control" id="chude" name ="subject">
+                <span id="subjectAlert"></span>
               </div>
               <div class="form-group">
-                <label form="">Message:</label>
-                <input type="text" class="form-control" id="tacgia" name ="message">
+                <label form="">Message:</label>                
+                <textarea class="form-control" rows="10" id="tinnhan" name ="message">
+                </textarea>  
+                <span id="messageAlert"></span>
               </div>
-              <button type="submit" class="btn btn-block btn-success btn-create">Gửi</button>
+              <button type="submit" onclick="return confirmAction();" class="btn btn-block btn-success btn-create">Gửi</button>
             </form>
           </div>
         </section>
 
       </div>
-
+      <script>
+        function validate() {
+          var subject = document.getElementById('chude').value;
+          var message = document.getElementById('tinnhan').value;
+          var status = false;
+          //var span = document.createElement('span');
+          if (subject.length < 1) {           
+            document.getElementById("subjectAlert").innerHTML = 
+                "Nhập lại subject";
+            status = false;
+          } else {
+              
+              status = true;
+          }
+          if (message.length < 1) {
+            document.getElementById("messageAlert").innerHTML = "Nhập lại nội dung";           
+            status = false;
+          }
+          return status;
+        } 
+        function confirmAction(){
+          var x = confirm("Bạn chắc chắn muốn gửi?");
+          if (x){
+            return true;
+          }
+          else{            
+            return false;
+          }      
+        }
+      </script>
 
       <!-- REQUIRED SCRIPTS -->
       <!-- jQuery -->

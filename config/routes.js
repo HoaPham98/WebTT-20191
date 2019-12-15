@@ -45,6 +45,9 @@ module.exports = function (app, passport) {
     app.get('/admin/insert_news', authAdmin, news.getInsertNewsUI);
     app.get('/admin/update_news', authAdmin, news.getUpdateNewsUI);
 
+    app.get('/admin/email', authAdmin, admin.getTemplateEmail);
+    app.post('/admin/email', authAdmin, admin.sendEmail);  
+
     app.post('/admin/seats', authAdmin, room.insertSeat);
     app.put('/admin/seats', authAdmin, room.updateSeat);
 
