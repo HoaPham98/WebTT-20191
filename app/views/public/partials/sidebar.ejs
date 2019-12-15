@@ -8,7 +8,16 @@
 							<li><a href="/news">Tin tức</a></li>
 							<li><a href="/contact">Liên hệ</a></li>
 							<% if (locals.user != null) { %>
-								<li><a href="#">Xin chào, <%=locals.user.email%></a></li>
+								<li><div class="dropdown show">
+									<a class="btn-header dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										Xin chào, <%=locals.user.email%>
+									</a>
+								  
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+									  <a class="dropdown-item" href="/signout">Đăng xuất</a>
+									  
+									</div>
+								  </div></li>
 							<% } else { %>
 								<li><a href="/login_register"><i class="icon-user"></i></a></li>
 							<% } %>
