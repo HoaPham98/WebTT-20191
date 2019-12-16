@@ -3,6 +3,7 @@ const { ShowTime, ShowTimeType } = require('../../models/showtimes')
 const { Transaction } = require('../../models/transactions')
 const { Room, Seat } = require('../../models/seats')
 const uuidv4 = require('uuid/v4')
+const { sendPasswordReset } = require('../mail')
 
 exports.create_payment = async function(req, res) {
     try {

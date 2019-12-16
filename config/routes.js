@@ -13,6 +13,8 @@ var api_payment = require('../app/controllers/api/payment')
 const { auth, authAdmin } = require('./auth')
 //you can include all your controllers
 
+const { sendMail } = require('../app/controllers/mail')
+
 module.exports = function (app, passport) {
 
     app.get('/', home.home);//home
@@ -118,5 +120,7 @@ module.exports = function (app, passport) {
 
     app.post('/api/create_payment', auth, api_payment.create_payment)
     app.get('/api/payment_return', auth, api_payment.return_payment)
+
+    app.get('/api/send/:id', home.sendMail)
 
 }

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  color: #363c44;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.ticket-design {
+  top: 50%;
+  left: 50%;
+  background: #fff;
+  border: 2px solid #99d298;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, .2);
+  overflow: hidden;
+}
+
+.ticket-design small {
+  display: block;
+  font-size: 11px;
+  color: #a2a9b3;
+  margin-bottom: 2px;
+}
+
+.ticket-design header {
+  padding: 12px 20px;
+  height: 53px;
+}
+
+.ticket-design header .logo img {
+  float: left;
+  width: 104px;
+  height: 31px;
+}
+
+.ticket-design .rightSection .eventDetails {
+  position: relative;
+}
+
+.ticket-design .mainSection:after,
+.ticket-design .mainSection .leftSection::after,
+.ticket-design .mainSection .times::after,
+.ticket-design .rightSection .infos:after,
+.ticket-design .rightSection .eventDetails::after,
+.ticket-design .rightSection .infos .places::after,
+.ticket-design .rightSection .infos .times::after,
+.ticket-design .strap::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.ticket-design .rightSection .eventDetails .eventDetail {
+  padding: 20px 18px;
+  float: left;
+}
+
+.ticket-design .rightSection .eventDetails .eventDetail:nth-child(2) {
+  float: right;
+}
+
+.ticket-design .rightSection .eventDetails .eventDetail strong {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.ticket-design .rightSection .eventDetails .eventDetail small {
+  margin-bottom: 0;
+  margin-left: 3px;
+}
+
+.ticket-design .rightSection .infos {
+  border-top: 2px solid #99d298;
+  border-bottom: 2px solid #99d298;
+  width: 100%;
+}
+
+.ticket-design .rightSection .infos .places,
+.ticket-design .rightSection .infos .times {
+  width: 50%;
+  height: 80px;
+  padding: 10px 0;
+}
+
+.ticket-design .rightSection .infos .places {
+  float: left;
+}
+
+.ticket-design .rightSection .infos .times {
+  float: right;
+}
+
+.ticket-design .rightSection .infos .times strong {
+  transform: scale(0.9);
+  transform-origin: left bottom;
+}
+
+.ticket-design .rightSection .infos .places {
+  border-right: 1px solid #99d298;
+}
+
+.ticket-design .rightSection .infos .places small {
+  color: #97a1ad;
+}
+
+.ticket-design .rightSection .infos .box {
+  padding: 10px 20px 10px;
+  float: left;
+}
+
+.ticket-design .rightSection .infos .box small {
+  font-size: 10px;
+}
+
+.ticket-design .mainSection {
+  border-top: 2px solid #99d298;
+  position: relative;
+}
+
+.ticket-design .mainSection .leftSection {
+  width: 20%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-right: 2px solid #99d298;
+}
+
+.ticket-design .mainSection .leftSection .qrcode img {
+  width: 90%;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  bottom: 55%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.ticket-design .mainSection .rightSection {
+  width: 80%;
+  float: right;
+}
+
+.ticket-design .mainSection .times strong {
+  transform: scale(0.9);
+  transform-origin: left bottom;
+}
+
+.ticket-design .mainSection .box {
+  padding: 10px 20px 10px;
+  float: left;
+  font-size: 13px;
+}
+
+.ticket-design .mainSection .box small {
+  font-size: 10px;
+}
+
+.ticket-design .strap {
+  clear: both;
+  position: relative;
+  /*border-top: 1px solid #99d298;*/
+}
+
+.ticket-design .strap .box {
+  padding: 23px 0 20px 20px;
+}
+
+.ticket-design .strap .box div {
+  margin-bottom: 15px;
+}
+
+.ticket-design .strap .box div small {
+  font-size: 10px;
+}
+
+.ticket-design .strap .box div strong {
+  font-size: 13px;
+}
+
+.ticket-design .strap .box sup {
+  font-size: 8px;
+  position: relative;
+  top: -5px;
+}
+
+.ticket-design .strap .eventLogo svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 400px;
+  height: auto;
+}
+    </style>
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+</head>
+
+<body>
+    <div class="ticket-design">
+        <div class="mainSection">
+            <div class="leftSection">
+                <div class="qrcode">
+                    <img src="https://i.stack.imgur.com/I7wrc.png">
+                </div>
+            </div>
+            <div class="rightSection">
+                <div class="eventDetails">
+                    <div class="eventDetail">
+                        <small>Khách hàng</small>
+                        <strong>Hoa Pham</strong>
+                    </div>
+                </div>
+                <div class="infos">
+                    <div class="places">
+                        <div class="box">
+                            <small>Vở diễn</small>
+                            <strong><%=transaction.showtime.dramatics.name%></strong>
+                        </div>
+                    </div>
+                    <div class="times">
+                        <div class="box">
+                            <small>Sân khấu</small>
+                            <strong>Sân khấu kịch 4H
+                              Địa chỉ: Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="strap">
+                    <div class="box">
+                        <div class="passenger">
+                            <small>Ghế ngồi</small>
+                            <strong><%=transaction.seat_code%></strong>
+                        </div>
+                        <div class="date">
+                            <small>Giá tiền</small>
+                            <strong><%=transaction.total_price%></strong>
+                        </div>
+                    </div>
+                    <div class="eventLogo">
+                        <svg id="barcode"></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        JsBarcode("#barcode", "<%=transaction.code%>");
+    </script>
+</body>
+
+</html>
