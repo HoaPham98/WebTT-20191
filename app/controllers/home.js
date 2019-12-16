@@ -184,10 +184,16 @@ exports.payment_success = async function(req, res) {
 		const transaction_id = req.session.transaction_id_success
 		delete req.session.transaction_id_success
 
-		const transaction = await Transaction.query().findById(transaction_id).withGraphFetched('[tickets, tickets.[seat, showtime, showtime.dramatics]]')
+		const transaction = await Transaction.query().findById(transaction_id).withGraphFetched('[tickets, tickets.[seat, showtime, showtime.dramatics], user]')
 		const showtime = transaction.tickets[0].showtime
 
 		const code = transaction.tickets.map( item => item.seat.code).join(', ')
+
+		transaction.showtime = showtime
+		transaction.seat_code = code
+	
+		sendMail("rubik0403@gmail.com", transaction.user.name, transaction)
+
 
 		res.render('payment_success.ejs', {
 			error : req.flash("error"),

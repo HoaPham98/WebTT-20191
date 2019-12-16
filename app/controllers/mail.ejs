@@ -203,6 +203,14 @@ body {
   width: 400px;
   height: auto;
 }
+
+.ticket-design .strap .eventLogo img {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 400px;
+  height: auto;
+}
     </style>
     <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
 </head>
@@ -245,7 +253,7 @@ body {
                         </div>
                         <div class="date">
                             <small>Giá tiền</small>
-                            <strong><%=transaction.total_price%></strong>
+                            <strong><%=transaction.total_price%> VNĐ</strong>
                         </div>
                     </div>
                     <div class="eventLogo">

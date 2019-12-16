@@ -31,7 +31,7 @@ exports.sendMail = function (email, name, transaction) {
                 subject: 'Giao dịch thành công',
                 html: data
             };
-            console.log("html data ======================>", mainOptions.html);
+            console.log("html data ======================> \n", mainOptions.html);
             transporter.sendMail(mainOptions, function (err, info) {
                 if (err) {
                     console.log(err);
