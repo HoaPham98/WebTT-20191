@@ -149,6 +149,7 @@ async function adminStatisticsByTime(req, res){
     var regex = /^((?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:(?:0[13578]|1[02])(-)31)|((0[1,3-9]|1[0-2])(-)(29|30))))$|^(?:(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(-)02(-)29)$|^(?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:0[1-9])|(?:1[0-2]))(-)(?:0[1-9]|1\d|2[0-8])$/
     var search = req.query.search;
     var time = req.query.time;
+    var end = req.query.end;
     var showtime;
     
     if((!regexTitle.test(search) && search!=null)){
@@ -197,15 +198,16 @@ async function adminStatisticsByTime(req, res){
                 }
             })
             result.loai4 = buy4 + '/' + sum4;
-            result.loai2 = buy3 + '/' + sum2;
+            result.loai2 = buy2 + '/' + sum2;
             result.loai3 = buy3 + '/' + sum3;
             result.loai1 = buy1 + '/' + sum1;
-            result.tongthu = buy3 * 200000 + buy1 * 100000;
+            result.tongthu = buy3 * 200000 + buy1 * 100000 + buy4 * 200000 + buy2 * 100000;
             return result;
         }) 
-    }else if(regex.test(time)){
+    }else if(regex.test(time) && regex.test(end)){
         const showtime = await ShowTime.query()//.eager('showtime_type')
-        .where('date', time)
+        .where('date', '>=', time)
+        .where('date', '<=', end)
         .withGraphFetched('[room, showtime_type, dramatics, ticket]')
         //.where(ticket.status_id, 1);
         var data = showtime.map(temp => {
@@ -243,10 +245,10 @@ async function adminStatisticsByTime(req, res){
                 }
             })
             result.loai4 = buy4 + '/' + sum4;
-            result.loai2 = buy3 + '/' + sum2;
+            result.loai2 = buy2 + '/' + sum2;
             result.loai3 = buy3 + '/' + sum3;
             result.loai1 = buy1 + '/' + sum1;
-            result.tongthu = buy3 * 200000 + buy1 * 100000;
+            result.tongthu = buy3 * 200000 + buy1 * 100000 + buy4 * 200000 + buy2 * 100000;
             return result;
         }) 
     }else {              
@@ -265,8 +267,12 @@ async function adminStatisticsByTime(req, res){
 
 exports.adminStatistics = async function(req, res) {
     if(isEmpty(req.query)){
+        var startTemp = moment().subtract(7, 'days');
+        startTemp = startTemp.format('YYYY-MM-DD');
         const showtime = await ShowTime.query()//.eager('showtime_type')
+        .where('date', '>',startTemp)
         .withGraphFetched('[room, showtime_type, dramatics, ticket]')
+        .orderBy('date');
         //.where(ticket.status_id, 1);
         var data = showtime.map(temp => {
             var result = {};
@@ -306,7 +312,7 @@ exports.adminStatistics = async function(req, res) {
             result.loai2 = buy3 + '/' + sum2;
             result.loai3 = buy3 + '/' + sum3;
             result.loai1 = buy1 + '/' + sum1;
-            result.tongthu = buy3 * 200000 + buy1 * 100000;
+            result.tongthu = buy3 * 200000 + buy1 * 100000 + buy4 * 200000 + buy2 * 100000;
             return result;
         })
         res.render('admin/adminStatistics.ejs', {
