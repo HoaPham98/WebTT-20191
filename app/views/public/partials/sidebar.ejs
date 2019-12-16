@@ -22,7 +22,7 @@
                             									</div>
                             								  </div></li>
 							<% } else { %>
-								<li><a href="/login_register"><i class="icon-user"></i></a></li>
+								<li <% if (typeof page_name !== "undefined" && page_name === 'login') { %>class="active" <% } %>><a href="/login_register">Đăng nhập</a></li>
 							<% } %>
 						</ul>
 					</nav>

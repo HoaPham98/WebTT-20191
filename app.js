@@ -21,6 +21,9 @@ const options = {
     autoClean: true
 };
 
+app.use(express.json());
+app.use(express.urlencoded());
+
 // parse data with connect-multiparty. 
 app.use(formData.parse(options));
 // delete from the request all empty files (size == 0)
@@ -60,6 +63,11 @@ app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'ejs');
 //app.set('view engine', 'ejs'); // set up ejs for templating
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 //required for passport
 //app.use(session({ secret: 'iloveyoudear...' })); // session secret

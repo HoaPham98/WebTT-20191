@@ -2044,5 +2044,11 @@ ul.book-right li {
   transition: 0.3s;
 }
 
+.img-responsives {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+}
+
 
 /*# sourceMappingURL=style.css.map */
