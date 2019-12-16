@@ -39,13 +39,16 @@ module.exports = function (passport) {
                         req.flash('loginMessage', 'Invalid email or password'));
                 } else {
                     // Object.keys(users).map(i => peopleObj[i])
-                    if (!bcrypt.compareSync(password, user.password)) {
+                    const result = await bcrypt.compare(password, user.password)
+                    if (!result) {
+                        console.log('Password is not match');
                         return done(null, false, req.flash('loginMessage', 'Invalid email or password'));
                     } else {
                         return done(null, user);
                     }
                 }
             } catch (err) {
+                console.log(err);
                 return done(err);
             }
         }));

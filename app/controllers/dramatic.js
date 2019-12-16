@@ -25,9 +25,10 @@ exports.insertDramatic = async function (req, res) {
 }
 
 exports.updateDramatic = async function (req, res) {
-    const path = req.body.poster.path
-    const image = 'data:image/jpeg;base64,' + base64_encode(path)
-    const dramatic = await Dramatic.query()
+    
+    const dramatic = await Dramatic.query().findById(req.body.id)
+    const image = req.body.poster == null ? dramatic.poster : 'data:image/jpeg;base64,' + base64_encode(req.body.poster.path)
+    await Dramatic.query()
         .findById(req.body.id)
         .patch({
             name: req.body.name,

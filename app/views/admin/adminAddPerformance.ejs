@@ -317,6 +317,7 @@
                 <label for="exampleInputFile">Tải ảnh lên</label>
                 <input type="file" id="exampleInputFile" name ="poster" accept='image/*' onchange="readURL(this);">
                 <img id="blah" src="#" alt=""/>
+                <span id="posterAlert"></span>
               </div>
               <button type="submit" class="btn btn-block btn-success btn-create">Thêm vở diễn</button>
             </form>
@@ -349,6 +350,7 @@
          var decorator = document.getElementById('trangtri').value;
          var actor = document.getElementById('dienvien').value;
          var sumary = document.getElementById('tomtat').value;
+         var poster = document.getElementById('exampleInputFile').value;
           //var content = document.getElementById('noidung').value;
           var status = false;
           //var span = document.createElement('span');
@@ -413,6 +415,15 @@
              document.getElementById("sumaryAlert").innerHTML = 
              "Nhập lại tóm tắt";  
              $("#sumaryAlert")
+             .delay(3200)
+             .fadeOut(300);
+             status = false;
+           } else if (poster.length < 1){
+            $("#posterAlert")               
+             .fadeIn();  
+             document.getElementById("posterAlert").innerHTML = 
+             "Chọn lại poster";  
+             $("#posterAlert")
              .delay(3200)
              .fadeOut(300);
              status = false;
