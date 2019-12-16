@@ -1,6 +1,7 @@
 var home = require('../app/controllers/home');
 var admin = require('../app/controllers/admin');
 var dramatic = require('../app/controllers/dramatic');
+var news = require('../app/controllers/news');
 var room = require('../app/controllers/room');
 var price = require('../app/controllers/price');
 var tickets = require('../app/controllers/tickets');
@@ -37,6 +38,16 @@ module.exports = function (app, passport) {
     app.get('/admin/dramatics/:id', authAdmin, check_input.isValidParam,
         dramatic.getDramatic);
 
+    app.post('/admin/insert_news', authAdmin, news.insertNews);
+    app.put('/admin/update_news', authAdmin, news.updateNews);
+    app.delete('/admin/news/:id', authAdmin, news.delNews);
+    app.get('/admin/news', authAdmin, news.getNewsUI);
+    app.get('/admin/insert_news', authAdmin, news.getInsertNewsUI);
+    app.get('/admin/update_news', authAdmin, news.getUpdateNewsUI);
+
+    app.get('/admin/email', authAdmin, admin.getTemplateEmail);
+    app.post('/admin/email', authAdmin, admin.sendEmail);  
+
     app.post('/admin/seats', authAdmin, room.insertSeat);
     app.put('/admin/seats', authAdmin, room.updateSeat);
 
@@ -51,6 +62,17 @@ module.exports = function (app, passport) {
     app.get('/admin/manage', authAdmin, admin.adminPerformManagement);
     app.get('/admin/addschedule', authAdmin, admin.adminAddSchedule);
     app.get('/admin/statistic', authAdmin, admin.adminStatistics);
+
+    app.get('/admin/seats', authAdmin, room.getAllSeat);
+    app.get('/admin/update_seats', authAdmin, room.getAllSeat);
+    app.get('/admin/insert_seats', authAdmin, room.getInsertTemplate);
+    app.delete('/admin/seats/:id', authAdmin, room.delSeat);
+    app.post('/admin/insert_seats', authAdmin, room.insertSeat);
+    app.put('/admin/update_seats', authAdmin, room.updateSeat);
+    
+    app.get('/admin/users', authAdmin, admin.getAdminUser); 
+    app.put('/admin/users', authAdmin, admin.updateAdminUser); 
+    app.get('/admin/allusers', authAdmin, admin.getAllAdminUser); 
 
     app.post('/admin/showtimes', authAdmin, showtime.insertShowTime);
     app.put('/admin/showtimes', authAdmin, showtime.updateShowTime);
@@ -82,7 +104,7 @@ module.exports = function (app, passport) {
             notFound404(req, res, next);
         } else {
             req.logout();
-            res.redirect('/signin');
+            res.redirect('/');
         }
     })
 

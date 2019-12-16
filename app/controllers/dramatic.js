@@ -1,7 +1,20 @@
 const { Dramatic } = require('../models/dramatic');
 
+var fs = require('fs');
+
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
 exports.insertDramatic = async function (req, res) {
-    const newDramatic = req.body;
+    var newDramatic = req.body;
+    const path = newDramatic.poster.path
+    const image = 'data:image/jpeg;base64,' + base64_encode(path)
+    newDramatic.poster = image
     console.log(newDramatic);
     const dramatic = await Dramatic.query()
         .allowGraph('[name, author, director, music, poster, decorator, actor, sumary]')
@@ -12,6 +25,8 @@ exports.insertDramatic = async function (req, res) {
 }
 
 exports.updateDramatic = async function (req, res) {
+    const path = req.body.poster.path
+    const image = 'data:image/jpeg;base64,' + base64_encode(path)
     const dramatic = await Dramatic.query()
         .findById(req.body.id)
         .patch({
@@ -19,7 +34,7 @@ exports.updateDramatic = async function (req, res) {
             author: req.body.author,
             director: req.body.director,
             music: req.body.music,
-            poster: req.body.poster,
+            poster: image,
             decorator: req.body.decorator,
             actor: req.body.actor,
             sumary: req.body.sumary

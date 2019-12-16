@@ -157,7 +157,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -182,19 +182,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/manage" class="nav-link ">
+                <a href="/admin/manage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý lịch diễn</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/news" class="nav-link">
+                <a href="/admin/seats" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý ghế ngồi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/news" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý tin tức</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/email" class="nav-link active">
+                <a href="/admin/email" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gửi Email</p>
                 </a>
@@ -223,7 +229,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/users" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thay đổi thông tin</p>
                 </a>
@@ -254,7 +260,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý vở diễn</h1>
+                <h1 class="m-0 text-dark" >Quản lý tin tức</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -269,36 +275,66 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/users"  method="POST">
-              <input type="hidden" name="_method" value="put">
+            <form onsubmit="return validate()" action="/admin/insert_news"  method="POST">
+              <!--role="form"enctype="multipart-form data" -->
+              <legend>Thêm tin tức</legend>
               <div class="form-group">
-                <label form="">ID</label>
-                <input type="text" class="form-control" id="tieude" name ="id" value="<%=user[0].id%>">
+                <label form="">Tiêu đề:</label>
+                <input type="text" class="form-control" id="tieude" name ="title">
+                <span id="titleAlert"></span>
               </div>
               <div class="form-group">
-                <label form="">Tên admin</label>
-                <input type="text" class="form-control" id="tieude" name ="name" value="<%=user[0].name%>">
-              </div>
-              <div class="form-group">
-                <label form="">Email</label>
-                <input type="text" class="form-control" id="tacgia" name ="email" value="<%=user[0].email%>">
-              </div>
-              <div class="form-group">
-                <label form="">Mật khẩu</label>
-                <input type="text" class="form-control" id="tacgia" name ="password">
-              </div>
-              <div class="form-group">
-                <label form="">Số điên thoại</label>
-                <input type="text" class="form-control" id="tieude" name ="phone" value="<%=user[0].phone%>">
+                <label form="">Nội dung:</label>
+                <textarea class="form-control" rows="10" id="noidung" name ="content">
+                </textarea>  
+                <span id="contentAlert"></span>
               </div>
 
-              <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật</button>
+              <button type="submit" class="btn btn-block btn-success btn-create">Thêm</button>
             </form>
           </div>
         </section>
 
       </div>
-
+      <script>
+        function validate() {
+           var x = confirm("Bạn chắc chắn muốn thêm?");
+          var regex = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+          var title = document.getElementById('tieude').value;
+          var content = document.getElementById('noidung').value;
+          var status = false;
+          //var span = document.createElement('span');
+          if(x){
+            if (title.length < 1 || regex.test(title)) {
+              $("#titleAlert")               
+             .fadeIn(); 
+              document.getElementById("titleAlert").innerHTML = 
+                "Nhập lại tiêu đề";
+              $("#titleAlert")
+             .delay(3200)
+             .fadeOut(300);
+              status = false;
+            } else {
+                
+              status = true;
+            }
+            if (content.length < 1 || regex.test(content)) {
+              $("#contentAlert")               
+             .fadeIn(); 
+              document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";        
+              $("#contentAlert")
+             .delay(3200)
+             .fadeOut(300);   
+              status = false;
+            }
+          }else{
+            return status;
+          }
+          
+          return status;
+          //return false;
+        } 
+      </script>
 
       <!-- REQUIRED SCRIPTS -->
       <!-- jQuery -->

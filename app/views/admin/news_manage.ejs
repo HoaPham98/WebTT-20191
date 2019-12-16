@@ -15,6 +15,14 @@
   <link rel="stylesheet" href="public/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+  <!-- bootstrap datepicker -->
+  <script src="public/js/pages/bootstrap-datepicker.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -34,14 +42,16 @@
       </ul>
 
       <!-- SEARCH FORM -->
-      <form class="form-inline ml-3">
+      <form onsubmit="return validate()" class="form-inline ml-3">
         <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control form-control-navbar" type="text" placeholder="Search" id="title" name="title" aria-label="Search">
+          <input class="form-control form-control-navbar" type="text" placeholder="Time yyyy-mm-dd"  id="time" name="time" >
           <div class="input-group-append">
             <button class="btn btn-navbar" type="submit">
               <i class="fas fa-search"></i>
             </button>
           </div>
+          <span id="searchAlert"></span>
         </div>
       </form>
 
@@ -157,7 +167,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -182,19 +192,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/manage" class="nav-link ">
+                <a href="/admin/manage" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý lịch diễn</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/news" class="nav-link">
+                <a href="/admin/seats" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý ghế ngồi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/news" class="nav-link active" >
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý tin tức</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/email" class="nav-link active">
+                <a href="/admin/email" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gửi Email</p>
                 </a>
@@ -223,7 +239,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/users" class="nav-link active">
+                <a href="/admin/users" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thay đổi thông tin</p>
                 </a>
@@ -254,8 +270,9 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý vở diễn</h1>
+                <h1 class="m-0 text-dark" >Quản lý tin tức</h1>
               </div><!-- /.col -->
+              
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -269,60 +286,180 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/users"  method="POST">
-              <input type="hidden" name="_method" value="put">
-              <div class="form-group">
-                <label form="">ID</label>
-                <input type="text" class="form-control" id="tieude" name ="id" value="<%=user[0].id%>">
-              </div>
-              <div class="form-group">
-                <label form="">Tên admin</label>
-                <input type="text" class="form-control" id="tieude" name ="name" value="<%=user[0].name%>">
-              </div>
-              <div class="form-group">
-                <label form="">Email</label>
-                <input type="text" class="form-control" id="tacgia" name ="email" value="<%=user[0].email%>">
-              </div>
-              <div class="form-group">
-                <label form="">Mật khẩu</label>
-                <input type="text" class="form-control" id="tacgia" name ="password">
-              </div>
-              <div class="form-group">
-                <label form="">Số điên thoại</label>
-                <input type="text" class="form-control" id="tieude" name ="phone" value="<%=user[0].phone%>">
-              </div>
+            <% if (message.length > 0) { %>
+              <h6 class="alert alert-success"><%= message %></h6>
+            <% } %>
+            <script type="text/javascript">
+              $(".alert.alert-success").delay(3200).fadeOut(300);
+            </script>
+            <div class="box">
+              <!-- /.box-header -->
+              <div class="box-body">
+                <a href="/admin/insert_news" class="btn btn-success">Thêm tin tức</a>
+                <br></br>
+                <table id="table_recurrent_task" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Tiêu đề</th>
+                      <!-- <th>Nội dung</th> -->
+                      <th>Thời gian khởi tạo</th>
+                      <th>Thời gian cập nhật</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%if (records.length >0){ %>
+                    <% for(var i = 0; i < records.length; i++) { %>
+                    <tr>
+                      <td class="id"><%= records[i].id %></td>
+                      <td><%= records[i].title %></td>
+                      <!-- <td><%= records[i].content %></td> -->
+                      <td><%= records[i].created_at %></td>
+                      <td><%= records[i].updated_at %></td>
+                      <td>
+                        <button class="btn btn-info btn-edit">Sửa</button>
+                        <button class="btn btn-danger btn-delete">Xóa</button>
+                      </td>
+                    </tr>
+                    <% }}else{ %>
+                    <tr>
+                      <td colspan="6">No Record Found</td>
 
-              <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật</button>
-            </form>
+                    </tr>
+                    <% } %>
+
+
+
+                </tbody>
+              </table>
+              <script type="text/javascript">
+                $(document).ready(function () {
+                  $(".btn.btn-info.btn-edit").click(function() {
+                  //find content of different elements inside a row.
+                  var id = $(this).closest('tr').find('.id').text();
+                  //console.log(id);
+                  window.location.href = '/admin/update_news?id=' + id;
+                });
+
+                  $(".btn.btn-danger.btn-delete").click(function() {
+                  var x = confirm("Bạn chắc chắn muốn xóa?");
+                  if (x){
+                    var button = $(this);
+                    //find content of different elements inside a row.
+                    var id = $(this).closest('tr').find('.id').text();
+                    $.ajax({
+                    url: '/admin/news/' + id,
+                    type: 'DELETE',
+                    success: function(result) {
+                      // $(".alert.alert-success").empty()
+                      // $(".alert.alert-success").append("Xóa thành công");
+                      // $(".alert.alert-success").fadeIn(300);
+                      button.closest('tr').remove()
+                    }
+                  });  
+                  }
+                  else{
+                    console.log('abc')
+                    return false;
+                  }        
+                });
+
+                });
+              </script>
+            </div>
+            <!-- /.box-body -->
           </div>
-        </section>
+          <!-- /.box -->
+        </div>
+      </section>
 
-      </div>
+    </div>
+    <script>
+        function validate() {
+          var regex = /^((?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:(?:0[13578]|1[02])(-)31)|((0[1,3-9]|1[0-2])(-)(29|30))))$|^(?:(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(-)02(-)29)$|^(?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:0[1-9])|(?:1[0-2]))(-)(?:0[1-9]|1\d|2[0-8])$/
+          var regexTitle = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+          var title = document.getElementById('title').value;
+          var time = document.getElementById('time').value;
+         
+          var status = false;
+          //var span = document.createElement('span');
+          if(regex.test(time) && (!regexTitle.test(title)) && title.length > 0){
+            status = true;
+          }  
+          else if(!regexTitle.test(title) && time.length==0 && title.length > 0){
+            status = true;
 
+          }else if(!regexTitle.test(title) && regex.test(time) && title.length == 0){
+            status = true;
 
-      <!-- REQUIRED SCRIPTS -->
-      <!-- jQuery -->
-      <script src="plugins/jquery/jquery.min.js"></script>
-      <!-- Bootstrap -->
-      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- overlayScrollbars -->
-      <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="public/js/adminlte.js"></script>
+          } else {              
+            document.getElementById("searchAlert").innerHTML = 
+                "Nhập lại thông tin";
+            status = false;
+          }
+          return status;
+        } 
+      </script>
+    <!-- <script>
+      $(document).ready(function(){ 
 
-      <!-- OPTIONAL SCRIPTS -->
-      <script src="public/js/demo.js"></script>
+      $('.nav-link').on("click", function(){
 
-      <!-- PAGE PLUGINS -->
-      <!-- jQuery Mapael -->
-      <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-      <script src="plugins/raphael/raphael.min.js"></script>
-      <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-      <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-      <!-- ChartJS -->
-      <script src="plugins/chart.js/Chart.min.js"></script>
+      $('.nav-link').removeClass('active');
 
-      <!-- PAGE SCRIPTS -->
-      <script src="public/js/pages/dashboard2.js"></script>
-    </body>
-    </html>
+      $(this).addClass('active');
+      });
+      });
+    </script> -->
+    <!-- <script>
+      function ConfirmDelete(){
+        var x = confirm("Bạn chắc chắn muốn xóa?");
+        if (x)
+          return true;
+        else{
+          console.log('abc')
+          return false;
+        }
+          
+      }
+    </script> -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery <script src="plugins/jquery/jquery.min.js"></script>-->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="public/js/adminlte.js"></script>
+
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="public/js/demo.js"></script>
+
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="plugins/raphael/raphael.min.js"></script>
+    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
+    <!-- bootstrap datepicker -->
+    <script src="public/js/pages/bootstrap-datepicker.min.js"></script>
+
+    <!-- PAGE SCRIPTS -->
+    <script src="public/js/pages/dashboard2.js"></script>
+    <script>
+      $('#time').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd',
+      })
+      // $('#end').datepicker({
+      //   autoclose: true,
+      //   format: 'yyyy-mm-dd',
+      // })
+    </script>
+  </body>
+  </html>
