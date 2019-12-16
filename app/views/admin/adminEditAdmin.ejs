@@ -146,7 +146,7 @@
         <a href="index3.html" class="brand-link">
           <img src="public/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-          <span class="brand-text font-weight-light">Quản lý Sân Khấu Kịch </span>
+          <span class="brand-text font-weight-light">Quản Lý Sân Khấu Kịch </span>
         </a>
 
         <!-- Sidebar -->
@@ -157,7 +157,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -235,7 +235,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/logout" class="nav-link">
+                <a href="/signout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -279,15 +279,15 @@
               <input type="hidden" name="_method" value="put">
               <div class="form-group">
                 <label form="">ID</label>
-                <input type="text" class="form-control" id="tieude" name ="id" value="<%=user[0].id%>">
+                <input type="text" class="form-control" id="tieude" name ="id" value="<%=user.id%>">
               </div>
               <div class="form-group">
                 <label form="">Tên admin</label>
-                <input type="text" class="form-control" id="tieude" name ="name" value="<%=user[0].name%>">
+                <input type="text" class="form-control" id="tieude" name ="name" value="<%=user.name%>">
               </div>
               <div class="form-group">
                 <label form="">Email</label>
-                <input type="text" class="form-control" id="tacgia" name ="email" value="<%=user[0].email%>">
+                <input type="text" class="form-control" id="tacgia" name ="email" value="<%=user.email%>">
               </div>
               <div class="form-group">
                 <label form="">Mật khẩu</label>
@@ -295,7 +295,7 @@
               </div>
               <div class="form-group">
                 <label form="">Số điên thoại</label>
-                <input type="text" class="form-control" id="tieude" name ="phone" value="<%=user[0].phone%>">
+                <input type="text" class="form-control" id="tieude" name ="phone" value="<%=user.phone%>">
               </div>
 
               <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật</button>

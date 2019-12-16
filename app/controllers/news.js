@@ -1,7 +1,7 @@
 const { News } = require('../models/news');
 const dateFormat = require('dateformat');
 const isEmpty = require('lodash.isempty');
-
+const moment = require('moment');
 exports.insertNews = async function (req, res) {
     var now = new Date();
     var created_at = dateFormat(now, "yyyy-mm-dd HH:MM:ss");
@@ -23,6 +23,8 @@ exports.insertNews = async function (req, res) {
 
 exports.updateNews = async function (req, res) {
     var now = new Date();
+    // var backOneWeek = new Date(now);
+    // backOneWeek.setDate(backOneWeek.getDate() - 7);
     var updated_at = dateFormat(now, "yyyy-mm-dd HH:MM:ss");
     const news = await News.query()
         .findById(req.body.id)
@@ -83,9 +85,11 @@ async function getNewsUIByTime(req, res) {
 
 exports.getNewsUI = async function(req, res) {
     if(isEmpty(req.query)){
-        var now = new Date();
-        var nowTemp = dateFormat(now, "yyyy-mm-dd ");
-        var start = nowTemp + "00:00:00";
+        var startTemp = moment().subtract(7, 'days');
+        startTemp = startTemp.format('YYYY-MM-DD');
+        var nowTemp = moment().format('YYYY-MM-DD');
+
+        var start =  startTemp + " 00:00:00";
         var end = nowTemp + "23:59:59";
         const news = await News.query()
             .where('updated_at', '>', start)

@@ -149,7 +149,7 @@
         <a href="index3.html" class="brand-link">
           <img src="public/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-          <span class="brand-text font-weight-light">Quản lý Sân Khấu Kịch </span>
+          <span class="brand-text font-weight-light">Quản Lý Sân Khấu Kịch </span>
         </a>
 
         <!-- Sidebar -->
@@ -160,7 +160,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -234,11 +234,11 @@
               <li class="nav-item">
                 <a href="/admin/users" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Thay đổi thông tin</p>/admin/allusers
+                  <p>Thay đổi thông tin</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/logout" class="nav-link">
+                <a href="/signout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -278,7 +278,12 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-
+            <% if (message.length > 0) { %>
+            <h6 class="alert alert-success"><%= message %></h6>
+            <% } %>
+            <script type="text/javascript">
+              $(".alert.alert-success").delay(3200).fadeOut(300);
+            </script>
             <div class="box">
               <!-- /.box-header -->
               <div class="box-body">
@@ -290,7 +295,7 @@
                       <th>Tên admin</th>
                       <th>Email</th>
                       <th>Số điện thoại</th>    
-                      <th>Hành động</th>           
+                              
                     </tr>
                   </thead>
                   <tbody>
@@ -301,10 +306,7 @@
                       <td><%= users[i].name %></td>
                       <td><%= users[i].email %></td>
                       <td><%= users[i].phone %></td>
-                    <td>
-                      <button class="btn btn-info btn-edit">Sửa</button>
-                      <button class="btn btn-danger btn-delete">Xóa</button>
-                    </td>
+                    
                   </tr>
                   <% }}else{ %>
                   <tr>

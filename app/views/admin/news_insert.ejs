@@ -146,7 +146,7 @@
         <a href="index3.html" class="brand-link">
           <img src="public/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-          <span class="brand-text font-weight-light">Quản lý Sân Khấu Kịch </span>
+          <span class="brand-text font-weight-light">Quản Lý Sân Khấu Kịch </span>
         </a>
 
         <!-- Sidebar -->
@@ -235,7 +235,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/logout" class="nav-link">
+                <a href="/signout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -306,18 +306,25 @@
           //var span = document.createElement('span');
           if(x){
             if (title.length < 1 || regex.test(title)) {
-            //span.innerHTML ='Nhập lại tiêu đề';
-            // document.getElementsById('tieude').parentElement.appendChild(span);
-            document.getElementById("titleAlert").innerHTML = 
+              $("#titleAlert")               
+             .fadeIn(); 
+              document.getElementById("titleAlert").innerHTML = 
                 "Nhập lại tiêu đề";
-            status = false;
+              $("#titleAlert")
+             .delay(3200)
+             .fadeOut(300);
+              status = false;
             } else {
                 
               status = true;
             }
             if (content.length < 1 || regex.test(content)) {
-              //span.innerHTML ='Nhập lại nội dung';
-              document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";           
+              $("#contentAlert")               
+             .fadeIn(); 
+              document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";        
+              $("#contentAlert")
+             .delay(3200)
+             .fadeOut(300);   
               status = false;
             }
           }else{

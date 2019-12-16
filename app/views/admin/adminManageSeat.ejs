@@ -149,7 +149,7 @@
         <a href="index3.html" class="brand-link">
           <img src="public/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-          <span class="brand-text font-weight-light">Quản lý Sân Khấu Kịch </span>
+          <span class="brand-text font-weight-light">Quản Lý Sân Khấu Kịch </span>
         </a>
 
         <!-- Sidebar -->
@@ -160,7 +160,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -238,7 +238,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/logout" class="nav-link">
+                <a href="/signout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -280,17 +280,35 @@
           <div class="col-xs-12">
             <!-- /.box -->
             <% if (message.length > 0) { %>
-              <h6 class="alert alert-danger"><%= message %></h6>
+              <h6 class="alert alert-success"><%= message %></h6>
             <% } %>
             <script type="text/javascript">
-              $(".alert.alert-danger").delay(3200).fadeOut(300);
+              $(".alert.alert-success").delay(3200).fadeOut(300);
             </script>
 
             <div class="box">
               <!-- /.box-header -->
               <div class="box-body">
-               <a href="/admin/addschedule" class="btn btn-success">Thêm ghế ngồi</a> 
+               <a href="/admin/insert_seats" class="btn btn-success">Thêm ghế ngồi</a>
                <br></br>
+               <select class="form-control select2" id="room_select" name ="room_select" style="width: 100%;">
+                  <%if (rooms.length >0){ %>
+                  <% for(var i = 0; i < rooms.length; i++) { %>
+                  
+                  <%if (records[0].room_id == rooms[i].id){ %>
+                    <option value='<%= rooms[i].id %>' selected ><%= rooms[i].name %></option>
+                  <% }else{ %>
+                    <option value='<%= rooms[i].id %>' ><%= rooms[i].name %></option>
+                  <% } %>
+                 <% }}else{ %>
+                  <tr>
+                    <option>NOT FOUND</option>
+
+                  </tr>
+                  <% } %>
+
+                </select> 
+               
                <table id="table_recurrent_task" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -330,21 +348,36 @@
                   //find content of different elements inside a row.
                   var id = $(this).closest('tr').find('.id').text();
                   console.log(id);
-                  window.location.href = '/admin/editschedule?id=' + id;
+                  window.location.href = '#' + id;
                 });
-                //   $(".btn.btn-danger.btn-delete").click(function() {
-                //   var button = $(this);
-                //   //find content of different elements inside a row.
-                //   var id = $(this).closest('tr').find('.id').text();
-                //   $.ajax({
-                //     url: '/admin/dramatics/' + id,
-                //     type: 'DELETE',
-                //     success: function(result) {
-                //       console.log('abc')
-                //       button.closest('tr').remove()
-                //     }
-                //   });
-                // });
+                  $("#room_select").change(function() {
+                  //find content of different elements inside a row.
+                  window.location.href = '/admin/seats?id=' + $(this).val();
+                });
+                  $(".btn.btn-danger.btn-delete").click(function() {
+                  var x = confirm("Bạn chắc chắn muốn xóa?");
+                  if (x){
+                    var button = $(this);
+                    //find content of different elements inside a row.
+                    var id = $(this).closest('tr').find('.id').text();
+                    $.ajax({
+                    url: '/admin/seats/' + id,
+                    type: 'DELETE',
+                    success: function(result) {
+                      // $(".alert.alert-success").empty()
+                      // $(".alert.alert-success").append("Xóa thành công");
+                      // $(".alert.alert-success").fadeIn(300);
+                      button.closest('tr').remove()
+                    }
+                  });  
+                  }
+                  else{
+                    console.log('abc')
+                    return false;
+                  }        
+                });
+
+
               });
             </script>
           </div>

@@ -18,6 +18,10 @@
 
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
+
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+  
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script> -->
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -37,14 +41,15 @@
       </ul>
 
       <!-- SEARCH FORM -->
-      <form class="form-inline ml-3">
+      <form onsubmit="return validate()" class="form-inline ml-3">
         <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control form-control-navbar" type="search" placeholder="Search" id="search" name="search" aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-navbar" type="submit">
               <i class="fas fa-search"></i>
             </button>
           </div>
+          <span id="searchAlert"></span>
         </div>
       </form>
 
@@ -149,7 +154,7 @@
         <a href="index3.html" class="brand-link">
           <img src="public/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-          <span class="brand-text font-weight-light">Quản lý Sân Khấu Kịch </span>
+          <span class="brand-text font-weight-light">Quản Lý Sân Khấu Kịch </span>
         </a>
 
         <!-- Sidebar -->
@@ -238,7 +243,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/logout" class="nav-link">
+                <a href="/signout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -280,7 +285,7 @@
         <section class="content">
           <div class="col-xs-12">
             <% if (message.length > 0) { %>
-              <h6 class="alert alert-success"><%= message %></h6>
+            <h6 class="alert alert-success"><%= message %></h6>
             <% } %>
             <script type="text/javascript">
               $(".alert.alert-success").delay(3200).fadeOut(300);
@@ -296,7 +301,8 @@
                       <th>ID</th>
                       <th>Tên vở diễn</th>
                       <th>Tác giả</th>
-                      <th>Âm nhạc </th>
+                      <th>Đạo diễn</th>
+                      <th>Âm nhạc</th>
                       <th>Poster</th>
                       <th>Trang trí</th>
                       <th>Diễn viên</th>
@@ -310,6 +316,7 @@
                     <tr>
                       <td class="id"><%= records[i].id %></td>
                       <td><%= records[i].name %></td>
+                      <td><%= records[i].author %></td>
                       <td><%= records[i].director %></td>
                       <td><%= records[i].music %></td>
                       <td>
@@ -340,18 +347,29 @@
                   window.location.href = '/admin/edit?id=' + id;
                 });
                   $(".btn.btn-danger.btn-delete").click(function() {
-                  var button = $(this);
-                  //find content of different elements inside a row.
-                  var id = $(this).closest('tr').find('.id').text();
-                  $.ajax({
-                    url: '/admin/dramatics/' + id,
-                    type: 'DELETE',
-                    success: function(result) {
-                      console.log('abc')
-                      button.closest('tr').remove()
-                    }
-                  });
+                    var x = confirm("Bạn chắc chắn muốn xóa?");
+                    if (x){
+                      var button = $(this);
+                    //find content of different elements inside a row.
+                    var id = $(this).closest('tr').find('.id').text();
+                    $.ajax({
+                      url: '/admin/dramatics/' + id,
+                      type: 'DELETE',
+                      success: function(result) {
+                        button.closest('tr').remove()
+                      }
+                    });  
+                  }
+                  else{                   
+                    return false;
+                  }      
+
                 });
+
+                // $('#table_recurrent_task').DataTable({
+                //   "scrollY": "200px",
+                //   "scrollCollapse": true,
+                //   });  
                 });
               </script>
             </div>
@@ -362,6 +380,29 @@
       </section>
 
     </div>
+    <script>
+      function validate() {
+        var regexTitle = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+        var search = document.getElementById('search').value;
+        var status = false;
+          //var span = document.createElement('span');
+          if((!regexTitle.test(search)) && search.length > 0){
+            status = true;
+
+          }else {   
+            $("#searchAlert")               
+              .fadeIn();           
+              document.getElementById("searchAlert").innerHTML = 
+                "Nhập lại từ khóa";
+            $("#searchAlert")
+              .delay(3200)
+              .fadeOut(300);           
+
+            status = false;
+          }
+          return status;
+        } 
+      </script>
     <!-- <script>
       $(document).ready(function(){ 
 

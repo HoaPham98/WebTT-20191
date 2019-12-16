@@ -147,7 +147,7 @@
         <a href="index3.html" class="brand-link">
           <img src="public/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-          <span class="brand-text font-weight-light">Quản lý Sân Khấu Kịch </span>
+          <span class="brand-text font-weight-light">Quản Lý Sân Khấu Kịch </span>
         </a>
 
         <!-- Sidebar -->
@@ -158,7 +158,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -236,7 +236,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/logout" class="nav-link">
+                <a href="/signout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -261,7 +261,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý vở diễn</h1>
+                <h1 class="m-0 text-dark" >Quản Lý ghế ngồi</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -276,15 +276,14 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/showtimes"  method="POST">
-              <legend>Thêm lịch diễn</legend>
+            <form action="/admin/insert_seats"  method="POST">
              
               <div class="form-group">
-                <label>Vở diễn:</label>
-                <select class="form-control select2" name ="dramatic_id" style="width: 100%;">
-                <%if (records.length >0){ %>
-                <% for(var i = 0; i < records.length; i++) { %>
-                <option value='<%= records[i].id %>' ><%= records[i].name %></option>
+                <label>Phòng:</label>
+                <select class="form-control select2" id="room_id" name ="room_id" style="width: 100%;">
+                <%if (room.length >0){ %>
+                <% for(var i = 0; i < room.length; i++) { %>
+                <option value='<%= room[i].id %>' ><%= room[i].name %></option>
                 <% }}else{ %>
                 <tr>
                   <option>NOT FOUND</option>
@@ -292,47 +291,16 @@
                 </tr>
                 <% } %>
 
-              </select>
+                </select>
              
               </div>
               
               <div class="form-group">
-                <label>Ngày chiếu:</label>
-                <div class='input-group date' id='datepicker'>
-                  <input type='text' name ="date" class="form-control" />
-                  <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                  </span>
-                </div>
-
-                <!-- /.input group  <div class="input-group date" id="datepicker">
-                  <input type="text" class="form-control" id="start_show">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                </div>-->
-              </div>
-              <div class="form-group">
-                <label>Suất chiếu:</label>
-                <div class="input-group bootstrap-timepicker timepicker">
-                  <input id="timepicker1" type="text" name ="time" class="form-control input-small">
-                  <span class="input-group-addon"><i class="far fa-clock"></i></span>
-                </div>
-              </div>
-                   
-                <!-- /.input group far fa-clock <div class="input-group date" id="timepicker" data-target-input="nearest">
-                  <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"/>
-                  <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="far fa-clock"></i></div>
-                  </div>
-                </div> -->
-              <!-- /.form group -->
-              <div class="form-group">
-                <label>Phòng:</label>
-                <select class="form-control select2" name ="room_id" style="width: 100%;">
-                  <%if (rooms.length >0){ %>
-                  <% for(var i = 0; i < rooms.length; i++) { %>
-                  <option value='<%= rooms[i].id %>' ><%= rooms[i].name %></option>
+                <label>Loại ghế ngồi:</label>
+                <select class="form-control select2" name ="type_id" style="width: 100%;">
+                  <%if (type.length >0){ %>
+                  <% for(var i = 0; i < type.length; i++) { %>
+                  <option value='<%= type[i].id %>' ><%= type[i].name %></option>
                  <% }}else{ %>
                   <tr>
                     <option>NOT FOUND</option>
@@ -343,11 +311,23 @@
                 </select>
               </div>
               <div class="form-group">
-                <label>Loại xuất chiếu:</label>
-                <select class="form-control select2" name ="type_id" style="width: 100%;">
-                  <%if (type.length >0){ %>
-                  <% for(var i = 0; i < type.length; i++) { %>
-                  <option value='<%= type[i].id %>' ><%= type[i].name %></option>
+                <label>Hàng:</label>
+                <select class="form-control select2" id="row" name ="row" style="width: 100%;">
+                  
+                
+                <% for(var j = 0; j < 10; j++) { %>
+                  <option value='<%= j+1 %>' ><%= j+1%></option>
+                <% }  %>
+
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Cột:</label>
+                <select class="form-control select2" name ="col" style="width: 100%;">
+                  <%if (room.length >0){ %>
+                  <% for(var k = 0; k < 12; k++) { %>
+                  <option value='<%= k+1 %>' ><%= k+1 %></option>
                  <% }}else{ %>
                   <tr>
                     <option>NOT FOUND</option>
@@ -393,21 +373,5 @@
       <script src="public/js/pages/bootstrap-datepicker.min.js"></script>
       <!-- timepicker-->
       <script src="public/js/pages/bootstrap-timepicker.min.js"></script>
-      <script>
-   //Date picker
-   $('#datepicker').datepicker({
-    autoclose: true,
-    format: 'yyyy-mm-dd',
-  })
-   $('#timepicker1').timepicker({
-    autoclose: true,
-    minuteStep: 1,
-    template: 'modal',
-    appendWidgetTo: 'body',
-    showSeconds: true,
-    showMeridian: false,
-    defaultTime: false
-  })
-</script>
 </body>
 </html>

@@ -146,7 +146,7 @@
         <a href="index3.html" class="brand-link">
           <img src="public/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-          <span class="brand-text font-weight-light">Quản lý Sân Khấu Kịch </span>
+          <span class="brand-text font-weight-light">Quản Lý Sân Khấu Kịch </span>
         </a>
 
         <!-- Sidebar -->
@@ -157,7 +157,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -235,7 +235,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/logout" class="nav-link">
+                <a href="/signout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -275,52 +275,147 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/dramatics"  method="POST">
+            <form onsubmit="return validate()"action="/admin/dramatics"  method="POST">
               <input type="hidden" name="_method" value="put">
               <div class="form-group">
                 <label form="">ID</label>
-                <input type="text" class="form-control" id="tieude" name ="id" value="<%=data[0].id%>">
+                <input type="text" class="form-control" id="ID" name ="id" value="<%=data[0].id%>">
               </div>
               <div class="form-group">
                 <label form="">Tên vở diễn</label>
-                <input type="text" class="form-control" id="tieude" name ="name" value="<%=data[0].name%>">
+                <input type="text" class="form-control" id="ten" name ="name" value="<%=data[0].name%>">
+                <span id="nameAlert"></span>
               </div>
               <div class="form-group">
                 <label form="">Tác giả</label>
                 <input type="text" class="form-control" id="tacgia" name ="author" value="<%=data[0].author%>">
+                <span id="authorAlert"></span>
               </div>
               <div class="form-group">
                 <label form="">Đạo diễn</label>
-                <input type="text" class="form-control" id="tieude" name ="director" value="<%=data[0].director%>">
-
+                <input type="text" class="form-control" id="daodien" name ="director" value="<%=data[0].director%>">
+                <span id="directorAlert"></span>
+              </div>
+              <div class="form-group">
+                <label form="">Âm nhạc</label>
+                <input type="text" class="form-control" id="amnhac" name ="music" value="<%=data[0].music%>">
+                <span id="musicAlert"></span>
+              </div>
+              <div class="form-group">
+                <label form="">Trang trí</label>
+                <input type="text" class="form-control" id="trangtri" name ="decorator" value="<%=data[0].decorator%>">
+                <span id="decoratorAlert"></span>
+              </div>
+              <div class="form-group">
+                <label form="">Diễn viên</label>
+                <input type="text" class="form-control" id="dienvien" name ="actor" value="<%=data[0].actor%>">
+                <span id="actorAlert"></span>
+              </div>
+              <div class="form-group">
+                <label form="">Tóm tắt</label>
+                <input type="text" class="form-control" id="tomtat" name ="sumary" value="<%=data[0].sumary%>">
+                <span id="sumaryAlert"></span>
               </div>
               <div class="form-group">
                 <label form="">Poster</label>
                 <label for="exampleInputFile">Tải ảnh lên</label>
                 <input type="file" id="exampleInputFile" name ="poster">
               </div>
-              <div class="form-group">
-                <label form="">Giám đốc sản xuất</label>
-                <input type="text" class="form-control" id="tieude" name ="">
-              </div>
-              <div class="form-group">
-                <label form="">Trang trí</label>
-                <input type="text" class="form-control" id="tieude" name ="decorator" value="<%=data[0].decorator%>">
-              </div>
-              <div class="form-group">
-                <label form="">Diễn viên</label>
-                <input type="text" class="form-control" id="tieude" name ="actor" value="<%=data[0].actor%>">
-              </div>
-              <div class="form-group">
-                <label form="">Tóm tắt</label>
-                <input type="text" class="form-control" id="tieude" name ="sumary" value="<%=data[0].sumary%>">
-              </div>
-              <button type="submit" class="btn btn-block btn-success btn-create">Tạo vở diễn</button>
+              <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật</button>
             </form>
           </div>
         </section>
 
       </div>
+      <script>
+        function validate() {
+         var x = confirm("Bạn chắc chắn muốn cập nhật vở diễn?");
+         var regex = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+         var name = document.getElementById('ten').value;
+         var author = document.getElementById('tacgia').value;
+         var director = document.getElementById('daodien').value;
+         var music = document.getElementById('amnhac').value;
+         var decorator = document.getElementById('trangtri').value;
+         var actor = document.getElementById('dienvien').value;
+         var sumary = document.getElementById('tomtat').value;
+          //var content = document.getElementById('noidung').value;
+          var status = false;
+          //var span = document.createElement('span');
+          if(x){
+            if (name.length < 1 || regex.test(name)) {  
+              $("#nameAlert")               
+              .fadeIn();           
+              document.getElementById("nameAlert").innerHTML = 
+              "Nhập lại tên";
+              $("#nameAlert")
+              .delay(3200)
+              .fadeOut(300);
+              status = false;
+            }else if(author.length < 1 || regex.test(author)){
+             $("#authorAlert")               
+             .fadeIn();  
+             document.getElementById("authorAlert").innerHTML = 
+             "Nhập lại tên tác giả";  
+             $("#authorAlert")
+             .delay(3200)
+             .fadeOut(300);
+             status = false;
+           }else if(director.length < 1 || regex.test(director)){
+             $("#directorAlert")               
+             .fadeIn();  
+             document.getElementById("directorAlert").innerHTML = 
+             "Nhập lại tên đạo diễn";  
+             $("#directorAlert")
+             .delay(3200)
+             .fadeOut(300);
+             status = false;
+           }else if(music.length < 1 || regex.test(music)){
+             $("#musicAlert")               
+             .fadeIn();  
+             document.getElementById("musicAlert").innerHTML = 
+             "Nhập lại phụ trách âm nhạc"; 
+             $("#musicAlert")
+             .delay(3200)
+             .fadeOut(300); 
+             status = false;
+           }else if(decorator.length < 1 || regex.test(decorator)){
+             $("#decoratorAlert")               
+             .fadeIn();  
+             document.getElementById("decoratorAlert").innerHTML = 
+             "Nhập lại phụ trách trang trí";  
+             $("#decoratorAlert")
+             .delay(3200)
+             .fadeOut(300);
+             status = false;
+           }else if(actor.length < 1 || regex.test(actor)){
+             $("#actorAlert")               
+             .fadeIn();  
+             document.getElementById("actorAlert").innerHTML = 
+             "Nhập lại tên diễn viên";  
+             $("#actorAlert")
+             .delay(3200)
+             .fadeOut(300);
+             status = false;
+           }else if(sumary.length < 1 || regex.test(sumary)){
+             $("#sumaryAlert")               
+             .fadeIn();  
+             document.getElementById("sumaryAlert").innerHTML = 
+             "Nhập lại tóm tắt";  
+             $("#sumaryAlert")
+             .delay(3200)
+             .fadeOut(300);
+             status = false;
+           }else{
+            status = true;
+          }
+        }else{
+          return status;
+        }
+        
+        return status;
+          //return false;
+        } 
+      </script>
 
 
       <!-- REQUIRED SCRIPTS -->
