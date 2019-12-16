@@ -17,6 +17,7 @@
     "dateformat": "^3.0.3",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
+    "express-form-data": "^2.0.10",
     "express-session": "^1.17.0",
     "knex": "^0.20.3",
     "lodash.find": "^4.6.0",

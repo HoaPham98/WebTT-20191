@@ -10,10 +10,25 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
 var session = require('express-session');
 var passport = require('passport');
+const formData = require("express-form-data");
+const os = require('os')
 
 var booking = require('./app/controllers/api/booking')
-
 var port = process.env.PORT || 8080;
+
+const options = {
+    uploadDir: os.tmpdir(),
+    autoClean: true
+};
+
+// parse data with connect-multiparty. 
+app.use(formData.parse(options));
+// delete from the request all empty files (size == 0)
+app.use(formData.format());
+// change the file objects to fs.ReadStream 
+// app.use(formData.stream());
+// union the body and the files
+app.use(formData.union());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

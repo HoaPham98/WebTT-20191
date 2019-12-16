@@ -275,7 +275,7 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form onsubmit="return validate()" action="/admin/dramatics"  method="POST">
+            <form id="form1" onsubmit="return validate()" enctype="multipart/form-data" action="/admin/dramatics"  method="POST">
               <!--role="form"enctype="multipart-form data" -->       
               <div class="form-group">
                 <label form="">Tên vở diễn</label>
@@ -315,7 +315,8 @@
               <div class="form-group">
                 <label form="">Poster</label>
                 <label for="exampleInputFile">Tải ảnh lên</label>
-                <input type="file" id="exampleInputFile" name ="poster">
+                <input type="file" id="exampleInputFile" name ="poster" accept='image/*' onchange="readURL(this);">
+                <img id="blah" src="#" alt=""/>
               </div>
               <button type="submit" class="btn btn-block btn-success btn-create">Thêm vở diễn</button>
             </form>
@@ -324,6 +325,20 @@
 
       </div>
       <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(150)
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
         function validate() {
          var x = confirm("Bạn chắc chắn muốn thêm vở diễn?");
          var regex = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
