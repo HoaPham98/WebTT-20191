@@ -1,11 +1,11 @@
-<% include public/partials/header %>
+<%- include('public/partials/header', {page_name: 'performance'}); %>
 
 
 <div id="fh5co-tours" class="fh5co-section-gray">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
-				<h6 class="heading-title"><%=dramatic.name%></h6>
+				<h3><%=dramatic.name%></h3>
 			</div>
 		</div>
 		<div class="row">
@@ -41,7 +41,7 @@
 						<tbody>
 						<% showtimes.forEach(showtime => { %>
 							<tr>
-								<td><%=new Date(showtime.date).toLocaleDateString()%></td>
+								<td><%=new Date(showtime.date).toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' })%></td>
 								<td><%=showtime.time%></td>
 								<td>
 									<a class="btn btn-primary btn-outline" href="/booking/<%=showtime.id%>">

@@ -1,12 +1,12 @@
 <nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li class="active"><a href="/">Trang chủ</a></li>
-							<li>
+							<li <% if (typeof page_name !== "undefined" && page_name === 'home') { %>class="active" <% } %> ><a href="/">Trang chủ</a></li>
+							<li <% if (typeof page_name !== "undefined" && page_name === 'schedule') { %>class="active" <% } %>>
 								<a href="/schedule" class="fh5co-sub-ddown">Lịch diễn</a>
 							</li>
-							<li><a href="/performance">Vở diễn</a></li>
-							<li><a href="/news">Tin tức</a></li>
-							<li><a href="/contact">Liên hệ</a></li>
+							<li <% if (typeof page_name !== "undefined" && page_name === 'performace') { %>class="active" <% } %>><a href="/performance">Vở diễn</a></li>
+							<li <% if (typeof page_name !== "undefined" && page_name === 'news') { %>class="active" <% } %>><a href="/news">Tin tức</a></li>
+							<li <% if (typeof page_name !== "undefined" && page_name === 'contact') { %>class="active" <% } %>><a href="/contact">Liên hệ</a></li>
 							<% if (locals.user != null) { %>
 														<li><div class="dropdown show">
                             									<a class="btn-header dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -14,6 +14,9 @@
                             									</a>
 
                             									<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+																	<%if (locals.user.isAdmin) { %>
+																		<a class="dropdown-item" href="/admin/mainpage">Admin</a>
+																	<% } %>
                             									  <a class="dropdown-item" href="/signout">Đăng xuất</a>
 
                             									</div>
