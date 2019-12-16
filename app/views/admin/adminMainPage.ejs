@@ -160,7 +160,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -194,6 +194,12 @@
                 <a href="/admin/seats" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý ghế ngồi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/news" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý tin tức</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -274,10 +280,10 @@
         <section class="content">
           <div class="col-xs-12">
             <% if (message.length > 0) { %>
-              <h6 class="alert alert-danger"><%= message %></h6>
+              <h6 class="alert alert-success"><%= message %></h6>
             <% } %>
             <script type="text/javascript">
-              $(".alert.alert-danger").delay(3200).fadeOut(300);
+              $(".alert.alert-success").delay(3200).fadeOut(300);
             </script>
             <div class="box">
               <!-- /.box-header -->
@@ -323,9 +329,6 @@
 
                   </tr>
                   <% } %>
-
-
-
                 </tbody>
               </table>
               <script type="text/javascript">

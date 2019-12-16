@@ -12,10 +12,11 @@ module.exports = function (passport) {
     });
 
     passport.deserializeUser(async function (id, done) {
-        //console.log('abcxyz' + id)
+        console.log('abcxyz' + id)
         try {
-            const user = await User.query().findById(id)
-            done(null, user)
+            const userTemp = await User.query().findById(id)
+            console.log('abcxyz' + userTemp.name)
+            done(null, userTemp)
         } catch (err) {
             console.log(err);
         }

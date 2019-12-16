@@ -20,7 +20,7 @@ exports.login = function(req, res) {
 }
 
 exports.getTemplateEmail = async function(req, res) {
-    res.render('admin/adminMailer.ejs', {
+    res.render('admin/mail_manage.ejs', {
         user: req.user,
         error : req.flash("error"),
         success: req.flash("success"),
@@ -33,7 +33,7 @@ exports.getTemplateEmail = async function(req, res) {
 
 exports.sendEmail = async function(req, res) {
       
-    var datas = await Transaction.query().select('email');
+    var datas = await User.query().select('email').where('isAdmin', false);
    //  for(let i=0; i<datas.length; i++){
    //      await email.send(datas[i].email, req.body.subject, req.body.message);
    //  }

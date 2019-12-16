@@ -157,7 +157,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -176,7 +176,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/mainpage" class="nav-link">
+                <a href="/admin/mainpage" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý vở diễn</p>
                 </a>
@@ -194,7 +194,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/email" class="nav-link active">
+                <a href="/admin/news" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý tin tức</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/email" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gửi Email</p>
                 </a>
@@ -223,7 +229,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/users" class="nav-link ">
+                <a href="/admin/users" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thay đổi thông tin</p>
                 </a>
@@ -254,7 +260,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý vở diễn</h1>
+                <h1 class="m-0 text-dark" >Quản lý tin tức</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -269,52 +275,88 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/email"  method="POST">
+            <form  onsubmit="return validate()"  action="/admin/update_news" method="POST">
+              <legend>Cập nhật tin tức</legend>
+              <input type="hidden" name="_method" value="put">
               <div class="form-group">
-                <label>Người nhận:</label>
-                <select class="form-control select2" name ="select" style="width: 100%;">               
-                <option value='all'>Tất cả</option>
-                </select>
+                <label form="">ID:</label>
+                <input type="text" class="form-control" id="id" name ="id" value="<%=data[0].id%>">
+               
               </div>
               <div class="form-group">
-                <label form="">Subject:</label>
-                <input type="text" class="form-control" id="tieude" name ="subject">
+                <label form="">Tiêu đề:</label>
+                <input type="text" class="form-control" id="tieude" name ="title" value="<%=data[0].title%>">
+                <span id="titleAlert"></span>
               </div>
               <div class="form-group">
-                <label form="">Message:</label>
-                <input type="text" class="form-control" id="tacgia" name ="message">
+                <label form="">Nội dung:</label>
+                <textarea class="form-control" rows="10" id="noidung" name ="content"> <%=data[0].content%>
+                </textarea>  
+                <span id="contentAlert"></span>
               </div>
-              <button type="submit" class="btn btn-block btn-success btn-create">Gửi</button>
+
+              <button type="submit" class="btn btn-block btn-success btn-create">Cập nhật</button>
             </form>
           </div>
         </section>
 
       </div>
+      <script>
+        function validate() {
+          var x = confirm("Bạn chắc chắn muốn cập nhật?");
+          var regex = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+          var title = document.getElementById('tieude').value;
+          var content = document.getElementById('noidung').value;
+          var status = false;
+          //var span = document.createElement('span');
+          if(x){
+            if (title.length < 1 || regex.test(title)) {
+            //span.innerHTML ='Nhập lại tiêu đề';
+            // document.getElementsById('tieude').parentElement.appendChild(span);
+            document.getElementById("titleAlert").innerHTML = 
+                "Nhập lại tiêu đề";
+            status = false;
+            } else {
+              
+              status = true;
+            }
+            if (content.length < 1 || regex.test(content)) {
+              //span.innerHTML ='Nhập lại nội dung';
+              document.getElementById("contentAlert").innerHTML = "Nhập lại nội dung";           
+              status = false;
+            }
+          }else{
+            return status
+          }
+          
+          return status;
+          //return false;
+        } 
+      </script>
 
+     <!-- REQUIRED SCRIPTS -->
+     <!-- jQuery -->
+     <script src="plugins/jquery/jquery.min.js"></script>
+     <!-- Bootstrap -->
+     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+     <!-- overlayScrollbars -->
+     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+     <!-- AdminLTE App -->
+     <script src="public/js/adminlte.js"></script>
 
-      <!-- REQUIRED SCRIPTS -->
-      <!-- jQuery -->
-      <script src="plugins/jquery/jquery.min.js"></script>
-      <!-- Bootstrap -->
-      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- overlayScrollbars -->
-      <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="public/js/adminlte.js"></script>
+     <!-- OPTIONAL SCRIPTS -->
+     <script src="public/js/demo.js"></script>
 
-      <!-- OPTIONAL SCRIPTS -->
-      <script src="public/js/demo.js"></script>
+     <!-- PAGE PLUGINS -->
+     <!-- jQuery Mapael -->
+     <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+     <script src="plugins/raphael/raphael.min.js"></script>
+     <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+     <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+     <!-- ChartJS -->
+     <script src="plugins/chart.js/Chart.min.js"></script>
 
-      <!-- PAGE PLUGINS -->
-      <!-- jQuery Mapael -->
-      <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-      <script src="plugins/raphael/raphael.min.js"></script>
-      <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-      <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-      <!-- ChartJS -->
-      <script src="plugins/chart.js/Chart.min.js"></script>
-
-      <!-- PAGE SCRIPTS -->
-      <script src="public/js/pages/dashboard2.js"></script>
-    </body>
-    </html>
+     <!-- PAGE SCRIPTS -->
+     <script src="public/js/pages/dashboard2.js"></script>
+  </body>
+</html>

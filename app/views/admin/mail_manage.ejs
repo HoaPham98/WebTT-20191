@@ -15,9 +15,6 @@
   <link rel="stylesheet" href="public/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
-  <script src="plugins/jquery/jquery.min.js"></script>
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -160,7 +157,7 @@
               <img src="public/img/IMG_5043.JPG" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"><%=user[0].name%></a>
+              <a href="#" class="d-block"><%=user.name%></a>
             </div>
           </div>
 
@@ -185,13 +182,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/manage" class="nav-link">
+                <a href="/admin/manage" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý lịch diễn</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/seats" class="nav-link active">
+                <a href="/admin/seats" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý ghế ngồi</p>
                 </a>
@@ -203,7 +200,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/email" class="nav-link">
+                <a href="/admin/email" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gửi Email</p>
                 </a>
@@ -232,7 +229,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/users" class="nav-link">
+                <a href="/admin/users" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thay đổi thông tin</p>
                 </a>
@@ -263,7 +260,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark" >Quản lý ghế ngồi</h1>
+                <h1 class="m-0 text-dark" >Gửi email</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -278,108 +275,84 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <!-- /.box -->
-            <% if (message.length > 0) { %>
-              <h6 class="alert alert-danger"><%= message %></h6>
-            <% } %>
-            <script type="text/javascript">
-              $(".alert.alert-danger").delay(3200).fadeOut(300);
-            </script>
-
-            <div class="box">
-              <!-- /.box-header -->
-              <div class="box-body">
-               <a href="/admin/addschedule" class="btn btn-success">Thêm ghế ngồi</a> 
-               <br></br>
-               <table id="table_recurrent_task" class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>ID:</th>
-                    <th>Phòng:</th>
-                    <th>Loại ghế ngồi:</th>
-                    <th>Hàng:</th>
-                    <th>Cột:</th>
-                    <th>Hành động:</th>                 
-                  </tr>
-                </thead>
-                <tbody>
-                  <%if (records.length >0){ %>
-                  <% for(var i = 0; i < records.length; i++) { %>
-                  <tr>
-                    <td class="id"><%= records[i].id %></td>
-                    <td><%= records[i].room_name %></td>
-                    <td><%= records[i].seat_type.name %></td>
-                    <td><%= records[i].row %></td>                   
-                    <td><%= records[i].col %></td>                                   
-                    <td>
-                      <button class="btn btn-info btn-edit">Sửa</button>
-                      <button class="btn btn-danger btn-delete">Xóa</button>
-                    </td>
-                  </tr>
-                  <% }}else{ %>
-                  <tr>
-                    <td colspan="6">No Record Found</td>
-
-                  </tr>
-                  <% } %>
-                </tbody>
-              </table>
-              <script type="text/javascript">
-                $(document).ready(function () {
-                  $(".btn.btn-info.btn-edit").click(function() {
-                  //find content of different elements inside a row.
-                  var id = $(this).closest('tr').find('.id').text();
-                  console.log(id);
-                  window.location.href = '/admin/editschedule?id=' + id;
-                });
-                //   $(".btn.btn-danger.btn-delete").click(function() {
-                //   var button = $(this);
-                //   //find content of different elements inside a row.
-                //   var id = $(this).closest('tr').find('.id').text();
-                //   $.ajax({
-                //     url: '/admin/dramatics/' + id,
-                //     type: 'DELETE',
-                //     success: function(result) {
-                //       console.log('abc')
-                //       button.closest('tr').remove()
-                //     }
-                //   });
-                // });
-              });
-            </script>
+            <form action="/admin/email"  method="POST">
+              <div class="form-group">
+                <label>Người nhận:</label>
+                <select class="form-control select2" name ="select" style="width: 100%;">               
+                <option value='all'>Tất cả</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label form="">Subject:</label>
+                <input type="text" class="form-control" id="chude" name ="subject">
+                <span id="subjectAlert"></span>
+              </div>
+              <div class="form-group">
+                <label form="">Message:</label>                
+                <textarea class="form-control" rows="10" id="tinnhan" name ="message">
+                </textarea>  
+                <span id="messageAlert"></span>
+              </div>
+              <button type="submit" onclick="return validate();" class="btn btn-block btn-success btn-create">Gửi</button>
+            </form>
           </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
+        </section>
+
       </div>
-    </section>
+      <script>
+        function validate() {
+          var x = confirm("Bạn chắc chắn muốn gửi?");
+          var regex = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+          var subject = document.getElementById('chude').value;
+          var message = document.getElementById('tinnhan').value;
+          var status = false;
+          if (x){
+            if (subject.length < 1 || regex.test(subject)) {           
+            document.getElementById("subjectAlert").innerHTML = 
+                "Nhập lại subject";
+            status = false;
+  
+            } else {
+              
+              status = true;
+            }
+            if (message.length < 1 || regex.test(message)) {
+              document.getElementById("messageAlert").innerHTML = "Nhập lại nội dung";           
+              status = false;
+      
+            }
+          }
+          else{            
+             return status;
+          }      
+          return status;
+         
+        } 
+      </script>
 
-  </div>
+      <!-- REQUIRED SCRIPTS -->
+      <!-- jQuery -->
+      <script src="plugins/jquery/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- overlayScrollbars -->
+      <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="public/js/adminlte.js"></script>
 
+      <!-- OPTIONAL SCRIPTS -->
+      <script src="public/js/demo.js"></script>
 
-  <!-- REQUIRED SCRIPTS -->
-  <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- overlayScrollbars -->
-  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="public/js/adminlte.js"></script>
+      <!-- PAGE PLUGINS -->
+      <!-- jQuery Mapael -->
+      <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+      <script src="plugins/raphael/raphael.min.js"></script>
+      <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+      <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+      <!-- ChartJS -->
+      <script src="plugins/chart.js/Chart.min.js"></script>
 
-  <!-- OPTIONAL SCRIPTS -->
-  <script src="public/js/demo.js"></script>
-
-  <!-- PAGE PLUGINS -->
-  <!-- jQuery Mapael -->
-  <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-  <script src="plugins/raphael/raphael.min.js"></script>
-  <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-  <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-  <!-- ChartJS -->
-  <script src="plugins/chart.js/Chart.min.js"></script>
-
-  <!-- PAGE SCRIPTS -->
-  <script src="public/js/pages/dashboard2.js"></script>
-</body>
-</html>
+      <!-- PAGE SCRIPTS -->
+      <script src="public/js/pages/dashboard2.js"></script>
+    </body>
+    </html>
