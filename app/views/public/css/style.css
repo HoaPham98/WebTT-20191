@@ -1591,7 +1591,7 @@ div.cs-select span {
 
 #footer {
   background: #393e46;
-  padding: 60px 0 40px;
+  padding: 40px 0 0px;
 }
 #footer p {
   color: rgba(255, 255, 255, 0.7);
@@ -1902,9 +1902,6 @@ div.cs-select span {
   }
 }
 
-.row-bottom-padded-md {
-  padding-bottom: 4em;
-}
 @media screen and (max-width: 768px) {
   .row-bottom-padded-md {
     padding-bottom: 2em;
@@ -2037,6 +2034,14 @@ ul.book-right li {
   font-weight: 500;
   color: #000;
   line-height: 1.9em;
+}
+
+
+.btn-header {
+  letter-spacing: 1px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
 }
 
 
