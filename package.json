@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --icu-data-dir=node_modules\\full-icu app"
+    "start": "node app"
   },
   "author": "Nhom 04",
   "license": "ISC",
