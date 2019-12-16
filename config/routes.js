@@ -63,6 +63,13 @@ module.exports = function (app, passport) {
     app.get('/admin/addschedule', authAdmin, admin.adminAddSchedule);
     app.get('/admin/statistic', authAdmin, admin.adminStatistics);
 
+    app.get('/admin/seats', authAdmin, room.getAllSeat);
+    app.get('/admin/update_seats', authAdmin, room.getAllSeat);
+    app.get('/admin/insert_seats', authAdmin, room.getInsertTemplate);
+    app.delete('/admin/seats/:id', authAdmin, room.delSeat);
+    app.post('/admin/insert_seats', authAdmin, room.insertSeat);
+    app.put('/admin/update_seats', authAdmin, room.updateSeat);
+    
     app.get('/admin/users', authAdmin, admin.getAdminUser); 
     app.put('/admin/users', authAdmin, admin.updateAdminUser); 
     app.get('/admin/allusers', authAdmin, admin.getAllAdminUser); 
