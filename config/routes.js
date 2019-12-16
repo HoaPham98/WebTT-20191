@@ -104,7 +104,7 @@ module.exports = function (app, passport) {
             notFound404(req, res, next);
         } else {
             req.logout();
-            res.redirect('/signin');
+            res.redirect('/login');
         }
     })
 

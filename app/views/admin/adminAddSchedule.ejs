@@ -149,7 +149,7 @@
         <a href="index3.html" class="brand-link">
           <img src="public/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-          <span class="brand-text font-weight-light">Quản lý Sân Khấu Kịch </span>
+          <span class="brand-text font-weight-light">Quản Lý Sân Khấu Kịch </span>
         </a>
 
         <!-- Sidebar -->
@@ -238,7 +238,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/logout" class="nav-link">
+                <a href="/signout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thoát</p>
                 </a>
@@ -278,7 +278,7 @@
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
-            <form action="/admin/showtimes"  method="POST">
+            <form onsubmit="return validate()" action="/admin/showtimes"  method="POST">
               <legend>Thêm lịch diễn</legend>
              
               <div class="form-group">
@@ -301,12 +301,13 @@
               <div class="form-group">
                 <label>Ngày chiếu:</label>
                 <div class='input-group date' id='datepicker'>
-                  <input type='text' name ="date" class="form-control" />
+                  <input type='text' id ="date" name ="date" class="form-control" />
                   <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                   </span>
+                  
                 </div>
-
+                <span id="dateAlert"></span>
                 <!-- /.input group  <div class="input-group date" id="datepicker">
                   <input type="text" class="form-control" id="start_show">
                   <div class="input-group-addon">
@@ -319,7 +320,9 @@
                 <div class="input-group bootstrap-timepicker timepicker">
                   <input id="timepicker1" type="text" name ="time" class="form-control input-small">
                   <span class="input-group-addon"><i class="far fa-clock"></i></span>
+                  
                 </div>
+                <span id="timeAlert"></span>
               </div>
                    
                 <!-- /.input group far fa-clock <div class="input-group date" id="timepicker" data-target-input="nearest">
@@ -365,6 +368,45 @@
         </section>
 
       </div>
+      <script>
+        function validate() {
+         var x = confirm("Bạn chắc chắn muốn thêm lịch diễn?");
+         var regex = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+         var date = document.getElementById('date').value;
+         var time = document.getElementById('timepicker1').value;
+        
+          var status = false;
+          //var span = document.createElement('span');
+          if(x){
+            if (date.length < 1 || regex.test(date)) {  
+              $("#dateAlert")               
+              .fadeIn();           
+              document.getElementById("dateAlert").innerHTML = 
+              "Nhập lại ngày";
+              $("#dateAlert")
+              .delay(3200)
+              .fadeOut(300);
+              status = false;
+            }else if(time.length < 1 || regex.test(time)){
+             $("#timeAlert")               
+             .fadeIn();  
+             document.getElementById("timeAlert").innerHTML = 
+             "Nhập lại thời gian";  
+             $("#timeAlert")
+             .delay(3200)
+             .fadeOut(300);
+             status = false;
+           }else{
+            status = true;
+          }
+        }else{
+          return status;
+        }
+        
+        return status;
+          //return false;
+        } 
+      </script>
 
 
       <!-- REQUIRED SCRIPTS -->

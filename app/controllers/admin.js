@@ -75,6 +75,7 @@ exports.getAllAdminUser = async function(req, res) {
     var data = await User.query().where('isAdmin', true);
     res.render('admin/adminUser.ejs', {
         user: req.user,
+        message: req.flash('flash'),
         users: data,
         error : req.flash("error"),
         success: req.flash("success"),
@@ -94,7 +95,8 @@ exports.updateAdminUser = async function(req, res) {
             password: bcrypt.hashSync(req.body.password, 8),
             phone: req.body.phone
         })
-    res.redirect(301, '/admin/mainpage'); 
+    req.flash('flash', 'Cập nhật thành công');
+    res.redirect(301, '/admin/allusers'); 
 }
 
 async function getDramaticsUIByTime(req, res) {
@@ -142,46 +144,184 @@ exports.adminMainPage = async function(req, res) {
 
 }
 
-exports.adminStatistics = async function(req, res) {
-    const showtime = await ShowTime.query()//.eager('showtime_type')
+async function adminStatisticsByTime(req, res){
+    var regexTitle = /\`|\~|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\<|\>|\/|\""|\;/
+    var regex = /^((?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:(?:0[13578]|1[02])(-)31)|((0[1,3-9]|1[0-2])(-)(29|30))))$|^(?:(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(-)02(-)29)$|^(?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:0[1-9])|(?:1[0-2]))(-)(?:0[1-9]|1\d|2[0-8])$/
+    var search = req.query.search;
+    var time = req.query.time;
+    var showtime;
+    
+    if((!regexTitle.test(search) && search!=null)){
+        const dramatic = await Dramatic.query()
+            .select('id')
+            .where('name', 'like', '%'+search+'%')
+        var listID = await dramatic.map(x =>{
+            return x.id;
+        })
+        const showtime = await ShowTime.query()//.eager('showtime_type')
+        .where('dramatic_id', 'IN', listID)
         .withGraphFetched('[room, showtime_type, dramatics, ticket]')
         //.where(ticket.status_id, 1);
-    var data = showtime.map(temp => {
-        var result = {};
-        var sum3=0, buy3=0;
-        var sum1=0, buy1=0;
-        result.id = temp.id,
-        result.date = temp.date,
-        result.time = temp.time,
-        result.room = temp.room,
-        result.dramatics = temp.dramatics,
-        temp.ticket.map(tempTicket => {
-            if(tempTicket.price_id == 3){
-                sum3++;
-                if(tempTicket.status_id == 2){
-                    buy3++;
+        var data = showtime.map(temp => {
+            var result = {};
+            var sum3=0, buy3=0;
+            var sum1=0, buy1=0;
+            var sum4=0, buy4=0;
+            var sum2=0, buy2=0;
+            result.id = temp.id,
+            result.date = temp.date,
+            result.time = temp.time,
+            result.room = temp.room,
+            result.dramatics = temp.dramatics,
+            temp.ticket.map(tempTicket => {
+                if(tempTicket.price_id == 3){
+                    sum3++;
+                    if(tempTicket.status_id == 2){
+                        buy3++;
+                    }
+                }else if(tempTicket.price_id == 4){
+                    sum4++;
+                    if(tempTicket.status_id == 2){
+                        buy4++;
+                    }
+                }if(tempTicket.price_id == 2){
+                    sum2++;
+                    if(tempTicket.status_id == 2){
+                        buy2++;
+                    }
+                }else{
+                    sum1++;
+                    if(tempTicket.status_id == 2){
+                        buy1++;
+                    }
                 }
-            }else{
-                sum1++;
-                if(tempTicket.status_id == 2){
-                    buy1++;
+            })
+            result.loai4 = buy4 + '/' + sum4;
+            result.loai2 = buy3 + '/' + sum2;
+            result.loai3 = buy3 + '/' + sum3;
+            result.loai1 = buy1 + '/' + sum1;
+            result.tongthu = buy3 * 200000 + buy1 * 100000;
+            return result;
+        }) 
+    }else if(regex.test(time)){
+        const showtime = await ShowTime.query()//.eager('showtime_type')
+        .where('date', time)
+        .withGraphFetched('[room, showtime_type, dramatics, ticket]')
+        //.where(ticket.status_id, 1);
+        var data = showtime.map(temp => {
+            var result = {};
+            var sum3=0, buy3=0;
+            var sum1=0, buy1=0;
+            var sum4=0, buy4=0;
+            var sum2=0, buy2=0;
+            result.id = temp.id,
+            result.date = temp.date,
+            result.time = temp.time,
+            result.room = temp.room,
+            result.dramatics = temp.dramatics,
+            temp.ticket.map(tempTicket => {
+                if(tempTicket.price_id == 3){
+                    sum3++;
+                    if(tempTicket.status_id == 2){
+                        buy3++;
+                    }
+                }else if(tempTicket.price_id == 4){
+                    sum4++;
+                    if(tempTicket.status_id == 2){
+                        buy4++;
+                    }
+                }if(tempTicket.price_id == 2){
+                    sum2++;
+                    if(tempTicket.status_id == 2){
+                        buy2++;
+                    }
+                }else{
+                    sum1++;
+                    if(tempTicket.status_id == 2){
+                        buy1++;
+                    }
                 }
-            }
-        })
-        result.loai3 = buy3 + '/' + sum3;
-        result.loai1 = buy1 + '/' + sum1;
-        result.tongthu = buy3 * 200000 + buy1 * 100000;
-        return result;
-    })
+            })
+            result.loai4 = buy4 + '/' + sum4;
+            result.loai2 = buy3 + '/' + sum2;
+            result.loai3 = buy3 + '/' + sum3;
+            result.loai1 = buy1 + '/' + sum1;
+            result.tongthu = buy3 * 200000 + buy1 * 100000;
+            return result;
+        }) 
+    }else {              
+        data = [];
+    }
     res.render('admin/adminStatistics.ejs', {
-        user: req.user,
-        records: data,
-        error : req.flash("error"),
-        success: req.flash("success"),
-        session:req.session,
-        title: "Admin Main Page",
+            user: req.user,
+            records: data,
+            error : req.flash("error"),
+            success: req.flash("success"),
+            session:req.session,
+            title: "Admin Main Page",
         
-    });
+        });
+}
+
+exports.adminStatistics = async function(req, res) {
+    if(isEmpty(req.query)){
+        const showtime = await ShowTime.query()//.eager('showtime_type')
+        .withGraphFetched('[room, showtime_type, dramatics, ticket]')
+        //.where(ticket.status_id, 1);
+        var data = showtime.map(temp => {
+            var result = {};
+            var sum3=0, buy3=0;
+            var sum1=0, buy1=0;
+            var sum4=0, buy4=0;
+            var sum2=0, buy2=0;
+            result.id = temp.id,
+            result.date = temp.date,
+            result.time = temp.time,
+            result.room = temp.room,
+            result.dramatics = temp.dramatics,
+            temp.ticket.map(tempTicket => {
+                if(tempTicket.price_id == 3){
+                    sum3++;
+                    if(tempTicket.status_id == 2){
+                        buy3++;
+                    }
+                }else if(tempTicket.price_id == 4){
+                    sum4++;
+                    if(tempTicket.status_id == 2){
+                        buy4++;
+                    }
+                }if(tempTicket.price_id == 2){
+                    sum2++;
+                    if(tempTicket.status_id == 2){
+                        buy2++;
+                    }
+                }else{
+                    sum1++;
+                    if(tempTicket.status_id == 2){
+                        buy1++;
+                    }
+                }
+            })
+            result.loai4 = buy4 + '/' + sum4;
+            result.loai2 = buy3 + '/' + sum2;
+            result.loai3 = buy3 + '/' + sum3;
+            result.loai1 = buy1 + '/' + sum1;
+            result.tongthu = buy3 * 200000 + buy1 * 100000;
+            return result;
+        })
+        res.render('admin/adminStatistics.ejs', {
+            user: req.user,
+            records: data,
+            error : req.flash("error"),
+            success: req.flash("success"),
+            session:req.session,
+            title: "Admin Main Page",
+        
+        });
+    }else{
+        adminStatisticsByTime(req, res);
+    }
+    
 
 }
 
