@@ -7,6 +7,7 @@ var price = require('../app/controllers/price');
 var tickets = require('../app/controllers/tickets');
 var showtime = require('../app/controllers/showtime');
 var check_input = require('../app/controllers/utils/check_input');
+var nhanvien = require('../app/controllers/nhanvien');
 
 var api_booking = require('../app/controllers/api/booking')
 var api_payment = require('../app/controllers/api/payment')
@@ -122,5 +123,11 @@ module.exports = function (app, passport) {
     app.get('/api/payment_return', auth, api_payment.return_payment)
 
     app.get('/api/send/:id', home.sendMail)
+
+
+    app.get('/admin/kpi_nhanvien', nhanvien.getNewsUI);
+    app.get('/admin/detail_kpi_employee', nhanvien.getDetailKPIEmployeeUI); 
+    app.get('/admin/kpi_phongban', news.getUpdateNewsUI);
+
 
 }
