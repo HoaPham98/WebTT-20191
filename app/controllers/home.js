@@ -181,11 +181,11 @@ exports.order_history = async function(req, res) {
 
 exports.payment_success = async function(req, res) {
 	if (req.session.transaction_id_success != null) {
-		const transaction_id = req.session.transaction_id_success
+		const id = req.session.transaction_id_success
 		delete req.session.transaction_id_success
 
-		const transaction = await Transaction.query().findById(transaction_id).withGraphFetched('[tickets, tickets.[seat, showtime, showtime.dramatics], user]')
-		const showtime = transaction.tickets[0].showtime
+		const transaction = await Transaction.query().findById(id).withGraphFetched('[tickets, tickets.[seat], user]')
+		const showtime = await ShowTime.query().findById(transaction.tickets[0].showtime_id).withGraphFetched('[dramatics]')
 
 		const code = transaction.tickets.map( item => item.seat.code).join(', ')
 
@@ -253,8 +253,8 @@ exports.register = async function(req, res) {
 exports.sendMail = async function(req, res) {
 	const id = req.query.id || 13
 	try {
-	const transaction = await Transaction.query().findById(id).withGraphFetched('[tickets, tickets.[seat, showtime, showtime.dramatics], user]')
-	const showtime = transaction.tickets[0].showtime
+	const transaction = await Transaction.query().findById(id).withGraphFetched('[tickets, tickets.[seat], user]')
+	const showtime = await ShowTime.query().findById(transaction.tickets[0].showtime_id).withGraphFetched('[dramatics]')
 
 	const code = transaction.tickets.map( item => item.seat.code).join(', ')
 
