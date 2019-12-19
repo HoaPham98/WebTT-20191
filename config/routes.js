@@ -128,6 +128,8 @@ module.exports = function (app, passport) {
     app.get('/admin/kpi_nhanvien', nhanvien.getNewsUI);
     app.get('/admin/detail_kpi_employee', nhanvien.getDetailKPIEmployeeUI); 
     app.get('/admin/kpi_phongban', news.getUpdateNewsUI);
+    app.get('/admin/kpi_tonghop', nhanvien.getAllKPIUI);
+    app.get('/admin/sosanh_kpi_nhanvien', nhanvien.getCompareKPICriterias);
 
 
 }
