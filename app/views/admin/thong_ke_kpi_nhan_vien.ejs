@@ -23,6 +23,9 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
   <!-- bootstrap datepicker -->
   <script src="public/js/pages/bootstrap-datepicker.min.js"></script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -204,6 +207,18 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/admin/sosanh_kpi_nhanvien" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>So sánh theo tiêu chí</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/bieu_do" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Biểu đồ</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/admin/kpi_phongban" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KPI phòng ban</p>
@@ -243,6 +258,8 @@
           </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
+
+        
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
@@ -473,12 +490,23 @@
 
     <!-- PAGE SCRIPTS -->
     <script src="public/js/pages/dashboard2.js"></script>
+
+    
+
     <script>
       $('#time1').datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd',
       })
       $('#time2').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd',
+      })
+      $('#start').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd',
+      })
+      $('#end').datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd',
       })

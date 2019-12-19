@@ -23,6 +23,53 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
   <!-- bootstrap datepicker -->
   <script src="public/js/pages/bootstrap-datepicker.min.js"></script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var departs = [1,2,3,4,5,6,7,8,9,10,11,12];
+        
+         Promise.all(departs.map(depart =>
+            fetch('https://dsd10-kong.herokuapp.com/kpis-number?startTime=<%= startTime %> 00:00:00&endTime=<%= endTime %> 23:59:59&id='+depart)
+            .then(response => {
+              return response.json();
+              // console.log(response)
+            })
+            .catch(error => console.log('There was a problem!', error))
+            ))
+          .then(data => {
+            var arrayAll = [['Phòng ban', 'Hoàn thành', 'Chưa hoàn thành']];
+            data.map((value, index) => {
+              var array = [];
+              var hoanthanh = value.data.all - value.data.chua_hoan_thanh;
+              var chuahoanthanh = value.data.chua_hoan_thanh
+              array = [ value.data.name, hoanthanh, chuahoanthanh]
+              
+              arrayAll.push(array);
+            }) 
+            var data = google.visualization.arrayToDataTable(arrayAll);
+
+            var options = {
+              chart: {
+                title: 'Trạng thái phòng ban',
+                subtitle: 'Nhân viên đã hoàn thành và chưa hoàn thành tiêu chí kpi',
+              }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));    
+          })
+          
+
+        
+      }
+    </script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -186,13 +233,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/kpi_tonghop" class="nav-link active">
+                <a href="/admin/kpi_tonghop" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KPI tổng hợp</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/kpi_nhanvien" class="nav-link">
+                <a href="/admin/kpi_nhanvien" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>KPI nhân viên</p>
                 </a>
@@ -204,7 +251,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/bieu_do" class="nav-link">
+                <a href="/admin/sosanh_kpi_nhanvien" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>So sánh theo tiêu chí</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/bieu_do" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Biểu đồ</p>
                 </a>
@@ -249,6 +302,9 @@
           </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
+
+        
+
         <!-- Main content -->
         <section class="content">
           <div class="col-xs-12">
@@ -264,102 +320,23 @@
                 <a href="/admin/insert_news" class="btn btn-success">Thêm tin tức</a>
                 <br></br>
 
-
-               <!--  <select class="form-control select2" id="depart_select" name ="depart_select" style="width: 50%;">
-                  <%if (departs.length >0){ %>
-                  <% for(var i = 0; i < departs.length; i++) { %>
-                  
-                  <%if (records[0].department_id == departs[i].id){ %>
-                  <option value='<%= departs[i].id %>' selected ><%= departs[i].title %></option>
-                  <% }else{ %>
-                  <option value='<%= departs[i].id %>' ><%= departs[i].title %></option>
-                  <% } %>
-                  <% }}else{ %>
-                  <tr>
-                    <option>NOT FOUND</option>
-
-                  </tr>
-                  <% } %>
-
-                </select>  -->
-
-
-                <!-- SEARCH FORM -->
-                <form onsubmit="return validate()" class="form-inline ml-3">
-                  <div class="input-group input-group-sm">
-                   <!-- <select class="form-control select2" id="depart_select" name ="id" style="width: 50%;">
-                    <%if (departs.length >0){ %>
-                    <% for(var i = 0; i < departs.length; i++) { %>
-
-                    <%if (records[0].department_id == departs[i].id){ %>
-                    <option value='<%= departs[i].id %>' selected ><%= departs[i].title %></option>
-                    <% }else{ %>
-                    <option value='<%= departs[i].id %>' ><%= departs[i].title %></option>
-                    <% } %>
-                    <% }}else{ %>
-                    <tr>
-                      <option>NOT FOUND</option>
-
-                    </tr>
-                    <% } %>
-
-                  </select>  -->
-                  <input autocomplete="off" class="form-control form-control-navbar" type="text" placeholder="Time yyyy-mm-dd"  id="time1" name="startTime" value="<%= startTime %>">
-                  <input autocomplete="off" class="form-control form-control-navbar" type="text" placeholder="Time yyyy-mm-dd"  id="time2" name="endTime" value="<%= endTime %>">
-                  <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                      <i class="fas fa-search"></i>
-                    </button>
+                  <!-- SEARCH FORM -->
+                  <form class="form-inline ml-3">
+                    <div class="input-group input-group-sm">
+             
+                    <input autocomplete="off" class="form-control form-control-navbar" type="text" placeholder="Time yyyy-mm-dd"  id="start" name="start" value="<%= startTime %>">
+                    <input autocomplete="off" class="form-control form-control-navbar" type="text" placeholder="Time yyyy-mm-dd"  id="end" name="end" value="<%= endTime %>">
+                    <div class="input-group-append">
+                      <button class="btn btn-navbar" type="submit">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                    <span id="searchAlert"></span>
                   </div>
-                  <span id="searchAlert"></span>
-                </div>
-              </form>
+                </form>
 
-
-
-              <table id="table_recurrent_task" class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <!-- <th>Tên nhân viên</th> -->
-                    <th>ID Phòng ban</th>
-                    <th>Phòng ban</th>
-                    <th>KPI</th>     
-                    <th>Chi tiết</th>                
-                  </tr>
-                </thead>
-                <tbody>
-                  <%if (records.length >0){ %>
-                  <% for(var i = 0; i < records.length; i++) { %>
-                  <tr>
-                    <td class="id"><%= records[i].employee_id %></td>
-                      <!-- <td><%= records[i].name %></td>
-                        <td><%= records[i].content %></td> -->
-                        <td class="depart_id"><%= records[i].department_id %></td>
-                        <% for(var j = 0; j < departs.length; j++) { %>
-
-                        <%if (records[i].department_id == departs[j].id){ %>            
-                        <td><%= departs[j].title %></td>
-                        <% break; %>
-                        <% } %>
-                        <% } %>
-
-                        <td><%= records[i].result %></td>
-                        <td>
-                          <button class="btn btn-info btn-edit">Xem</button>
-                        </td>
-                      </tr>
-                      <% }}else{ %>
-                      <tr>
-                        <td colspan="6">No Record Found</td>
-
-                      </tr>
-                      <% } %>
-
-
-
-                    </tbody>
-                  </table>
+                <div id="columnchart_material" style="width: 1000px; height: 500px;"></div>
+                 
                   <script type="text/javascript">
                     $(document).ready(function () {
                       $(".btn.btn-info.btn-edit").click(function() {
@@ -479,12 +456,23 @@
 
     <!-- PAGE SCRIPTS -->
     <script src="public/js/pages/dashboard2.js"></script>
+
+    
+
     <script>
       $('#time1').datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd',
       })
       $('#time2').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd',
+      })
+      $('#start').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd',
+      })
+      $('#end').datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd',
       })
