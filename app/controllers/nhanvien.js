@@ -101,11 +101,22 @@ function parseJSONWithPromise(response) {
     return Promise.resolve(response.json());
 }
 
-async function getNewsUI(req, res) {
+function setTime(req) {
+    var params = {
+        startTime: req.query.startTime + ' 00:00:00',
+        endTime: req.query.endTime + ' 23:59:59'
+    };
+
+    return query = Object.keys(params)
+        .map(k => k + '=' + params[k])
+        .join('&');
+}
+
+async function getNewsByTimeUI(req, res) {
     const departments = await Department.query();
-    var url = 'https://dsd10-kong.herokuapp.com/kpis?id=2&startTime=2019-11-01%2000:00:00&endTime=2019-12-30%2000:00:00';
-    // var department = req.query.department;
-    //var urls = department.map(id => departmentKPI + '?' + setUrlForCompare(req) + '&' + 'departmentId=' + id)
+    var url = 'https://dsd10-kong.herokuapp.com/kpis';
+    var id = req.query.id;
+    url = url + '?id=' + id + '&' + setTime(req);
     var kpiEmployee = [];
     fetch(url)
         .then(checkStatus)
@@ -117,6 +128,8 @@ async function getNewsUI(req, res) {
                 message: req.flash('flash'),
                 departs: departments,
                 user: req.user,
+                startTime: req.query.startTime,
+                endTime: req.query.endTime,
                 records: kpiEmployee,
                 error : req.flash("error"),
                 success: req.flash("success"),
@@ -126,6 +139,40 @@ async function getNewsUI(req, res) {
             }); 
         })
         .catch(error => console.log('There was a problem!', error))
+}
+
+async function getNewsUI(req, res) {
+    if(isEmpty(req.query)){
+        const departments = await Department.query();
+        var url = 'https://dsd10-kong.herokuapp.com/kpis?id=1&startTime=2019-11-01%2000:00:00&endTime=2019-12-30%2000:00:00';
+        // var department = req.query.department;
+        //var urls = department.map(id => departmentKPI + '?' + setUrlForCompare(req) + '&' + 'departmentId=' + id)
+        var kpiEmployee = [];
+        fetch(url)
+            .then(checkStatus)
+            .then(parseJSONWithPromise)
+            .then(data => {
+                kpiEmployee = data.data;
+                console.log(kpiEmployee);
+                res.render('admin/thong_ke_kpi_nhan_vien.ejs', {
+                    message: req.flash('flash'),
+                    departs: departments,
+                    user: req.user,
+                    startTime: '2019-11-01',
+                    endTime: '2019-12-30',
+                    records: kpiEmployee,
+                    error : req.flash("error"),
+                    success: req.flash("success"),
+                    session:req.session,
+                    title: "Admin Main Page",
+
+                }); 
+            })
+            .catch(error => console.log('There was a problem!', error))
+    }else{
+        getNewsByTimeUI(req, res)
+    }
+    
 
     // var startTemp = moment().subtract(7, 'days');
     // startTemp = startTemp.format('YYYY-MM-DD');
@@ -140,10 +187,14 @@ async function getNewsUI(req, res) {
 }
 
 async function getDetailKPIEmployeeUI(req, res) {
-    var url = 'https://dsd10-kong.herokuapp.com/kpi-percent?id=1&startTime=2019-11-01%2000:00:00&endTime=2019-12-30%2000:00:00&employee_id='+req.query.employee_id;
-    //url += req.query.employee_id;
-    // var department = req.query.department;
-    //var urls = department.map(id => departmentKPI + '?' + setUrlForCompare(req) + '&' + 'departmentId=' + id)
+    var url = 'https://dsd10-kong.herokuapp.com/kpi-percent';
+    var id = req.query.id;
+    console.log(id)
+    var employee_id = req.query.employee_id;
+    var startTime = req.query.startTime + ' 00:00:00';
+    var endTime = req.query.endTime + ' 23:59:59';
+    console.log(startTime + ' ' + endTime)
+    url = url + '?id='+ id + '&employee_id='+ employee_id+ '&startTime='+startTime + '&endTime='+ endTime
     var kpiEmployee = [];
     fetch(url)
         .then(checkStatus)
