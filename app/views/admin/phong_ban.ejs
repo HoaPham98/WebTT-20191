@@ -288,7 +288,7 @@
                     <% for(var i = 0; i < records.length; i++) { %>
                     <tr>
                       <td><%= i + 1 %></td>     
-                      <td><%= records[i].department_id %></td>
+                      <td class="depart_id"><%= records[i].department_id %></td>
                       <% for(var j = 0; j < departs.length; j++) { %>
 
                         <%if (departs[j].id == records[i].department_id){ %>
@@ -316,9 +316,9 @@
                 $(document).ready(function () {
                   $(".btn.btn-info.btn-edit").click(function() {
                   //find content of different elements inside a row.
-                  var id = $(this).closest('tr').find('.id').text();
+                  var id = $(this).closest('tr').find('.depart_id').text();
                   //console.log(id);
-                  window.location.href = '/admin/detail_kpi_department?department_id=' + id;
+                  window.location.href = '/admin/detail_kpi_department?id=' + id + '&startTime=' + "<%= startTime %>" + '&endTime=' + "<%= endTime %>" 
                 });
 
                   $(".btn.btn-danger.btn-delete").click(function() {

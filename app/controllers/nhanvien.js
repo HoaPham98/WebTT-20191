@@ -506,6 +506,35 @@ async function getKPIDepartmentUI(req, res) {
     }
 }
 
+async function getDetailKPIDepartmentUI(req, res) {
+    var url = 'https://it4883microservice.herokuapp.com/kpi-department-percent';
+    var id = req.query.id;
+    var startTime = req.query.startTime + ' 00:00:00';
+    var endTime = req.query.endTime + ' 23:59:59';
+    console.log(startTime + ' ' + endTime)
+    url = url + '?id='+ id + '&startTime='+startTime + '&endTime='+ endTime
+    var kpiDepart = [];
+    fetch(url)
+    .then(checkStatus)
+    .then(parseJSONWithPromise)
+    .then(data => {
+        kpiDepart = data.data.result;
+        //console.log(kpiEmployee);
+        res.render('admin/detai_department.ejs', {
+            message: req.flash('flash'),
+            user: req.user,
+            records: kpiDepart,
+            error : req.flash("error"),
+            success: req.flash("success"),
+            session:req.session,
+            title: "Admin Main Page",
+
+        }); 
+    })
+    .catch(error => console.log('There was a problem!', error))
+
+}
+
 async function getCompareDepartKPICriterias(req, res) {
     if(isEmpty(req.query)){
         const departments = await Department.query();
@@ -582,5 +611,6 @@ module.exports = {
     getCompareKPICriterias,
     getChart,
     getKPIDepartmentUI,
-    getCompareDepartKPICriterias
+    getCompareDepartKPICriterias,
+    getDetailKPIDepartmentUI
 }
