@@ -131,6 +131,7 @@ module.exports = function (app, passport) {
     app.get('/admin/kpi_tonghop', nhanvien.getAllKPIUI);
     app.get('/admin/sosanh_kpi_nhanvien', nhanvien.getCompareKPICriterias);
     app.get('/admin/bieu_do', nhanvien.getChart);
+    app.get('/admin/sosanh_kpi_phong_ban', nhanvien.getCompareDepartKPICriterias);
 
 
 }

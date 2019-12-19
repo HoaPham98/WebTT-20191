@@ -445,23 +445,23 @@ async function getDetailKPIEmployeeUI(req, res) {
 }
 async function getKPIDepartmentByTimeUI(req, res) {
     const departments = await Department.query();
-    var url = 'https://dsd10-kong.herokuapp.com/kpis';
+    var url = 'https://dsd10-kong.herokuapp.com/kpi-departments?';
     var id = req.query.id;
-    url = url + '?id=' + id + '&' + setTime(req);
-    var kpiEmployee = [];
+    url = url + setTime(req);
+    var kpiDepartment = [];
     fetch(url)
     .then(checkStatus)
     .then(parseJSONWithPromise)
     .then(data => {
-        kpiEmployee = data.data;
-        console.log(kpiEmployee);
-        res.render('admin/thong_ke_kpi_nhan_vien.ejs', {
+        kpiDepartment = data.data;
+        console.log(kpiDepartment);
+        res.render('admin/phong_ban.ejs', {
             message: req.flash('flash'),
             departs: departments,
             user: req.user,
             startTime: req.query.startTime,
             endTime: req.query.endTime,
-            records: kpiEmployee,
+            records: kpiDepartment,
             error : req.flash("error"),
             success: req.flash("success"),
             session:req.session,
@@ -476,23 +476,23 @@ async function getKPIDepartmentUI(req, res) {
     if(isEmpty(req.query)){
         const departments = await Department.query();
         console.log(departments[0].id)
-        var url = 'https://dsd10-kong.herokuapp.com/kpis?id=1&startTime=2019-11-01%2000:00:00&endTime=2019-12-30%2000:00:00';
+        var url = 'https://dsd10-kong.herokuapp.com/kpi-departments?startTime=2019-11-01%2000:00:00&endTime=2019-12-30%2000:00:00';
         // var department = req.query.department;
         //var urls = department.map(id => departmentKPI + '?' + setUrlForCompare(req) + '&' + 'departmentId=' + id)
-        var kpiEmployee = [];
+        var kpiDepartment = [];
         fetch(url)
         .then(checkStatus)
         .then(parseJSONWithPromise)
         .then(data => {
-            kpiEmployee = data.data;
-            console.log(kpiEmployee);
-            res.render('admin/thong_ke_kpi_nhan_vien.ejs', {
+            kpiDepartment = data.data;
+            console.log(kpiDepartment);
+            res.render('admin/phong_ban.ejs', {
                 message: req.flash('flash'),
                 departs: departments,
                 user: req.user,
                 startTime: '2019-11-01',
                 endTime: '2019-12-30',
-                records: kpiEmployee,
+                records: kpiDepartment,
                 error : req.flash("error"),
                 success: req.flash("success"),
                 session:req.session,
@@ -502,9 +502,78 @@ async function getKPIDepartmentUI(req, res) {
         })
         .catch(error => console.log('There was a problem!', error))
     }else{
-        getNewsByTimeUI(req, res)
+        getKPIDepartmentByTimeUI(req, res)
     }
 }
+
+async function getCompareDepartKPICriterias(req, res) {
+    if(isEmpty(req.query)){
+        const departments = await Department.query();
+        var url = 'https://it4883microservice.herokuapp.com/kpi-department-criterias?id=1&startTime=2019-11-01%2000:00:00&endTime=2019-12-30%2000:00:00';
+        // var department = req.query.department;
+        //var urls = department.map(id => departmentKPI + '?' + setUrlForCompare(req) + '&' + 'departmentId=' + id)
+        var kpiDepart = [];
+        fetch(url)
+        .then(checkStatus)
+        .then(parseJSONWithPromise)
+        .then(data => {
+
+            kpiDepart = data.data.sap_xep;
+            criterias = data.data.tieu_chi;
+            console.log(criterias)
+            res.render('admin/sosanh_kpi_phong_ban.ejs', {
+                message: req.flash('flash'),
+                departs: departments,
+                user: req.user,
+                startTime: '2019-11-01',
+                endTime: '2019-12-30',
+                records: kpiDepart,
+                criterias: criterias,
+                error : req.flash("error"),
+                success: req.flash("success"),
+                session:req.session,
+                title: "Admin Main Page",
+
+            }); 
+        })
+        .catch(error => console.log('There was a problem!', error))
+    }else{
+        getCompareDepartKPICriteriasByTime(req, res)
+    }
+}
+
+async function getCompareDepartKPICriteriasByTime(req, res) {
+    const departments = await Department.query();
+    var id = req.query.depart_id;
+    var url = 'https://it4883microservice.herokuapp.com/kpi-department-criterias';
+    url = url + '?id=' + id + '&' + setTime(req);
+        //var urls = department.map(id => departmentKPI + '?' + setUrlForCompare(req) + '&' + 'departmentId=' + id)
+        var kpiDepart = [];
+        fetch(url)
+        .then(checkStatus)
+        .then(parseJSONWithPromise)
+        .then(data => {
+
+            kpiDepart = data.data.sap_xep;
+            criterias = data.data.tieu_chi;
+            console.log(criterias)
+            res.render('admin/sosanh_kpi_phong_ban.ejs', {
+                message: req.flash('flash'),
+                departs: departments,
+                user: req.user,
+                startTime: req.query.startTime,
+                endTime: req.query.endTime,
+                records: kpiDepart,
+                criterias: criterias,
+                error : req.flash("error"),
+                success: req.flash("success"),
+                session:req.session,
+                title: "Admin Main Page",
+
+            }); 
+        })
+        .catch(error => console.log('There was a problem!', error))
+    }
 
 module.exports = {
     getNewsUI,
@@ -512,5 +581,6 @@ module.exports = {
     getAllKPIUI,
     getCompareKPICriterias,
     getChart,
-    getKPIDepartmentUI
+    getKPIDepartmentUI,
+    getCompareDepartKPICriterias
 }
